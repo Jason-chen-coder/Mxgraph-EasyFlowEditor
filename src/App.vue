@@ -94,6 +94,7 @@ export default {
   height: 90vh;
   border: 1px solid #ededed;
   background-color: #efefef;
+  padding: 0;
 }
 .graph_container {
   width: 100%;
