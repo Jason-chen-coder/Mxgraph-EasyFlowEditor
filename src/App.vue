@@ -61,7 +61,7 @@
 </template>
 
 <script>
-require('mxgraph/javascript/src/css/common.css')
+// require('mxgraph/javascript/src/css/common.css')
 export default {
   name: 'App',
   methods: {
@@ -81,17 +81,17 @@ export default {
   margin: 0;
 }
 .header {
-  height: 10vh;
+  height: 8vh !important;
 }
 .aside {
-  height: 90vh;
+  height: 92vh;
   border: 1px solid #ededed;
 }
 .menu-row {
   width: 100%;
 }
 .main {
-  height: 90vh;
+  height: 92vh;
   border: 1px solid #ededed;
   background-color: #efefef;
   padding: 0;

@@ -12,10 +12,12 @@
     "element-ui": "^2.13.2",
     "exports-loader": "^1.1.0",
     "less-loader": "^6.1.2",
-    "mxgraph": "^4.0.6",
+    "lodash": "^4.17.19",
+    "mxgraph": "^4.2.0",
     "mxgraph-js": "^1.0.1",
     "script-loader": "^0.7.2",
     "vue": "^2.6.11",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^3.3.4"
   },
   "devDependencies": {

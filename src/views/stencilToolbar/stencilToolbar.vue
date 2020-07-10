@@ -25,22 +25,21 @@
 </template>
 
 <script>
-import {
-  mxUtils as MxUtils,
-  mxGraph as MxGraph,
-  mxEvent as MxEvent,
-  mxKeyHandler as MxKeyHandler,
-  mxRubberband as MxRubberBand,
-  mxConstants as MxConstants,
-  mxStencilRegistry as MxStencilRegistry,
-  mxStencil as MxStencil,
-  mxCodec as MxCodec,
-  mxGraphModel as MxGraphModel,
-  mxGeometry as MxGeometry
-} from 'mxgraph-js'
-
-const path = require('path')
-
+const path = require('path');
+import mxgraph from "../../graph/index";
+const {
+  mxUtils,
+  mxGraph,
+  mxEvent,
+  mxKeyHandler,
+  mxRubberband,
+  mxConstants,
+  mxStencilRegistry,
+  mxStencil,
+  mxCodec,
+  mxGraphModel,
+  mxGeometry,
+} = mxgraph
 export default {
   name: 'stencilToolbar',
   data () {
@@ -54,21 +53,21 @@ export default {
   methods: {
     // 创建Graph画布
     createGraph () {
-      this.graph = new MxGraph(this.$refs.container)
+      this.graph = new mxGraph(this.$refs.container)
       this.$refs.container.style.background = 'url("./mxgraph/images/grid.gif")'
     },
     encode (graph) {
-      const encoder = new MxCodec()
+      const encoder = new mxCodec()
       const result = encoder.encode(graph.getModel())
 
-      return MxUtils.getPrettyXml(result)
+      return mxUtils.getPrettyXml(result)
     },
     decode (graphXml, graph) {
-      window['mxGraphModel'] = MxGraphModel
-      window['mxGeometry'] = MxGeometry
+      window['mxGraphModel'] = mxGraphModel
+      window['mxGeometry'] = mxGeometry
 
-      const xmlDocument = MxUtils.parseXml(graphXml)
-      const decoder = new MxCodec(xmlDocument)
+      const xmlDocument = mxUtils.parseXml(graphXml)
+      const decoder = new mxCodec(xmlDocument)
       const node = xmlDocument.documentElement
 
       decoder.decode(node, graph.getModel())
@@ -78,13 +77,13 @@ export default {
         return
       }
       // 禁用浏览器默认的右键菜单栏 
-      MxEvent.disableContextMenu(this.$refs.container);
+      mxEvent.disableContextMenu(this.$refs.container);
 
       //开启鼠标框选
-      this.rubberBand = new MxRubberBand(this.graph)
+      this.rubberBand = new mxRubberband(this.graph)
       this.graph.setCellsEditable(false) // 不可修改
       // 绑定删除键事件
-      this.keyHandler = new MxKeyHandler(this.graph)
+      this.keyHandler = new mxKeyHandler(this.graph)
       this.keyHandler.bindKey(46, () => {
         const cells = this.graph.getSelectionCells() || []
         this.graph.removeCells(cells, true)
@@ -118,26 +117,26 @@ export default {
     },
 
     addStencilPalette (title, name, file) {
-      let req = MxUtils.load(file)
+      let req = mxUtils.load(file)
       let root = req.getDocumentElement()
       let shape = root.firstChild
       this.$set(this.palettes, name, { title, name, shapes: [] })
 
       while (shape != null) {
-        if (shape.nodeType === MxConstants.NODETYPE_ELEMENT) {
+        if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
           const shapeName = shape.getAttribute('name')
           const w = shape.getAttribute('w')
           const h = shape.getAttribute('h')
 
-          MxStencilRegistry.addStencil(shapeName, new MxStencil(shape))
+          mxStencilRegistry.addStencil(shapeName, new mxStencil(shape))
           this.palettes[name]['shapes'].push({ name: shape.getAttribute('name'), width: w / 2, height: h / 2 })
         }
-
         shape = shape.nextSibling
+        console.log(this.palettes[name]['shapes'])
       }
     },
     createThumb (item, width, height) {
-      const tmpGraph = new MxGraph(document.createElement('div'))
+      const tmpGraph = new mxGraph(document.createElement('div'))
       const thumbBorder = 2
 
       tmpGraph.labelsVisible = false
@@ -163,8 +162,8 @@ export default {
 
       return node
     },
-    initToolBar () {
-      const domArray = this.$refs.dragItem
+    initStencilToolBar () {
+      var domArray = this.$refs.dragItem
 
       if (!(domArray instanceof Array) || domArray.length <= 0 || (this.graph == null || this.graph == undefined)) {
         return
@@ -173,30 +172,30 @@ export default {
         const shapeIndex = dom.getAttribute('shapeIndex')
         const paletteIndex = dom.getAttribute('paletteIndex')
         const shapeItem = Object.values(this.palettes)[paletteIndex]['shapes'][shapeIndex]
-        const width = shapeItem['width']
-        const height = shapeItem['height']
-        const dragHandler = (graph, evt, cell, x, y) => {
-          this.instanceGraph(this.graph, shapeItem, x, y, width, height)
+        const shapeWidth = shapeItem['width']
+        const shapeHeight = shapeItem['height']
+        const stencilDragHandler = (graph, evt, cell, x, y) => {
+          this.instanceGraph(this.graph, shapeItem, x, y, shapeWidth, shapeHeight)
         }
-        const createDragPreview = () => {
+        var createDragPreview = () => {
           //设置鼠标拖拽节点时的样式
           const elt = document.createElement('div')
           elt.style.border = '2px dotted black'
-          elt.style.width = `${width}px`
-          elt.style.height = `${height}px`
+          elt.style.width = `${shapeWidth}px`
+          elt.style.height = `${shapeHeight}px`
           return elt
         }
-        dom.appendChild(this.createThumb(shapeItem, width, height))
+        dom.appendChild(this.createThumb(shapeItem, shapeWidth, shapeHeight))
 
-        MxUtils.makeDraggable(dom, this.graph, dragHandler, createDragPreview(), 0, 0, false, true)
+        mxUtils.makeDraggable(dom, this.graph, stencilDragHandler, createDragPreview(), 0, 0, false, true)
       })
     },
     instanceGraph (graph, shapeItem, x, y, width, height) {
-      const parent = graph.getDefaultParent()
+      const stencilParent = graph.getDefaultParent()
 
       graph.getModel().beginUpdate()
       try {
-        let vertex = graph.insertVertex(parent, null, null, x, y, width, height, `shape=${shapeItem['name']};`)
+        let vertex = graph.insertVertex(stencilParent, null, null, x, y, width, height, `shape=${shapeItem['name']};`)
 
         vertex.customer = true
       } finally {
@@ -209,7 +208,7 @@ export default {
     this.initGraph()
     this.addStencilPalette('箭头', 'arrows', path.join('./arrows.xml'))
     this.$nextTick(() => {
-      this.initToolBar()
+      this.initStencilToolBar()
     })
   }
 }
