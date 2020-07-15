@@ -14,6 +14,7 @@
           </el-tooltip>
         </el-button-group>
       </div>
+      <!-- 节点样板栏 -->
       <el-collapse v-model="activeNames">
         <el-collapse-item name="1">
           <!-- 将所有自定义图标渲染出来 -->
@@ -101,7 +102,7 @@
         <div class="grid-content bg-purple"></div>
       </el-col>
     </div>
-    <div class="graphContainer" ref="container"></div>
+    <div class="graphContainer" id="graphContainer" ref="container"></div>
     <!-- 样式设置 -->
     <style-select
       @changeDashed="changeDashed"
@@ -110,8 +111,10 @@
       @changeFontSize="changeFontSize"
       @changeFontColor="changeFontColor"
       @changeLabelBackgroundColor="changeLabelBackgroundColor"
+      @changeConfigOrder="changeConfigOrder"
       :isNode="isNode"
       :cellStyle="cellStyle"
+      :configOrder="configOrder"
       :graphX="graphX"
       :graphY="graphY"
       class="style-select"
@@ -160,9 +163,18 @@ const {
   mxEdgeHandler,
   mxPerimeter,
   mxOutline,
+  mxCellOverlay,
+  mxEventObject
 } = mxgraph
-const path = require('path')
-import styleSelect from "./component/styleSelect"
+const path = require('path');
+Object.assign(mxEvent, {
+  NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED',
+});
+
+import styleSelect from "./component/styleSelect";
+// import domtoimage from 'dom-to-image';
+import html2canvas from 'html2canvas'
+
 
 export default {
   computed: {
@@ -192,11 +204,24 @@ export default {
       undoMng: "",
       uploadDataVisible: false,
       isOutputXml: false,
-      outline: ""
+      outline: "",
+      idSeed: 0,
+      configOrder: 0,
+      currentNormalType: {},
+      normalTypePosition: {
+        top: '0',
+        left: '0',
+      },
     }
   },
   methods: {
-
+    changeConfigOrder (val) {
+      // 获取当前的cell
+      this.currentNormalType.title = val.newConfigOrder;
+      // 修改指定cell的背景图片
+      this.graph.setCellStyles(mxConstants.STYLE_IMAGE, `./images/order/unselect-${val.newConfigOrder}.png`, [this.currentNormalType]);
+      this.graph.refresh(this.currentNormalType)
+    },
     createGraph () {
       // 创建graph
       // 方式一：直接构建graph实例
@@ -207,7 +232,7 @@ export default {
       // 去锯齿效果
       mxRectangleShape.prototype.crisp = true;
       //cell创建支持传入html
-      this.graph.setHtmlLabels(true);
+      this.graph.setHtmlLabels(false);
       // 设置连线时的预览路径及样式
       this.graph.connectionHandler.createEdgeState = () => {
         // 设置预览的连接线,第三个参数为连接成功后连接线上的label
@@ -220,6 +245,7 @@ export default {
       this.undoMng = new mxUndoManager();
       let listener = (sender, evt) => {
         this.undoMng.undoableEditHappened(evt.getProperty('edit'));
+
       };
       this.graph.getModel().addListener(mxEvent.UNDO, listener);
       this.graph.getView().addListener(mxEvent.UNDO, listener)
@@ -231,18 +257,11 @@ export default {
         return
       }
 
+      // 配置默认全局样式
+      this.configureStylesheet(this.graph);
       // 获取全局Edge、label样式
       var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle()
-      let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
-
-      // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
-      mxConstants.HANDLE_FILLCOLOR = '#99ccff'
-      mxConstants.HANDLE_STROKECOLOR = '#0088cf'
-      mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
-      mxConstants.STYLE_STYLE_ROTATION = 'rotation';
-
-      this.configureStylesheet(this.graph);
-
+      // let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
       // 设置连线风格(设置为正交折线)
       edgeStyle['edgeStyle'] = 'orthogonalEdgeStyle';
 
@@ -257,26 +276,53 @@ export default {
         {
           currentState: null,
           previousStyle: null,
-          mouseDown: function (sender, me) {
-            console.log('mouseDown')
-            // if (this.currentState != null) {
-            //   // 修改节点信息
-            //   this.dragLeave(me.getEvent(), this.currentState);
-            //   this.currentState = null;
-            // }
+          mouseDown: (sender, evt) => {
+            if (!evt.state) {
+              console.log('点击了画布')
+              return;
+            } else if (evt.state.cell.edge) {
+              console.log('点击了连线')
+              return;
+            }
+
+            const cell = evt.state.cell;
+            let clickNormalType = false;
+            if (cell.style !== undefined) {
+              clickNormalType = cell.style.includes('normalType');
+            }
+            if (clickNormalType) {
+              // 使用 mxGraph 事件中心，触发自定义事件
+              this.graph.fireEvent(new mxEventObject(mxEvent.NORMAL_TYPE_CLICKED, 'cell', evt));
+            } else {
+              return
+            }
           },
           mouseMove: (sender, me) => {
             // console.log('mouseMove')
             this.graphX = Math.ceil(me.graphX);
             this.graphY = me.graphY;
           },
-          mouseUp: (sender, me) => {
-            console.log('mouseUp')
-            // console.log(sender, me)
+          mouseUp: (sender, evt) => {
+            console.log("mouseUp")
+            if (evt.sourceState == undefined) {
+              return;
+            } else {
+              var cell = evt.sourceState.cell;
+
+            }
           },
         });
-
-
+      // 监听自定义事件
+      this.graph.addListener(mxEvent.NORMAL_TYPE_CLICKED, this.showNormalTypeSelect);
+    },
+    showNormalTypeSelect (sender, evt) {
+      let cell = evt.properties.cell.state.cell;
+      this.configOrder = cell.title
+      this.currentNormalType = cell
+      // const { x, y } = evt
+      // this.normalTypePosition.left = `${x - 210}px`;
+      // this.normalTypePosition.top = `${y - 8}px`;
+      // this.normalTypeSelectVisible = true;
     },
     // 添加元素
     addCell (toolItem, x, y) {
@@ -287,8 +333,13 @@ export default {
       this.graph.getModel().beginUpdate()
       try {
         let vertex = this.graph.insertVertex(parent, null, null, x, y, width, height, style)
-
+        // Presets the collapsed size
+        vertex.geometry.alternateBounds = new mxRectangle(0, 0, 120, 40);
         vertex.title = toolItem['title']
+        vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
+        // 添加完节点后自动添加顺序图标
+        this.addPoint(vertex, toolItem['idSeed'])
+        toolItem['idSeed']++;
       } finally {
         this.graph.getModel().endUpdate()
       }
@@ -308,6 +359,7 @@ export default {
         //定义拖拽后的回调函数
         var dropHandler = (graph, evt, cell, x, y) => {
           this.addCell(toolItem, x, y)
+
         }
         // 设置节点被拖拽时的样式(预览)
         var createDragPreview = () => {
@@ -316,16 +368,19 @@ export default {
           elt.style.width = `${width}px`
           elt.style.height = `${height}px`
           elt.style.backgroundImage = `url(${image})`
-          elt.style.backgroundSize = `contain	`
-          elt.style.backgroundRepeat = 'no - repeat';
+          elt.style.backgroundSize = `contain`
+          elt.style.backgroundRepeat = 'no-repeat';
           return elt
         }
         // 允许拖拽
-        mxUtils.makeDraggable(dom, this.graph, dropHandler, createDragPreview(), 0, 0, false, true)
+        let ds = mxUtils.makeDraggable(dom, this.graph, dropHandler, createDragPreview(), 0, 0, true, true)
+        ds.setGuidesEnabled(true);
+
       })
     },
     // 基础配置函数
     configOption () {
+
       // 鼠标框选 
       this.rubberBand = new mxRubberband(this.graph)
 
@@ -334,7 +389,6 @@ export default {
 
       // 键盘按下删除键绑定事件
       this.keyHandler.bindKey(46, () => {
-        // const cells = this.graph.getSelectionCells() || []
         this.graph.removeCells()
       })
 
@@ -342,45 +396,49 @@ export default {
       mxEvent.disableContextMenu(this.$refs.container)
       // 自定义右键菜单栏
       this.graph.popupMenuHandler.factoryMethod = (menu) => {
-        menu.addItem('输出所有节点的id', null, () => {
-          // this.graphXml = this.encode(this.graph)
-          // console.log(this.graphXml)
-          // this.$message.success('导出成功')
-          Object.values(this.graph.getModel().cells).forEach((cell, index) => {
-            console.log(cell.id)
+        menu.addItem('输出所有节点', null, () => {
+          Object.values(this.graph.getModel().cells).forEach((cell) => {
+            console.log(cell)
           })
         })
-        menu.addSeparator()
-        menu.addItem('导入', null, () => {
-          this.$confirm('为了使导入的效果明显，会先删除所有现有的cell，并在1秒后执行导入！！！', '提示')
-            .then(() => {
-              this.graph.selectAll()
-              this.graph.removeCells(this.graph.getSelectionCells())
-              setTimeout(() => {
-                this.decode(this.graphXml, this.graph)
-                this.$message('导入成功')
-              }, 1000)
-            })
-            .catch(() => { })
-        })
+
         menu.addSeparator()
         menu.addItem('复制', null, () => {
           let selectionCells = this.graph.getSelectionCells();
           mxClipboard.copy(this.graph, selectionCells);
         })
-        menu.addSeparator()
         menu.addItem('粘贴', null, () => {
           mxClipboard.paste(this.graph);
         })
-
-        // 添加分割符号
+        menu.addSeparator()
+        menu.addItem('组合', null, () => {
+          let vertex = new mxCell(null, new mxGeometry(0, 0));
+          vertex.setVertex(true);
+          this.graph.groupCells(vertex, 0, this.graph.getSelectionCells());
+        })
+        menu.addItem('分解', null, () => {
+          this.graph.ungroupCells(this.graph.getSelectionCells());
+        })
+        menu.addSeparator()
+        menu.addItem('配置完成', null, () => {
+          let cell = this.graph.getSelectionCell().children[0];
+          let cellArrayStyle = cell.getStyle().split(';');
+          cellArrayStyle.shift();
+          let cellStyle = {}
+          cellArrayStyle.forEach(item => {
+            cellStyle[item.split('=')[0]] = item.split('=')[1]
+          })
+          let cellImage = cellStyle['image'].replace('unselect', 'selected');
+          this.graph.setCellStyles(mxConstants.STYLE_IMAGE, cellImage, [cell]);
+          console.log(cell)
+          this.graph.refresh(cell)
+        })
+        // 分割符号
         menu.addSeparator()
         menu.addItem('修改样式', null, () => {
           var cell = this.graph.getSelectionCell();
           if (cell) {
             cell.vertex ? this.isNode = true : this.isNode = false
-            var cell = this.graph.getSelectionCell();
-            // this.cellStyle = cell.getStyle() ? cell.getStyle() : "";
             var getcellStyle = cell.getStyle() ? cell.getStyle() : "";
             if (getcellStyle) {
               var arr = getcellStyle.split(";")
@@ -390,6 +448,9 @@ export default {
                 styleObject[item.split("=")[0]] = item.split("=")[1]
               }))
               this.cellStyle = styleObject
+              if (this.isNode) {
+
+              }
             }
           } else {
             this.$message.error("请选择节点或者连线")
@@ -399,11 +460,10 @@ export default {
       // 启用工具提示，新连接平滑移动  
       this.graph.setPanning(true);
       // 开启提示
-      this.graph.setTooltips(true);
+      this.graph.setTooltips(false);
       // 允许连线
       this.graph.setConnectable(true)
-      // 设置鼠标悬浮至节点或者连线时高亮显示的颜色
-      var highlight = new mxCellTracker(this.graph, '#409eff');
+
       // 开启方块上的文字编辑功能
       this.graph.setCellsEditable(true)
       // 启用对齐线帮助定位
@@ -422,26 +482,33 @@ export default {
       this.graph.alternateEdgeStyle = 'elbow=vertical'
       this.$message.success("切换连线样式成功")
     },
-    // 配置全局样式
+    //  配置全局样式
     configureStylesheet (graph) {
+
+      // 设置节点的文字可被移动
+      graph.vertexLabelsMovable = true;
+      // 设置鼠标悬浮至节点或者连线时高亮显示的颜色
+      new mxCellTracker(graph, '#409eff');
+
       var style = new Object();
       style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
       style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
+      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
       style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
       style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-      style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
-      style[mxConstants.STYLE_SPACING_TOP] = '56';
-      style[mxConstants.STYLE_GRADIENTCOLOR] = 'skyblue'; // 渐变颜色
+      style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
+      // style[mxConstants.STYLE_SPACING_TOP] = 6;
+      style[mxConstants.STYLE_SPACING_LEFT] = 5;
+      // style[mxConstants.STYLE_GRADIENTCOLOR] = 'skyblue'; // 渐变颜色
       style[mxConstants.STYLE_STROKECOLOR] = '#5d65df';   // 线条颜色
-      style[mxConstants.STYLE_FILLCOLOR] = '#adc5ff';
+      style[mxConstants.STYLE_FILLCOLOR] = 'transparent';
       style[mxConstants.STYLE_FONTCOLOR] = '#1d258f';     // 字体颜色
       style[mxConstants.STYLE_FONTFAMILY] = 'Verdana';    // 字体风格
       style[mxConstants.STYLE_FONTSIZE] = '12';           // 字体大小
       style[mxConstants.STYLE_FONTSTYLE] = '1';           // 斜体字
-      style[mxConstants.STYLE_ROUNDED] = true;             // 圆角
-      style[mxConstants.STYLE_IMAGE_WIDTH] = '18';        // 图片宽度
-      style[mxConstants.STYLE_IMAGE_HEIGHT] = '18';       // 图片高度
+      // style[mxConstants.STYLE_ROUNDED] = true;             // 圆角
+      style[mxConstants.STYLE_IMAGE_WIDTH] = '28';        // 图片宽度
+      style[mxConstants.STYLE_IMAGE_HEIGHT] = '28';       // 图片高度
       style[mxConstants.STYLE_OPACITY] = '80';            // 节点透明度(不包含字体)
       graph.getStylesheet().putDefaultVertexStyle(style);
 
@@ -459,11 +526,8 @@ export default {
       style[mxConstants.STYLE_STARTSIZE] = '30';
       style[mxConstants.STYLE_FONTSIZE] = '16';
       style[mxConstants.STYLE_FONTSTYLE] = 1;
-      // style['edgeStyle'] = 'orthogonalEdgeStyle';
-      style[mxConstants.STYLE_ORTHOGONAL_LOOP] = 1;
-      style[mxConstants.STYLE_JETTY_SIZE] = "auto";
       graph.getStylesheet().putCellStyle('group', style);
-      console.log('edgestyle', style)
+
       style = new Object();
       style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
       style[mxConstants.STYLE_FONTCOLOR] = '#774400';
@@ -475,13 +539,23 @@ export default {
       style[mxConstants.STYLE_FONTSTYLE] = 2;
       style[mxConstants.STYLE_IMAGE_WIDTH] = '16';
       style[mxConstants.STYLE_IMAGE_HEIGHT] = '16';
+      style[mxConstants.STYLE_BACKGROUNDCOLOR] = 'transparent';
       graph.getStylesheet().putCellStyle('port', style);
+
 
       style = graph.getStylesheet().getDefaultEdgeStyle();
       style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
       style[mxConstants.STYLE_STROKEWIDTH] = '2';
       style[mxConstants.STYLE_ROUNDED] = true;
-      style[mxConstants.STYLE_EDGE] = mxEdgeStyle.EntityRelation;
+
+
+      // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
+      mxConstants.HANDLE_FILLCOLOR = '#99ccff'
+      mxConstants.HANDLE_STROKECOLOR = '#0088cf'
+      mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
+      mxConstants.STYLE_STYLE_ROTATION = 'rotation';
+
+
     },
     //设置虚线样式
     changeDashed (value) {
@@ -545,11 +619,45 @@ export default {
     // 等比例缩放
     autoSize () {
       this.editor.execute('actualSize')
+      // this.graph.fit();//自适应
+      // this.graph.center(true, true, 0.5, 0.5);//将画布放到容器中间
+      // // var sc = graph.getView().getScale();//获取当前的缩放比例
+      // // this.graph.zoomTo(Math.round(sc / 6));//在缩放一半，否则是满屏状态，不好看
     },
     // 生成图片
     showImage () {
-      this.editor.execute('show');
+      this.editor.execute('show');//直接页面跳转,并以svg流程图
+      // this.exportFile('png');
+
     },
+    exportFile (format) {
+      var bg = '#ffffff';
+      var scale = 1;
+      var b = 1;
+      var imgExport = new mxImageExport();
+      var bounds = this.graph.getGraphBounds();
+      var vs = this.graph.view.scale;
+      // New image export
+      var xmlDoc = mxUtils.createXmlDocument();
+      var root = xmlDoc.createElement('output');
+      xmlDoc.appendChild(root);
+      // Renders graph. Offset will be multiplied with state's scale when painting state.
+      var xmlCanvas = new mxXmlCanvas2D(root);
+      xmlCanvas.translate(Math.floor((b / scale - bounds.x) / vs), Math.floor((b / scale - bounds.y) / vs));
+      xmlCanvas.scale(scale / vs);
+      imgExport.drawState(this.graph.getView().getState(this.graph.model.root), xmlCanvas);
+      // Puts request data together
+      var w = Math.ceil(bounds.width * scale / vs + 2 * b);
+      var h = Math.ceil(bounds.height * scale / vs + 2 * b);
+      var xml = mxUtils.getXml(root);
+      if (bg != null) {
+        bg = '&bg=' + bg;
+      }
+      new mxXmlRequest('../../../public/Export.ashx', 'filename=export.' + format + '&format=' + format +
+        bg + '&w=' + w + '&h=' + h + '&xml=' + encodeURIComponent(xml)).
+        simulate(document, '_blank');
+    },
+
     // 开始导入xml文件
     inPutXml () {
       this.isOutputXml = false;
@@ -565,6 +673,7 @@ export default {
         this.$message.success("渲染成功")
       }, 1000)
     },
+
     decode (graphXml, graph) {
       this.graph.getModel().beginUpdate();
       // window['mxGraphModel'] = mxGraphModel;
@@ -586,6 +695,7 @@ export default {
       const result = encoder.encode(graph.getModel())
       return mxUtils.getPrettyXml(result)
     },
+
     addStencilPalette (title, name, file) {
       let req = mxUtils.load(file)
       let root = req.getDocumentElement()
@@ -594,19 +704,19 @@ export default {
       while (shape != null) {
         if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
           const shapeName = shape.getAttribute('name')
-          const w = shape.getAttribute('w')
           const h = shape.getAttribute('h')
-
+          shape.querySelector('path').setAttribute('fill', 'transparent')
+          const w = shape.getAttribute('w')
           mxStencilRegistry.addStencil(shapeName, new mxStencil(shape))
-          this.palettes[name]['shapes'].push({ name: shape.getAttribute('name'), width: w / 2, height: h / 2 })
+          this.palettes[name]['shapes'].push({ name: shape.getAttribute('name'), width: w / 2, height: h / 2, fill: 'transparent' })
         }
         shape = shape.nextSibling
-        console.log(this.palettes[name]['shapes'])
       }
+      console.log(' this.palettes', this.palettes)
     },
+    // 初始化箭头节点组的工具栏
     initStencilToolBar () {
       var stencilDomArray = this.$refs.stencilDragItem;
-      console.log('stencilDomArray', stencilDomArray)
       if (!(stencilDomArray instanceof Array) || stencilDomArray.length <= 0 || (this.graph == null || this.graph == undefined)) {
         return
       }
@@ -614,11 +724,12 @@ export default {
         const shapeIndex = dom.getAttribute('shapeIndex')
         const paletteIndex = dom.getAttribute('paletteIndex')
         const shapeItem = Object.values(this.palettes)[paletteIndex]['shapes'][shapeIndex]
-        console.log()
         const shapeWidth = shapeItem['width']
         const shapeHeight = shapeItem['height']
         const stencilDragHandler = (graph, evt, cell, x, y) => {
+
           this.instanceGraph(this.graph, shapeItem, x, y, shapeWidth, shapeHeight)
+          console.log("拖拽箭头", graph, evt, cell, shapeItem, x, y)
         }
         var createDragPreview = () => {
           //设置鼠标拖拽节点时的样式
@@ -633,6 +744,7 @@ export default {
         mxUtils.makeDraggable(dom, this.graph, stencilDragHandler, createDragPreview(), 0, 0, false, true)
       })
     },
+
     instanceGraph (graph, shapeItem, x, y, width, height) {
       const stencilParent = graph.getDefaultParent()
       graph.getModel().beginUpdate()
@@ -644,6 +756,7 @@ export default {
         graph.getModel().endUpdate()
       }
     },
+    // 拖拽结束是新增的箭头节点
     createThumb (item, width, height) {
       const tmpGraph = new mxGraph(document.createElement('div'))
       const thumbBorder = 2
@@ -671,6 +784,30 @@ export default {
 
       return node
     },
+
+    addPoint (cell, number) {
+      const normalTypeVertex = this.graph.insertVertex(cell, null, null,
+        1, 1, 30, 30,
+        `port;normalType;fillColor=none;image=./images/order/unselect-${number}.png;spacingLeft=18;spacingBottom=18`, true);
+      // 固定序号图标的位置.不随节点变大而改变位置
+      normalTypeVertex.geometry.offset = new mxPoint(-18, -18);
+      normalTypeVertex.setConnectable(false);
+      normalTypeVertex.id = (cell.id).split('-')[0] + `-unselect-${number}`;
+      normalTypeVertex.title = number;
+      // 将新增的图标鼠标悬浮换成手势的图案
+      const oldGetCursorForCell = mxGraph.prototype.getCursorForCell;
+      this.graph.getCursorForCell = function (...args) {
+        const [cell] = args;
+        cell.style.includes('normalType') ? console.log(cell) : false
+        if (cell.edge || cell.style == undefined) {
+          return
+        }
+        return cell.style.includes('normalType') ?
+          'pointer' :
+          oldGetCursorForCell.apply(this, args);
+      };
+
+    }
   },
   mounted () {
     // 检测浏览器兼容性
@@ -679,7 +816,7 @@ export default {
     }
     else {
       // Overridden to define per-shape connection points
-      mxGraph.prototype.getAllConnectionConstraints = function (terminal, source) {
+      mxGraph.prototype.getAllConnectionConstraints = function (terminal) {
         if (terminal != null && terminal.shape != null) {
           if (terminal.shape.stencil != null) {
             if (terminal.shape.stencil.constraints != null) {
@@ -694,7 +831,7 @@ export default {
         return null;
       };
       // 设定连接点的位置、可编辑状态和图标
-      mxConstraintHandler.prototype.pointImage = new mxImage('./icon/dot.gif', 10, 10);
+      mxConstraintHandler.prototype.pointImage = new mxImage('./icon/dot.gif', 3, 3);
       mxShape.prototype.constraints = [
         new mxConnectionConstraint(new mxPoint(0, 0), true),
         new mxConnectionConstraint(new mxPoint(0.25, 0), true),
@@ -712,17 +849,17 @@ export default {
         new mxConnectionConstraint(new mxPoint(0.5, 1), true),
         new mxConnectionConstraint(new mxPoint(0.75, 1), true),
         new mxConnectionConstraint(new mxPoint(1, 1), true)];
-      // Edges have no connection points
       mxPolyline.prototype.constraints = null;
 
       this.createGraph()
       this.initGraph()
       this.configOption()
-      this.addStencilPalette('箭头', 'arrows', path.join('./arrows.xml'))
+      this.addStencilPalette('箭头组', 'arrows', path.join('./arrows.xml'))
       this.$nextTick(() => {
         this.initToolbar();
         this.initStencilToolBar();
       })
+
     }
   }
 }
@@ -829,6 +966,9 @@ div.mxPopupMenu {
   .el-collapse-item__content {
     display: flex;
     flex-wrap: wrap;
+  }
+  svg g path {
+    fill: transparent;
   }
 }
 </style>

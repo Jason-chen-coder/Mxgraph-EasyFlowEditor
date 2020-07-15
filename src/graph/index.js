@@ -1,6 +1,6 @@
 import mx from 'mxgraph'
 const mxgraph = mx({
-  mxBasePath: '/static/mxgraph'
+  // mxBasePath: './'
 })
 // decode bug https://github.com/jgraph/mxgraph/issues/49
 window.mxGraph = mxgraph.mxGraph

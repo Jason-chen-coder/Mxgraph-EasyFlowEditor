@@ -1,6 +1,6 @@
 <template>
   <div class="styleTool">
-    <h1 v-if="isNode" class="title">属性</h1>
+    <h1 class="title">属性</h1>
     <el-tabs stretch type="border-card">
       <el-tab-pane label="样式">
         <el-form :inline="true" :model="form" class="style-form" size="mini" label-position="left">
@@ -27,6 +27,15 @@
               :min="1"
               :max="10"
               label="线条宽度"
+            ></el-input-number>
+          </el-form-item>
+          <el-form-item label="配置序号">
+            <el-input-number
+              v-model="newConfigOrder"
+              @change="$emit('changeConfigOrder', {newConfigOrder})"
+              :min="1"
+              :max="10"
+              label="配置序号"
             ></el-input-number>
           </el-form-item>
         </el-form>
@@ -70,7 +79,7 @@
 </template>
 <script>
 export default {
-  props: ['isNode', 'cellStyle', 'graphY', 'graphX'],
+  props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'configOrder'],
   data () {
     return {
       form: {
@@ -81,6 +90,8 @@ export default {
         labelBackgroundColor: "",
         fontSize: 12
       },
+      newConfigOrder: 0,
+      newConfigOrderId: '',
       predefineColors: [
         '#ff4500',
         '#ff8c00',
@@ -100,28 +111,25 @@ export default {
     }
   },
   mounted () {
+
+    console.log('this.newConfigOrder', this.newConfigOrder)
   },
   watch: {
     cellStyle: {
       handler (newvalue) {
-        console.log('newvalue', newvalue)
         this.form.dashed = newvalue.dashed ? newvalue.dashed : '0';
         this.form.strokeWidth = newvalue.strokeWidth;
         this.form.strokeColor = newvalue.strokeColor;
         this.form.fontColor = newvalue.fontColor ? newvalue.fontColor : "#000000";
-        // var arr = newvalue.split(";")
-        // arr.pop()
-        // console.log(arr)
-        // var styleObject = {}
-        // arr.forEach((item => {
-        //   styleObject[item.split("=")[0]] = item.split("=")[1]
-        // }))
-        // console.log(styleObject)
-        // this.form = { ...styleObject }
-        // console.log(this.form)
       },
       deep: true,
       immediate: true
+    },
+    configOrder: {
+      handler (newvalue) {
+        this.newConfigOrder = newvalue;
+        console.log('newConfigOrder', this.newConfigOrder)
+      }
     }
   },
   methods: {

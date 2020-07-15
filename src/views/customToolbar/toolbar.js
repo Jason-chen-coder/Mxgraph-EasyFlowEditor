@@ -12,16 +12,18 @@ const connectPoint = './icon/connectPoint.png'
 
 export const toolbarItems = [
   {
+    id: 'output',
+    idSeed: 1,
     icon: outputIcon,
     title: '输出',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent',
       strokeColor: '#000000',
       strokeWidth: '1',
       shape: mxConstants.SHAPE_LABEL,
-      align: mxConstants.ALIGN_CENTER,
+      align: mxConstants.ALIGN_TOP,
       verticalAlign: mxConstants.ALIGN_BOTTOM,
       imageAlign: mxConstants.ALIGN_CENTER,
       imageVerticalAlign: mxConstants.ALIGN_TOP,
@@ -29,10 +31,12 @@ export const toolbarItems = [
     }
   },
   {
+    id: 'input',
+    idSeed: 1,
     icon: inputIcon,
     title: '输入',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -46,10 +50,12 @@ export const toolbarItems = [
     }
   },
   {
+    id: 'group',
+    idSeed: 1,
     icon: group,
     title: '群组',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -63,10 +69,12 @@ export const toolbarItems = [
     }
   },
   {
+    id: 'home',
+    idSeed: 1,
     icon: home,
     title: '首页',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -80,10 +88,12 @@ export const toolbarItems = [
     }
   },
   {
+    id: 'stencil',
+    idSeed: 1,
     icon: stencil,
     title: '集群',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -97,10 +107,12 @@ export const toolbarItems = [
     }
   },
   {
+    id: 'connectPoint',
+    idSeed: 1,
     icon: connectPoint,
     title: '连接',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -120,8 +132,8 @@ export const toolbarItems2 = [
   {
     icon: outputIcon,
     title: '输出',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent',
       strokeColor: '#000000',
@@ -137,8 +149,8 @@ export const toolbarItems2 = [
   {
     icon: inputIcon,
     title: '输入',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -154,8 +166,8 @@ export const toolbarItems2 = [
   {
     icon: group,
     title: '群组',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -171,8 +183,8 @@ export const toolbarItems2 = [
   {
     icon: home,
     title: '首页',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -188,8 +200,8 @@ export const toolbarItems2 = [
   {
     icon: stencil,
     title: '集群',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
@@ -205,8 +217,8 @@ export const toolbarItems2 = [
   {
     icon: connectPoint,
     title: '连接',
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
     style: {
       fillColor: 'transparent', // 填充色
       strokeColor: '#000000', // 线条颜色
