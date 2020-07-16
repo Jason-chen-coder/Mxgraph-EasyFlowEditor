@@ -1,0 +1,49 @@
+<shapes name="mxgraph.electric">
+<shape name="circuit breaker" h="102" w="102" aspect="variable" strokewidth="inherit">
+<connections>
+<constraint x="0.5" y="0" perimeter="0" name="N"/>
+<constraint x="0.5" y="1" perimeter="0" name="S"/>
+<constraint x="0" y="0.5" perimeter="0" name="W"/>
+<constraint x="1" y="0.5" perimeter="0" name="E"/>
+</connections>
+<background>
+<path>
+<move x="36.48" y="22.1888"/>
+<line x="37.45664" y="21.83296"/>
+<line x="60.58752" y="74.4704"/>
+<line x="60.62592" y="74.64832"/>
+<line x="60.62592" y="102.4"/>
+<line x="59.57376" y="102.4"/>
+<line x="59.57376" y="74.7392"/>
+<close/>
+</path>
+<fillstroke/>
+<path>
+<move x="63.8208" y="20.1856"/>
+<line x="64.77312" y="21.0432"/>
+<line x="55.35232" y="31.50592"/>
+<line x="54.4" y="30.6496"/>
+<close/>
+</path>
+<fillstroke/>
+<path>
+<move x="54.4" y="21.0432"/>
+<line x="55.35104" y="20.1856"/>
+<line x="64.77184" y="30.6496"/>
+<line x="63.8208" y="31.5072"/>
+<close/>
+</path>
+<fillstroke/>
+<path>
+<move x="58.88" y="0"/>
+<line x="60.16" y="0"/>
+<line x="60.16" y="25.6"/>
+<line x="58.88" y="25.6"/>
+<close/>
+</path>
+</background>
+<foreground>
+<fillstroke/>
+</foreground>
+</shape>
+</shapes>

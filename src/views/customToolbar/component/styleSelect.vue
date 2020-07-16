@@ -4,13 +4,13 @@
     <el-tabs stretch type="border-card">
       <el-tab-pane label="样式">
         <el-form :inline="true" :model="form" class="style-form" size="mini" label-position="left">
+          <el-form-item label="线条样式">
+            <el-select v-model="form.dashed" @change="$emit('changeDashed', form.dashed)">
+              <el-option label="-------" value="1"></el-option>
+              <el-option label="———" value="0"></el-option>
+            </el-select>
+          </el-form-item>
           <el-row>
-            <el-form-item label="线条样式">
-              <el-select v-model="form.dashed" @change="$emit('changeDashed', form.dashed)">
-                <el-option label="-------" value="1"></el-option>
-                <el-option label="———" value="0"></el-option>
-              </el-select>
-            </el-form-item>
             <el-form-item label="线条颜色">
               <el-color-picker
                 v-model="form.strokeColor"
@@ -18,6 +18,17 @@
                 :predefine="predefineColors"
                 @change="$emit('changeStrokeColor', form.strokeColor)"
               ></el-color-picker>
+            </el-form-item>
+            <el-form-item v-if="isNode" label="填充颜色">
+              <el-color-picker
+                v-model="form.fillColor"
+                show-alpha
+                :predefine="predefineColors"
+                @change="$emit('changeFillColor', form.fillColor)"
+              ></el-color-picker>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="form.shadow" @change="$emit('changeShadow', form.shadow)">阴影</el-checkbox>
             </el-form-item>
           </el-row>
           <el-form-item label="线条宽度">
@@ -49,6 +60,20 @@
               label="字体大小"
             ></el-input-number>
           </el-form-item>
+          <el-row>
+            <el-form-item>
+              <el-checkbox v-model="fontIsBold">加粗</el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="fontIsIncline">倾斜</el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="fontIsUnderline">下划线</el-checkbox>
+            </el-form-item>
+            <el-form-item>
+              <el-checkbox v-model="fontIsStrickout">删除线</el-checkbox>
+            </el-form-item>
+          </el-row>
           <el-form-item label="字体颜色">
             <el-color-picker
               v-model="form.fontColor"
@@ -79,7 +104,7 @@
 </template>
 <script>
 export default {
-  props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'configOrder'],
+  props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'currentNormalType'],
   data () {
     return {
       form: {
@@ -87,11 +112,20 @@ export default {
         strokeColor: "#6482b9",
         fontColor: "#6482b9",
         strokeWidth: "1",
-        labelBackgroundColor: "",
-        fontSize: 12
+        labelBackgroundColor: "#FFFFFF",
+        fontSize: 12,
+        fillColor: "#FFFFFF",
+        shadow: 0,
+        fontBold: 0,
+        fontStyle: 0
       },
+      fontIsBold: false,
+      fontIsIncline: false,
+      fontIsUnderline: false,
+      fontIsStrickout: false,
       newConfigOrder: 0,
       newConfigOrderId: '',
+      fontStyle: 0,
       predefineColors: [
         '#ff4500',
         '#ff8c00',
@@ -110,25 +144,57 @@ export default {
       ]
     }
   },
+  computed: {
+    selectfontStyle () {
+      return Boolean(this.fontIsBold) * 1 + Boolean(this.fontIsIncline) * 2 + Boolean(this.fontIsUnderline) * 4 + Boolean(this.fontIsStrickout) * 8
+    }
+  },
   mounted () {
 
-    console.log('this.newConfigOrder', this.newConfigOrder)
   },
   watch: {
     cellStyle: {
       handler (newvalue) {
+        console.log('newvalue', newvalue)
         this.form.dashed = newvalue.dashed ? newvalue.dashed : '0';
         this.form.strokeWidth = newvalue.strokeWidth;
         this.form.strokeColor = newvalue.strokeColor;
         this.form.fontColor = newvalue.fontColor ? newvalue.fontColor : "#000000";
+        this.form.labelBackgroundColor = newvalue.labelBackgroundColor ? newvalue.labelBackgroundColor : "#FFFFFF";
+        this.form.fillColor = newvalue.fillColor ? newvalue.fillColor : "#FFFFFF";
+        this.form.fontSize = newvalue.fontSize ? newvalue.fontSize : 12;
+        this.form.shadow = newvalue.shadow ? Boolean(newvalue.shadow) : false;
+        this.form.fontStyle = newvalue.fontStyle ? newvalue.fontStyle : 0;
+        switch (parseInt(newvalue.fontStyle)) {
+          case 1: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = false; break
+          case 2: this.fontIsBold = false, this.fontIsIncline = true, this.fontIsUnderline = false, this.fontIsStrickout = false; break
+          case 3: this.fontIsBold = true, this.fontIsIncline = true, this.fontIsUnderline = false, this.fontIsStrickout = false; break
+          case 4: this.fontIsBold = false, this.fontIsIncline = false, this.fontIsUnderline = true, this.fontIsStrickout = false; break
+          case 5: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = true, this.fontIsStrickout = false; break
+          case 6: this.fontIsBold = false, this.fontIsIncline = true, this.fontIsUnderline = true, this.fontIsStrickout = false; break
+          case 7: this.fontIsBold = true, this.fontIsIncline = true, this.fontIsUnderline = true, this.fontIsStrickout = false; break
+          case 8: this.fontIsBold = false, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = true; break
+          case 9: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = true; break
+          case 10: this.fontIsBold = false, this.fontIsIncline = true, this.fontIsUnderline = false, this.fontIsStrickout = true; break
+          case 11: this.fontIsBold = true, this.fontIsIncline = true, this.fontIsUnderline = false, this.fontIsStrickout = true; break
+          case 12: this.fontIsBold = false, this.fontIsIncline = false, this.fontIsUnderline = true, this.fontIsStrickout = true; break
+          case 13: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = true, this.fontIsStrickout = true; break
+          case 14: this.fontIsBold = false, this.fontIsIncline = true, this.fontIsUnderline = true, this.fontIsStrickout = true; break
+          case 15: this.fontIsBold = true, this.fontIsIncline = true, this.fontIsUnderline = true, this.fontIsStrickout = true; break
+          default: this.fontIsBold = false, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = false;
+        }
       },
       deep: true,
       immediate: true
     },
-    configOrder: {
+    currentNormalType: {
       handler (newvalue) {
-        this.newConfigOrder = newvalue;
-        console.log('newConfigOrder', this.newConfigOrder)
+        this.newConfigOrder = newvalue.title;
+      }
+    },
+    selectfontStyle: {
+      handler (newvalue) {
+        this.$emit("changeFontStyle", newvalue)
       }
     }
   },
