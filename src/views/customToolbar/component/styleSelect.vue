@@ -49,6 +49,31 @@
               label="配置序号"
             ></el-input-number>
           </el-form-item>
+          <el-form-item v-if="isNode" label="节点图片">
+            <el-select
+              @change="$emit('changeNodeimage', nodeImageUrl)"
+              v-model="nodeImageUrl"
+              filterable
+              placeholder="请选择"
+            >
+              <el-option
+                v-for="item in nodeImageOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              >
+                <el-tooltip class="item" effect="dark" :content="item.label" placement="top">
+                  <div style="width:100%">
+                    <el-image class="select-image" :src="item.value">
+                      <div slot="error" class="image-slot">
+                        <i class="el-icon-picture-outline"></i>
+                      </div>
+                    </el-image>
+                  </div>
+                </el-tooltip>
+              </el-option>
+            </el-select>
+          </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="文本">
@@ -141,7 +166,27 @@ export default {
         'hsl(181, 100%, 37%)',
         'hsla(209, 100%, 56%, 0.73)',
         '#c7158577'
-      ]
+      ],
+      nodeImageOptions: [{
+        value: './icon/home.png',
+        label: '首页'
+      }, {
+        value: './icon/stencil.png',
+        label: '集群'
+      }, {
+        value: './icon/input.png',
+        label: '输入'
+      }, {
+        value: './icon/output.png',
+        label: '输出'
+      }, {
+        value: './icon/connectPoint.png',
+        label: '连接'
+      }, {
+        value: './icon/group.png',
+        label: '群组'
+      }],
+      nodeImageUrl: ''
     }
   },
   computed: {
@@ -165,6 +210,7 @@ export default {
         this.form.fontSize = newvalue.fontSize ? newvalue.fontSize : 12;
         this.form.shadow = newvalue.shadow ? Boolean(newvalue.shadow) : false;
         this.form.fontStyle = newvalue.fontStyle ? newvalue.fontStyle : 0;
+        this.nodeImageUrl = newvalue.image ? newvalue.image : '';
         switch (parseInt(newvalue.fontStyle)) {
           case 1: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = false; break
           case 2: this.fontIsBold = false, this.fontIsIncline = true, this.fontIsUnderline = false, this.fontIsStrickout = false; break
@@ -253,6 +299,16 @@ export default {
     width: 160px;
     height: 120px;
     background: rgba(255, 255, 255, 0.5);
+  }
+}
+.el-select-dropdown {
+  .el-select-dropdown__item {
+    text-align: center;
+    img {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+    }
   }
 }
 </style>

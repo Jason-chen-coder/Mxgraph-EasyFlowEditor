@@ -18,6 +18,20 @@
       <el-collapse v-model="activeNames">
         <el-collapse-item name="1">
           <!-- 将所有自定义图标渲染出来 -->
+          <template slot="title" class="collaspetitle">基础节点</template>
+          <!-- <span
+            v-for="item in toolbarItems"
+            style="display:inline-block;margin:20px; width:50px;height:50px"
+            :key="item['title']"
+            ref="toolItem"
+          >
+            <img style="width:24px;height:24px" :src="item['icon']" />
+            <br />
+            <span>{{item['title']}}</span>
+          </span>-->
+        </el-collapse-item>
+        <el-collapse-item name="2">
+          <!-- 将所有自定义图标渲染出来 -->
           <template slot="title" class="collaspetitle">自定义节点</template>
           <span
             v-for="item in toolbarItems"
@@ -78,7 +92,6 @@
         <el-tooltip class="item" effect="dark" content="导出xml文件" placement="bottom">
           <el-button type="text" icon="iconfont icon-xmloutput" @click="outPutXml"></el-button>
         </el-tooltip>
-
         <el-tooltip class="item" effect="dark" content="显示网格背景" placement="bottom">
           <el-button type="text" icon="iconfont icon-dituleiwanggequ-copy"></el-button>
         </el-tooltip>
@@ -115,6 +128,7 @@
       @changeFillColor="changeFillColor"
       @changeShadow="changeShadow"
       @changeFontStyle="changeFontStyle"
+      @changeNodeimage="changeNodeimage"
       :isNode="isNode"
       :cellStyle="cellStyle"
       :currentNormalType="currentNormalType"
@@ -130,25 +144,22 @@
       :graphXml="graphXml"
       :isOutputXml="isOutputXml"
     ></upload-data>
-    <!--  上传图片-->
-    <upload-image @changeNodeImage="changeNodeImage" v-if="uploadImageVisible" />
   </div>
 </template>
 
 <script>
 // 导入自定义图标数组
 import { toolbarItems } from './toolbar'
+import { generalToolbarItems } from "./general-shape"
 import uploadData from "./component/uploadData"
 import mxgraph from "../../graph/index";
 import styleSelect from "./component/styleSelect";
-import uploadImage from "./component/uploadImage"
 const {
   mxStencilRegistry,
   mxStencil,
   mxEvent,
   mxGraph,
   mxEditor,
-  mxDivResizer,
   mxUtils,
   mxRubberband,
   mxKeyHandler,
@@ -158,7 +169,6 @@ const {
   mxConstraintHandler,
   mxCellState,
   mxCodec,
-  // mxEdgeStyle,
   mxRectangleShape,
   mxShape,
   mxConnectionConstraint,
@@ -177,6 +187,7 @@ const {
   mxCell
 } = mxgraph
 const path = require('path');
+// 配置自定义事件
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED',
 });
@@ -188,7 +199,6 @@ export default {
   components: {
     styleSelect,
     uploadData,
-    uploadImage
   },
   data () {
     return {
@@ -196,20 +206,19 @@ export default {
       editor: null,
       palettes: {},
       graphXml: '',
-      activeNames: ['1'],
+      activeNames: ['1', '2'],
       edgeOptions: [
         { label: "直线", value: 'none' },
         { label: "折线", value: "ElbowConnector" },
         { label: '折线2', value: "orthogonalEdgeStyle" },
         { label: "小折线", value: "Loop" }],
       edgeValue: "折线2",
-      isNode: true,
+      isNode: false,
       cellStyle: "",
       graphX: 100,
       graphY: 10,
       undoMng: "",
       uploadDataVisible: false,
-      uploadImageVisible: false,
       isOutputXml: false,
       outline: "",
       idSeed: 0,
@@ -250,7 +259,7 @@ export default {
       mxConstants.DEFAULT_HOTSPOT = 1;
 
       //cell创建支持传入html
-      this.graph.setHtmlLabels(false);
+      this.graph.setHtmlLabels(true);
       // 禁用分组的收缩功能
       // this.graph.isCellFoldable = (cell) => {
       //   return false
@@ -403,7 +412,7 @@ export default {
                 console.log("getcellStyle", getcellStyle)
                 if (getcellStyle) {
                   var arr = getcellStyle.split(";")
-                  arr.pop()
+                  // arr.pop()
                   var styleObject = {}
                   arr.forEach((item => {
                     styleObject[item.split("=")[0]] = item.split("=")[1]
@@ -530,21 +539,6 @@ export default {
           this.graph.ungroupCells(this.graph.getSelectionCells());
         })
         menu.addSeparator()
-        var submenu1 = menu.addItem('修改背景图', null, null);
-        menu.addItem('上传本地图片', './images/close.gif', () => {
-          var cell = this.graph.getSelectionCell();
-          if (cell == undefined || cell.edge) {
-            this.$message.error("请选择节点")
-            return
-          }
-          //  this.graph.setCellStyles(MxConstants.STYLE_FONTCOLOR, "#ED2323", [cell]);
-          this.uploadImageVisible = true;
-          this.currentCell = cell;
-        }, submenu1);
-        menu.addItem('上传图片在线地址', './images/close.gif', () => {
-
-        }, submenu1)
-        menu.addSeparator()
         menu.addItem('配置完成', null, () => {
           let cell = this.graph.getSelectionCell().children[0];
           let cellArrayStyle = cell.getStyle().split(';');
@@ -567,7 +561,8 @@ export default {
             var getcellStyle = cell.getStyle() ? cell.getStyle() : "";
             if (getcellStyle) {
               var arr = getcellStyle.split(";")
-              arr.pop()
+              //弹出最后一个空样式
+              // arr.pop()
               var styleObject = {}
               arr.forEach((item => {
                 styleObject[item.split("=")[0]] = item.split("=")[1]
@@ -675,7 +670,9 @@ export default {
       style[mxConstants.STYLE_ROUNDED] = true;
 
 
+
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
+      mxConstants.STYLE_WHITE_SPACE = 'wrap';
       mxConstants.HANDLE_FILLCOLOR = '#99ccff'
       mxConstants.HANDLE_STROKECOLOR = '#0088cf'
       mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
@@ -730,9 +727,14 @@ export default {
       this.graph.setCellStyles(mxConstants.STYLE_SHADOW, +(value), [...cell]);
     },
     changeFontStyle (value) {
-      console.log("加粗", value);
       var cell = this.graph.getSelectionCells();
       this.graph.setCellStyles(mxConstants.STYLE_FONTSTYLE, value, [...cell]);
+    },
+    changeNodeimage (value) {
+      console.log("image", value)
+      var cell = this.graph.getSelectionCells();
+      this.graph.setCellStyles(mxConstants.STYLE_IMAGE, value, [...cell]);
+      console.log('cell', cell)
     },
     // 删除节点
     deleteNode () {
@@ -770,34 +772,33 @@ export default {
       this.editor.execute('show');//直接页面跳转,并以svg流程图
       // this.exportFile('png');
     },
-    exportFile (format) {
-      var bg = '#ffffff';
-      var scale = 1;
-      var b = 1;
-      var imgExport = new mxImageExport();
-      var bounds = this.graph.getGraphBounds();
-      var vs = this.graph.view.scale;
-      // New image export
-      var xmlDoc = mxUtils.createXmlDocument();
-      var root = xmlDoc.createElement('output');
-      xmlDoc.appendChild(root);
-      // Renders graph. Offset will be multiplied with state's scale when painting state.
-      var xmlCanvas = new mxXmlCanvas2D(root);
-      xmlCanvas.translate(Math.floor((b / scale - bounds.x) / vs), Math.floor((b / scale - bounds.y) / vs));
-      xmlCanvas.scale(scale / vs);
-      imgExport.drawState(this.graph.getView().getState(this.graph.model.root), xmlCanvas);
-      // Puts request data together
-      var w = Math.ceil(bounds.width * scale / vs + 2 * b);
-      var h = Math.ceil(bounds.height * scale / vs + 2 * b);
-      var xml = mxUtils.getXml(root);
-      if (bg != null) {
-        bg = '&bg=' + bg;
-      }
-      new mxXmlRequest('../../../public/Export.ashx', 'filename=export.' + format + '&format=' + format +
-        bg + '&w=' + w + '&h=' + h + '&xml=' + encodeURIComponent(xml)).
-        simulate(document, '_blank');
-    },
-
+    // exportFile (format) {
+    //   var bg = '#ffffff';
+    //   var scale = 1;
+    //   var b = 1;
+    //   var imgExport = new mxImageExport();
+    //   var bounds = this.graph.getGraphBounds();
+    //   var vs = this.graph.view.scale;
+    //   // New image export
+    //   var xmlDoc = mxUtils.createXmlDocument();
+    //   var root = xmlDoc.createElement('output');
+    //   xmlDoc.appendChild(root);
+    //   // Renders graph. Offset will be multiplied with state's scale when painting state.
+    //   var xmlCanvas = new mxXmlCanvas2D(root);
+    //   xmlCanvas.translate(Math.floor((b / scale - bounds.x) / vs), Math.floor((b / scale - bounds.y) / vs));
+    //   xmlCanvas.scale(scale / vs);
+    //   imgExport.drawState(this.graph.getView().getState(this.graph.model.root), xmlCanvas);
+    //   // Puts request data together
+    //   var w = Math.ceil(bounds.width * scale / vs + 2 * b);
+    //   var h = Math.ceil(bounds.height * scale / vs + 2 * b);
+    //   var xml = mxUtils.getXml(root);
+    //   if (bg != null) {
+    //     bg = '&bg=' + bg;
+    //   }
+    //   new mxXmlRequest('../../../public/Export.ashx', 'filename=export.' + format + '&format=' + format +
+    //     bg + '&w=' + w + '&h=' + h + '&xml=' + encodeURIComponent(xml)).
+    //     simulate(document, '_blank');
+    // },
     // 开始导入xml文件
     inPutXml () {
       this.isOutputXml = false;
