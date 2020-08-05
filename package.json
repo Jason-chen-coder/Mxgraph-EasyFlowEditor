@@ -9,16 +9,12 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
-    "dom-to-image": "^2.6.0",
     "element-ui": "^2.13.2",
     "exports-loader": "^1.1.0",
-    "html2canvas": "^1.0.0-rc.5",
     "less-loader": "^6.1.2",
     "lodash": "^4.17.19",
     "mxgraph": "^4.2.0",
     "mxgraph-js": "^1.0.1",
-    "save-svg-as-png": "^1.4.17",
-    "script-loader": "^0.7.2",
     "vue": "^2.6.11",
     "vue-codemirror": "^4.0.6",
     "vue-router": "^3.3.4"

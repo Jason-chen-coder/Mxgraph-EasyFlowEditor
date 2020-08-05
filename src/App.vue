@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <el-container>
-      <el-header class="header">
+      <!-- <el-header class="header">
         <el-row style="text-align:center;height:100%;line-height:100%">
           <el-col :span="24" style="text-align:center;height:100%;line-height:100%">
             <div
@@ -10,9 +10,9 @@
             >Easy editor</div>
           </el-col>
         </el-row>
-      </el-header>
+      </el-header>-->
       <el-container>
-        <el-aside class="aside" width="200px" height="90vh">
+        <el-aside class="aside" width="200px">
           <el-row class="menu-row">
             <el-col>
               <el-menu
@@ -36,16 +36,16 @@
                 </el-menu-item>
                 <el-menu-item index="customToolbar">
                   <i class="el-icon-setting"></i>
-                  <span slot="title">自定义工具栏</span>
+                  <span slot="title">Easy Editor</span>
                 </el-menu-item>
                 <el-menu-item index="stencilToolbar">
                   <i class="el-icon-document"></i>
                   <span slot="title">模板工具箱</span>
                 </el-menu-item>
-                <el-menu-item index="01-editor">
+                <!-- <el-menu-item index="01-editor">
                   <i class="el-icon-document"></i>
                   <span slot="title">01-editor</span>
-                </el-menu-item>
+                </el-menu-item>-->
               </el-menu>
             </el-col>
           </el-row>
@@ -80,18 +80,18 @@ export default {
   padding: 0;
   margin: 0;
 }
-.header {
+/* .header {
   height: 8vh !important;
-}
+} */
 .aside {
-  height: 92vh;
+  height: 100vh;
   border: 1px solid #ededed;
 }
 .menu-row {
   width: 100%;
 }
 .main {
-  height: 92vh;
+  height: 100vh;
   border: 1px solid #ededed;
   background-color: #efefef;
   padding: 0;

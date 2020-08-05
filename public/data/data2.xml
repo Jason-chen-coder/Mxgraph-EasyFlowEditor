@@ -1,0 +1,68 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="17" value="GroupCase" style="group;fontColor=white;fontSize=17;" parent="1" vertex="1">
+      <mxGeometry x="86" y="105" width="878" height="616" as="geometry" />
+    </mxCell>
+    <mxCell id="center-2" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/boxDomain.png;" parent="17" vertex="1" title="中心">
+      <mxGeometry x="40" y="72" width="60" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-2" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/selected-1.png;spacingLeft=18;spacingBottom=18" parent="center-2" vertex="1" connectable="0" title="1">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-3" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/boxDomain.png;" parent="17" vertex="1" title="中心">
+      <mxGeometry x="784" y="72" width="60" height="60" as="geometry">
+        <mxPoint x="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-unselect-3" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/selected-3.png;spacingLeft=18;spacingBottom=18" parent="center-3" vertex="1" connectable="0" title="3">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-4" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/center.png" parent="17" vertex="1" title="中心">
+      <mxGeometry x="403" y="516" width="63" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-4" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-3.png;spacingLeft=18;spacingBottom=18" parent="center-4" vertex="1" connectable="0" title="3">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-5" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/center.png" parent="17" vertex="1" title="中心">
+      <mxGeometry x="406" y="306" width="57" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-5" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-4.png;spacingLeft=18;spacingBottom=18" parent="center-5" vertex="1" connectable="0" title="4">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="10" value="查询分发" style="entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;fontSize=13;" parent="17" source="center-2" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="436" y="87" />
+          <mxPoint x="436" y="87" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="11" value="管理" style="edgeStyle=none;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=13;" parent="17" source="center-5" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="12" value="管理" style="edgeStyle=none;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=13;" parent="17" source="center-5" target="center-2" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="13" value="数据迁移" style="edgeStyle=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;fontSize=13;" parent="17" source="center-2" target="center-4" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="15" value="管理" style="fontSize=14;" parent="17" source="center-5" target="center-4" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="16" value="数据迁移" style="entryX=0.5;entryY=1;entryDx=0;entryDy=0;edgeStyle=none;dashed=1;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=13;" parent="17" source="center-4" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>

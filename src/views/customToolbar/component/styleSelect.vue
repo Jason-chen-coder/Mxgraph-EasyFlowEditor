@@ -40,7 +40,23 @@
               label="线条宽度"
             ></el-input-number>
           </el-form-item>
-          <el-form-item label="配置序号">
+          <el-form-item label="线条风格" v-if="!isNode">
+            <el-select
+              class="select-edgetype"
+              v-model="form.edgeStyle"
+              @change="$emit('edgeChange',form.edgeStyle)"
+              placeholder="请选择"
+              round
+            >
+              <el-option
+                v-for="item in edgeOptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item v-if="isNode" label="配置序号(预留)">
             <el-input-number
               v-model="newConfigOrder"
               @change="$emit('changeConfigOrder', {newConfigOrder})"
@@ -49,7 +65,7 @@
               label="配置序号"
             ></el-input-number>
           </el-form-item>
-          <el-form-item v-if="isNode" label="节点图片">
+          <el-form-item v-if="isNode&&!form.orderPoint" label="节点图片">
             <el-select
               @change="$emit('changeNodeimage', nodeImageUrl)"
               v-model="nodeImageUrl"
@@ -132,7 +148,12 @@ export default {
   props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'currentNormalType'],
   data () {
     return {
+      edgeOptions: [
+        { label: "直线", value: 'SideToSide' },
+        { label: '折线', value: "orthogonalEdgeStyle" }
+      ],
       form: {
+        edgeStyle: "折线",
         dashed: "0",
         strokeColor: "#6482b9",
         fontColor: "#6482b9",
@@ -168,23 +189,23 @@ export default {
         '#c7158577'
       ],
       nodeImageOptions: [{
-        value: './icon/home.png',
-        label: '首页'
+        value: './icon/boxDomain.png',
+        label: '域盒子'
       }, {
-        value: './icon/stencil.png',
+        value: './icon/center.png',
+        label: '中心'
+      }, {
+        value: './icon/database.png',
+        label: '数据库'
+      }, {
+        value: './icon/authorizate.png',
+        label: '认证'
+      }, {
+        value: './icon/cluster.png',
         label: '集群'
       }, {
-        value: './icon/input.png',
-        label: '输入'
-      }, {
-        value: './icon/output.png',
-        label: '输出'
-      }, {
-        value: './icon/connectPoint.png',
-        label: '连接'
-      }, {
-        value: './icon/group.png',
-        label: '群组'
+        value: './icon/exchange.png',
+        label: '缓冲'
       }],
       nodeImageUrl: ''
     }
@@ -210,6 +231,8 @@ export default {
         this.form.fontSize = newvalue.fontSize ? newvalue.fontSize : 12;
         this.form.shadow = newvalue.shadow ? Boolean(newvalue.shadow) : false;
         this.form.fontStyle = newvalue.fontStyle ? newvalue.fontStyle : 0;
+        this.form.edgeStyle = newvalue.edgeStyle ? newvalue.edgeStyle : 'orthogonalEdgeStyle';
+        this.form.orderPoint = newvalue.orderPoint ? newvalue.orderPoint : false;
         this.nodeImageUrl = newvalue.image ? newvalue.image : '';
         switch (parseInt(newvalue.fontStyle)) {
           case 1: this.fontIsBold = true, this.fontIsIncline = false, this.fontIsUnderline = false, this.fontIsStrickout = false; break
@@ -248,7 +271,8 @@ export default {
     // changeDash () {
     //   this.$emit("changeDashed", this.form.dashed)
     // },
-  }}
+  }
+}
 </script>
 <style lang="less">
 .styleTool {

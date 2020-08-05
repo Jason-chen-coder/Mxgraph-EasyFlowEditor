@@ -5,21 +5,21 @@
 
 import mxgraph from "../../graph/index";
 const { mxConstants } = mxgraph;
-const outputIcon = './icon/output.png'
-const inputIcon = './icon/input.png'
-const group = './icon/group.png'
-const home = './icon/home.png'
-const stencil = './icon/stencil.png'
-const connectPoint = './icon/connectPoint.png'
+const boxDomain = './icon/boxDomain.png'
+const center = './icon/center.png'
+const database = './icon/database.png'
+const authorizate = './icon/authorizate.png'
+const cluster = './icon/cluster.png'
+const exchange = './icon/exchange.png'
 
 export const toolbarItems = [
   {
-    id: 'output',
+    id: 'boxDomain',
     idSeed: 1,
-    icon: outputIcon,
-    title: '输出',
-    width: 70,
-    height: 70,
+    icon: boxDomain,
+    title: '域盒子',
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF',
@@ -28,18 +28,18 @@ export const toolbarItems = [
       shape: mxConstants.SHAPE_LABEL,
       align: mxConstants.ALIGN_TOP,
       verticalAlign: mxConstants.ALIGN_BOTTOM,
-      imageAlign: mxConstants.ALIGN_CENTER,
-      imageVerticalAlign: mxConstants.ALIGN_TOP,
-      image: outputIcon
+      imageAlign: mxConstants.ALIGN_CENTER, // 背景图的水平方向的定位
+      imageVerticalAlign: mxConstants.ALIGN_TOP, // 背景图垂直方向的定位
+      image: boxDomain
     }
   },
   {
-    id: 'input',
+    id: 'center',
     idSeed: 1,
-    icon: inputIcon,
-    title: '输入',
-    width: 70,
-    height: 70,
+    icon: center,
+    title: '中心',
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -50,16 +50,16 @@ export const toolbarItems = [
       verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
       imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
       imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: inputIcon // 图形
+      image: center // 图形
     }
   },
   {
     id: 'group',
     idSeed: 1,
-    icon: group,
-    title: '群组',
-    width: 70,
-    height: 70,
+    icon: database,
+    title: '数据库',
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -70,16 +70,16 @@ export const toolbarItems = [
       verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
       imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
       imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: group // 图形
+      image: database // 图形
     }
   },
   {
-    id: 'home',
+    id: 'authorizate',
     idSeed: 1,
-    icon: home,
-    title: '首页',
-    width: 70,
-    height: 70,
+    icon: authorizate,
+    title: '认证',
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -90,16 +90,16 @@ export const toolbarItems = [
       verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
       imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
       imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: home // 图形
+      image: authorizate // 图形
     }
   },
   {
-    id: 'stencil',
+    id: 'cluster',
     idSeed: 1,
-    icon: stencil,
+    icon: cluster,
     title: '集群',
-    width: 70,
-    height: 70,
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -110,16 +110,16 @@ export const toolbarItems = [
       verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
       imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
       imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: stencil // 图形
+      image: cluster // 图形
     }
   },
   {
-    id: 'connectPoint',
+    id: 'exchange',
     idSeed: 1,
-    icon: connectPoint,
-    title: '连接',
-    width: 70,
-    height: 70,
+    icon: exchange,
+    title: '缓冲',
+    width: 60,
+    height: 60,
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -130,7 +130,7 @@ export const toolbarItems = [
       verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
       imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
       imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: connectPoint // 图形
+      image: exchange // 图形
     }
   },
   // {
@@ -165,108 +165,3 @@ export const toolbarItems = [
   // }
 ]
 
-// 备用的图标
-export const toolbarItems2 = [
-  {
-    icon: outputIcon,
-    title: '输出',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF',
-      strokeColor: '#000000',
-      strokeWidth: '1',
-      shape: mxConstants.SHAPE_LABEL,
-      align: mxConstants.ALIGN_CENTER,
-      verticalAlign: mxConstants.ALIGN_BOTTOM,
-      imageAlign: mxConstants.ALIGN_CENTER,
-      imageVerticalAlign: mxConstants.ALIGN_TOP,
-      image: outputIcon
-    }
-  },
-  {
-    icon: inputIcon,
-    title: '输入',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF', // 填充色
-      strokeColor: '#000000', // 线条颜色
-      strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: inputIcon // 图形
-    }
-  },
-  {
-    icon: group,
-    title: '群组',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF', // 填充色
-      strokeColor: '#000000', // 线条颜色
-      strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: group // 图形
-    }
-  },
-  {
-    icon: home,
-    title: '首页',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF', // 填充色
-      strokeColor: '#000000', // 线条颜色
-      strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: home // 图形
-    }
-  },
-  {
-    icon: stencil,
-    title: '集群',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF', // 填充色
-      strokeColor: '#000000', // 线条颜色
-      strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: stencil // 图形
-    }
-  },
-  {
-    icon: connectPoint,
-    title: '连接',
-    width: 70,
-    height: 70,
-    style: {
-      fillColor: '#FFFFFF', // 填充色
-      strokeColor: '#000000', // 线条颜色
-      strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: connectPoint // 图形
-    }
-  },
-]

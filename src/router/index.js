@@ -13,7 +13,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: () => import("../views/helloworld/HelloWorld.vue"),
+      component: () => import("../views/customToolbar/customToolbar.vue"),
     },
     {
       path: '/helloworld',

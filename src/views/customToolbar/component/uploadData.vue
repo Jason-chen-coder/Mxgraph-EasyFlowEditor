@@ -52,6 +52,24 @@ import 'codemirror/theme/lesser-dark.css'
 import 'codemirror/mode/markdown/markdown.js'
 // 导入数据类型识别文件
 import "codemirror/mode/javascript/javascript.js"
+import "codemirror/mode/properties/properties.js"
+import 'codemirror/addon/scroll/annotatescrollbar.js'
+import 'codemirror/addon/search/matchesonscrollbar.js'
+import 'codemirror/addon/search/match-highlighter.js'
+import 'codemirror/addon/search/jump-to-line.js'
+import 'codemirror/addon/selection/active-line' //光标行背景高亮，配置里面也需要styleActiveLine设置为true
+
+import 'codemirror/addon/dialog/dialog.js'
+import 'codemirror/addon/dialog/dialog.css'
+import 'codemirror/addon/search/searchcursor.js'
+import 'codemirror/addon/search/search.js'
+// 折叠
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/comment-fold'
+
 export default {
   props: ['graphXml', 'isOutputXml'],
   data () {
@@ -62,12 +80,16 @@ export default {
       // codemirror配置项
       options: {
         tabSize: 4,
-        styleActiveLine: true,
         lineNumbers: true,
-        lineWrapping: false,
         line: true,
         mode: 'text/x-markdown',
-        theme: 'lesser-dark'
+        theme: 'lesser-dark',
+        foldGutter: true,
+        lineWrapping: true,
+        styleActiveLine: true,
+        autoRefresh: true,
+        lint: true,
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
       }
     }
   },

@@ -1,126 +1,173 @@
-export default {
-  Rectangle: {
-    type: 'vertex',
-    style: 'rounded=0;whiteSpace=wrap;html=1;',
+import mxgraph from "../../graph/index";
+const { mxConstants } = mxgraph;
+export const generalToolbarItems = [
+  {
+    index: 0,
+    idSeed: 1,
+    id: "rectangle",
+    title: "rectangle",
+    class: "common rectangle",
+    width: 120,
+    height: 40,
+    style: {
+      margin_left: 10,
+      shape: "rectangle",
+      perimeter: 'ellipsePerimeter',
+      arcSize: 20
+    }
   },
-  'Rounded Rectangle': {
-    type: 'vertex',
-    style: 'rounded=1;whiteSpace=wrap;html=1;',
+  {
+    index: 1,
+    idSeed: 1,
+    title: "triangle",
+    id: "triangle",
+    class: "common triangle",
+    width: 120,
+    height: 60,
+    style: {
+      margin_left: 10,
+      shape: "triangle",
+      direction: 'north'
+    }
   },
-  Text: {
-    type: 'vertex',
-    style: 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;',
+
+  {
+    index: 2,
+    idSeed: 1,
+    title: "circle",
+    id: "circle",
+    class: "common circle",
+    width: 80,
+    height: 80,
+    style: {
+      margin_left: 10,
+      shape: "ellipse",
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Eclipse: {
-    type: 'vertex',
-    style: 'shape=ellipse;whiteSpace=wrap;html=1;',
+
+  {
+    index: 3,
+    idSeed: 1,
+    title: "rhombus",
+    id: "rhombus",
+    class: "common rhombus",
+    width: 80,
+    height: 80,
+    style: {
+      shape: "rhombus",
+      margin_left: 10,
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Square: {
-    type: 'vertex',
-    style: 'whiteSpace=wrap;html=1;aspect=fixed;',
+  {
+    index: 5,
+    idSeed: 1,
+    title: "cylinder",
+    id: "cylinder",
+    class: "common cylinder",
+    width: 80,
+    height: 80,
+    style: {
+      shape: "cylinder",
+      margin_left: 10,
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Circle: {
-    type: 'vertex',
-    style: 'shape=ellipse;whiteSpace=wrap;html=1;aspect=fixed;',
+
+  {
+    index: 6,
+    idSeed: 1,
+    title: "actor",
+    id: "actor",
+    class: "common actor",
+    width: 60,
+    height: 60,
+    style: {
+      margin_left: 10,
+      shape: "actor",
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Process: {
-    type: 'vertex',
-    style: 'shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;',
+
+  {
+    index: 7,
+    idSeed: 1,
+    title: "cloud",
+    id: "cloud",
+    class: "common cloud",
+    width: 80,
+    height: 80,
+    style: {
+      margin_left: 10,
+      shape: "cloud",
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Diamond: {
-    type: 'vertex',
-    style: 'shape=rhombus;whiteSpace=wrap;html=1;',
+  {
+    index: 8,
+    idSeed: 1,
+    title: "hexagon",
+    id: "hexagon",
+    class: "common hexagon",
+    width: 80,
+    height: 80,
+    style: {
+      margin_left: 10,
+      shape: "hexagon",
+      perimeter: 'ellipsePerimeter',
+    }
   },
-  Parallelogram: {
-    type: 'vertex',
-    style: 'shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;',
+  {
+    index: 9,
+    idSeed: 1,
+    title: "doubleEllipse",
+    id: "doubleEllipse",
+    class: "common doubleEllipse",
+    width: 80,
+    height: 80,
+    style: {
+      shape: 'doubleEllipse',
+      perimeter: 'ellipsePerimeter',
+      margin_left: 10,
+    }
   },
-  Triangle: {
-    type: 'vertex',
-    style: 'shape=triangle;whiteSpace=wrap;html=1;',
+
+  {
+    index: 10,
+    idSeed: 1,
+    title: "swimlane",
+    id: "swimlane",
+    class: "common swimlane",
+    width: 120,
+    height: 120,
+    style: {
+      shape: "swimlane",
+      perimeter: 'ellipsePerimeter',
+      margin_left: 10,
+    }
   },
-  Cylinder: {
-    type: 'vertex',
-    style: 'shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;',
-  },
-  Cloud: {
-    type: 'vertex',
-    style: 'shape=ellipse;shape=cloud;whiteSpace=wrap;html=1;',
-  },
-  Document: {
-    type: 'vertex',
-    style: 'shape=document;whiteSpace=wrap;html=1;boundedLbl=1;',
-  },
-  'Internal Storage': {
-    type: 'vertex',
-    style: 'shape=internalStorage;whiteSpace=wrap;html=1;backgroundOutline=1;',
-  },
-  Cube: {
-    type: 'vertex',
-    style: 'shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;',
-  },
-  Step: {
-    type: 'vertex',
-    style: 'shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;',
-  },
-  Trapezoid: {
-    type: 'vertex',
-    style: 'shape=trapezoid;perimeter=trapezoidPerimeter;whiteSpace=wrap;html=1;',
-  },
-  Tape: {
-    type: 'vertex',
-    style: 'shape=tape;whiteSpace=wrap;html=1;',
-  },
-  Note: {
-    type: 'vertex',
-    style: 'shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;',
-  },
-  Card: {
-    type: 'vertex',
-    style: 'shape=card;whiteSpace=wrap;html=1;',
-  },
-  Callout: {
-    type: 'vertex',
-    style: 'shape=callout;whiteSpace=wrap;html=1;perimeter=calloutPerimeter;',
-  },
-  Actor: {
-    type: 'vertex',
-    style: 'shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;outlineConnect=0;',
-  },
-  Hexagon: {
-    type: 'vertex',
-    style: 'shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;',
-  },
-  Curve: {
-    type: 'edge',
-    style: 'edgeStyle=elbowEdgeStyle;curved=1;endArrow=classic;html=1;',
-  },
-  'Bidirectional Arrow': {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;shape=flexArrow;endArrow=classic;startArrow=classic;html=1;fillColor=#ffffff;',
-  },
-  Arrow: {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;shape=flexArrow;endArrow=classic;html=1;fillColor=#ffffff;',
-  },
-  Link: {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;shape=link;html=1;',
-  },
-  'Dashed Line': {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;endArrow=none;dashed=1;html=1;',
-  },
-  Line: {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;endArrow=none;html=1;',
-  },
-  'Bidirectional Connector': {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;endArrow=classic;html=1;',
-  },
-  'Directional Connector': {
-    type: 'edge',
-    style: 'edgeStyle=loopEdgeStyle;endArrow=classic;html=1;',
-  },
-};
+
+  {
+    index: 11,
+    idSeed: 1,
+    title: "Text",
+    id: "Text",
+    class: "common word",
+    width: 70,
+    height: 20,
+    style: {
+      margin_left: 10,
+      shape: "Text",
+      strokeColor: 'transparent',
+      strokeWidth: '1',
+      html: 1,
+      fillColor: '#FFFFFF',
+      verticalAlign: mxConstants.ALIGN_MIDDLE,
+      align: mxConstants.ALIGN_CENTER,
+      whiteSpace: 'wrap',
+      rounded: 0,
+    }
+  }
+]
+
