@@ -38,13 +38,17 @@
                   <i class="el-icon-setting"></i>
                   <span slot="title">Easy Editor</span>
                 </el-menu-item>
-                <el-menu-item index="stencilToolbar">
+                <el-menu-item index="renderModel">
+                  <i class="el-icon-document"></i>
+                  <span slot="title">渲染模式</span>
+                </el-menu-item>
+                <!-- <el-menu-item index="stencilToolbar">
                   <i class="el-icon-document"></i>
                   <span slot="title">模板工具箱</span>
-                </el-menu-item>
+                </el-menu-item>-->
                 <!-- <el-menu-item index="01-editor">
                   <i class="el-icon-document"></i>
-                  <span slot="title">01-editor</span>
+                  <span slot="title">编辑器-01</span>
                 </el-menu-item>-->
               </el-menu>
             </el-col>

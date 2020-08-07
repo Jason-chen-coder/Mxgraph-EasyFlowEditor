@@ -38,6 +38,10 @@ const router = new VueRouter({
     {
       path: "/stencilToolbar",
       component: () => import("../views/stencilToolbar/stencilToolbar.vue")
+    },
+    {
+      path: "/renderModel",
+      component: () => import("../views/renderModel/index.vue")
     }
   ]
 })

@@ -446,7 +446,7 @@ export default {
         ds.setGuidesEnabled(true);
       })
     },
-    
+
     // 初始化工具栏
     initToolbar () {
       // 获取工具栏中的自定义节点的dom
