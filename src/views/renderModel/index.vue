@@ -23,26 +23,26 @@
             icon="iconfont icon-expandalt-fill"
           ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="导出xml文件" placement="bottom">
+        <!-- <el-tooltip class="item" effect="dark" content="导出xml文件" placement="bottom">
           <el-button type="text" icon="iconfont icon-xmloutput" @click="outPutXml"></el-button>
-        </el-tooltip>
+        </el-tooltip>-->
         <!-- <el-tooltip class="item" effect="dark" content="显示网格背景" placement="bottom">
           <el-button type="text" icon="iconfont icon-dituleiwanggequ-copy"></el-button>
         </el-tooltip>-->
         <el-tooltip class="item" effect="dark" content="导出为图片" placement="bottom">
           <el-button type="text" icon="iconfont icon-tupian" @click="showImage"></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="树形布局" placement="bottom">
+        <!-- <el-tooltip class="item" effect="dark" content="树形布局" placement="bottom">
           <el-button type="text" icon="iconfont icon-Directory-tree"></el-button>
-        </el-tooltip>
+        </el-tooltip>-->
       </el-col>
       <el-col :span="8">
         <div
           class="grid-content bg-purple"
           style="display:flex;justify-content: flex-end;padding-right:20px"
         >
-          <el-button round size="medium" @click="loadFlowCase(1)">化工流程案例</el-button>
-          <el-button round size="medium" @click="loadFlowCase(2)">组件管理案例</el-button>
+          <el-button round size="medium" @click="loadFlowCase(1)">组件关系</el-button>
+          <el-button round size="medium" @click="loadFlowCase(2)">部署流程</el-button>
           <el-button round size="medium" @click="loadFlowCase(3)">Vue生命周期案例</el-button>
         </div>
       </el-col>
@@ -185,7 +185,7 @@ export default {
       this.graph.isHtmlLabel = function (cell) {
         return !this.isSwimlane(cell);
       }
-      
+
     },
     // 初始化画布
     initGraph () {
@@ -256,7 +256,7 @@ export default {
                 if (!this.isNode) {
                   getcellStyle ? this.edgeStyle = getcellStyle : 'orthogonalEdgeStyle'
                 }
-                console.log("getcellStyle", getcellStyle)
+                console.log(cell)
                 if (getcellStyle) {
                   var arr = getcellStyle.split(";")
                   // arr.pop()
@@ -288,19 +288,6 @@ export default {
           Object.values(this.graph.getModel().cells).forEach((cell) => {
             console.log(cell)
           })
-        })
-        menu.addSeparator()
-        menu.addItem('流动的线(测试)', null, () => {
-          let cell = this.graph.getSelectionCell();
-          if (cell && cell.edge) {
-            let state = this.graph.view.getState(cell);
-            state.shape.node.getElementsByTagName('path')[0].removeAttribute('visibility');
-            state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke-width', '6');
-            state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'lightGray');
-            state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
-          } else {
-            this.$message.error("请选择连线")
-          }
         })
       }
       // 启用工具提示，新连接平滑移动  
@@ -482,34 +469,23 @@ export default {
       const result = encoder.encode(graph.getModel())
       return mxUtils.getPrettyXml(result)
     },
-
     // 加载案例流程图
     loadFlowCase (index) {
-      this.$confirm('请确认您当前流程图数据已保存至本地 ?', '提示', {
-        confirmButtonText: '我已保存',
-        cancelButtonText: '取消加载',
-        type: 'warning'
-      }).then(() => {
-        let loadData = "";
-        switch (index) {
-          case 1: loadData = xmlData1; break
-          case 2: loadData = xmlData2; break
-          case 3: loadData = xmlData3; break
-        }
-        let newXml = mxUtils.load(loadData).request.response
-        this.graph.selectAll()
-        this.graph.removeCells(this.graph.getSelectionCells())
-        setTimeout(() => {
-          this.decode(newXml, this.graph)
 
-          this.$message.success("加载流程图案例成功")
-        }, 1000)
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消加载流程图案例'
-        });
-      });
+      let loadData = "";
+      switch (index) {
+        case 1: loadData = xmlData1; break
+        case 2: loadData = xmlData2; break
+        case 3: loadData = xmlData3; break
+      }
+      let newXml = mxUtils.load(loadData).request.response
+      this.graph.selectAll()
+      this.graph.removeCells(this.graph.getSelectionCells())
+      setTimeout(() => {
+        this.decode(newXml, this.graph)
+
+        this.$message.success("加载流程图案例成功")
+      }, 1000)
     }
   },
 

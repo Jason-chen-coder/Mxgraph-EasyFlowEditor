@@ -8,9 +8,15 @@ const { mxConstants } = mxgraph;
 const boxDomain = './icon/boxDomain.png'
 const center = './icon/center.png'
 const database = './icon/database.png'
-const authorizate = './icon/authorizate.png'
-const cluster = './icon/cluster.png'
-const exchange = './icon/exchange.png'
+// const authorizate = './icon/authorizate.png'
+// const cluster = './icon/cluster.png'
+// const exchange = './icon/exchange.png'
+const elasticsearch = './icon/elasticsearch.png'
+const kibana = './icon/kibana.svg'
+const logstash = './icon/logstash.png'
+const KAFKA = './icon/KAFKA.png'
+const beats = './icon/beats.png'
+const redis = './icon/redis.png'
 
 export const toolbarItems = [
   {
@@ -20,6 +26,7 @@ export const toolbarItems = [
     title: '域盒子',
     width: 60,
     height: 60,
+    nodeType: 'square',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF',
@@ -40,6 +47,7 @@ export const toolbarItems = [
     title: '中心',
     width: 60,
     height: 60,
+    nodeType: 'square',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -60,6 +68,7 @@ export const toolbarItems = [
     title: '数据库',
     width: 60,
     height: 60,
+    nodeType: 'square',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -73,13 +82,77 @@ export const toolbarItems = [
       image: database // 图形
     }
   },
+  // {
+  //   id: 'authorizate',
+  //   idSeed: 1,
+  //   icon: authorizate,
+  //   title: '认证',
+  //   width: 60,
+  //   height: 60,
+  //   nodeType: 'square',
+  //   dropAble: false, // 是否可以作为drop的对象
+  //   style: {
+  //     fillColor: '#FFFFFF', // 填充色
+  //     strokeColor: '#000000', // 线条颜色
+  //     strokeWidth: '1', // 线条粗细
+  //     shape: mxConstants.SHAPE_LABEL, // 形状
+  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     image: authorizate // 图形
+  //   }
+  // },
+  // {
+  //   id: 'cluster',
+  //   idSeed: 1,
+  //   icon: cluster,
+  //   title: '集群',
+  //   width: 60,
+  //   height: 60,
+  //   nodeType: 'square',
+  //   dropAble: false, // 是否可以作为drop的对象
+  //   style: {
+  //     fillColor: '#FFFFFF', // 填充色
+  //     strokeColor: '#000000', // 线条颜色
+  //     strokeWidth: '1', // 线条粗细
+  //     shape: mxConstants.SHAPE_LABEL, // 形状
+  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     image: cluster // 图形
+  //   }
+  // },
+  // {
+  //   id: 'exchange',
+  //   idSeed: 1,
+  //   icon: exchange,
+  //   title: '缓冲',
+  //   width: 60,
+  //   height: 60,
+  //   nodeType: 'square',
+  //   dropAble: false, // 是否可以作为drop的对象
+  //   style: {
+  //     fillColor: '#FFFFFF', // 填充色
+  //     strokeColor: '#000000', // 线条颜色
+  //     strokeWidth: '1', // 线条粗细
+  //     shape: mxConstants.SHAPE_LABEL, // 形状
+  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     image: exchange // 图形
+  //   },
+  // },
   {
-    id: 'authorizate',
+    id: 'elasticsearch',
     idSeed: 1,
-    icon: authorizate,
-    title: '认证',
-    width: 60,
-    height: 60,
+    icon: elasticsearch,
+    title: 'ElasticSearch',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -87,19 +160,20 @@ export const toolbarItems = [
       strokeWidth: '1', // 线条粗细
       shape: mxConstants.SHAPE_LABEL, // 形状
       align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: authorizate // 图形
-    }
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: elasticsearch // 图形
+    },
   },
   {
-    id: 'cluster',
+    id: 'kibana',
     idSeed: 1,
-    icon: cluster,
-    title: '集群',
-    width: 60,
-    height: 60,
+    icon: kibana,
+    title: 'Kibana',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -107,19 +181,20 @@ export const toolbarItems = [
       strokeWidth: '1', // 线条粗细
       shape: mxConstants.SHAPE_LABEL, // 形状
       align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: cluster // 图形
-    }
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: kibana // 图形
+    },
   },
   {
-    id: 'exchange',
+    id: 'logstash',
     idSeed: 1,
-    icon: exchange,
-    title: '缓冲',
-    width: 60,
-    height: 60,
+    icon: logstash,
+    title: 'logstash',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
     dropAble: false, // 是否可以作为drop的对象
     style: {
       fillColor: '#FFFFFF', // 填充色
@@ -127,11 +202,74 @@ export const toolbarItems = [
       strokeWidth: '1', // 线条粗细
       shape: mxConstants.SHAPE_LABEL, // 形状
       align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
-      image: exchange // 图形
-    }
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: logstash // 图形
+    },
+  },
+  {
+    id: 'KAFKA',
+    idSeed: 1,
+    icon: KAFKA,
+    title: 'KAFKA',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
+    dropAble: false, // 是否可以作为drop的对象
+    style: {
+      fillColor: '#FFFFFF', // 填充色
+      strokeColor: '#000000', // 线条颜色
+      strokeWidth: '1', // 线条粗细
+      shape: mxConstants.SHAPE_LABEL, // 形状
+      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: KAFKA // 图形
+    },
+  },
+  {
+    id: 'beats',
+    idSeed: 1,
+    icon: beats,
+    title: 'beats',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
+    dropAble: false, // 是否可以作为drop的对象
+    style: {
+      fillColor: '#FFFFFF', // 填充色
+      strokeColor: '#000000', // 线条颜色
+      strokeWidth: '1', // 线条粗细
+      shape: mxConstants.SHAPE_LABEL, // 形状
+      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: beats // 图形
+    },
+  },
+  {
+    id: 'redis',
+    idSeed: 1,
+    icon: redis,
+    title: 'redis',
+    width: 140,
+    height: 40,
+    nodeType: 'rectangle',
+    dropAble: false, // 是否可以作为drop的对象
+    style: {
+      fillColor: '#FFFFFF', // 填充色
+      strokeColor: '#000000', // 线条颜色
+      strokeWidth: '1', // 线条粗细
+      shape: mxConstants.SHAPE_LABEL, // 形状
+      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      image: redis // 图形
+    },
   },
   // {
   //   title: '容器',

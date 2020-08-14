@@ -136,8 +136,8 @@
     </el-tabs>
     <!-- 鼠标坐标展示 -->
     <div class="graphLocation">
-      <span style="width:60px;display:inline-block;">X:{{graphX}}</span>
-      <span style="width:60px;display:inline-block;">Y:{{graphY}}</span>
+      <span style="width:60px;display:inline-block;">X:{{parseInt(graphX)}}</span>
+      <span style="width:60px;display:inline-block;">Y:{{parseInt(graphY)}}</span>
     </div>
     <!-- 收缩小工具 -->
     <div class="show-map" ref="showMap"></div>
@@ -206,7 +206,32 @@ export default {
       }, {
         value: './icon/exchange.png',
         label: '缓冲'
-      }],
+      },
+      {
+        value: './icon/elasticsearch.png',
+        label: 'ElasticSearch'
+      },
+      {
+        value: './icon/kibana.svg',
+        label: 'Kibana'
+      },
+      {
+        value: './icon/logstash.png',
+        label: 'LogStash'
+      },
+      {
+        value: './icon/KAFKA.png',
+        label: 'KAFKA'
+      },
+      {
+        value: './icon/beats.png',
+        label: 'Beats'
+      },
+      {
+        value: './icon/redis.png',
+        label: 'Redis'
+      }
+      ],
       nodeImageUrl: ''
     }
   },

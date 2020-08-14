@@ -35,13 +35,15 @@
           <template slot="title" class="collaspetitle">自定义节点</template>
           <span
             v-for="item in toolbarItems"
-            style="display:inline-block;margin:10px 0 10px; width:28%;height:50px"
+            style
+            :class="{'rectangle-node':item['nodeType']==='rectangle'} "
+            class="custom-node"
             :key="item['title']"
             ref="toolItem"
           >
-            <img style="width:34px;height:34px" :src="item['icon']" />
+            <img style :src="item['icon']" />
             <br />
-            <span>{{item['title']}}</span>
+            <span class="node-title">{{item['title']}}</span>
           </span>
         </el-collapse-item>
         <!-- 模板图标 -->
@@ -58,6 +60,7 @@
             :shapeIndex="shapeIndex"
             :paletteIndex="paletteIndex"
             ref="stencilDragItem"
+            class="stencil-node"
             :key="shapeIndex"
           ></a>
         </el-collapse-item>
@@ -81,9 +84,26 @@
         <el-tooltip class="item" effect="dark" content="导出xml文件" placement="bottom">
           <el-button type="text" icon="iconfont icon-xmloutput" @click="outPutXml"></el-button>
         </el-tooltip>
-        <!-- <el-tooltip class="item" effect="dark" content="显示网格背景" placement="bottom">
-          <el-button type="text" icon="iconfont icon-dituleiwanggequ-copy"></el-button>
-        </el-tooltip>-->
+        <el-tooltip
+          class="item"
+          effect="dark"
+          v-if="showBackground"
+          content="隐藏网格背景"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-dituleiwanggequ-copy"
+            @click="showBackground=false"
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip v-else class="item" effect="dark" content="显示网格背景" placement="bottom">
+          <el-button
+            type="text"
+            icon="iconfont icon-fangxingweixuanzhong-copy"
+            @click="showBackground=true"
+          ></el-button>
+        </el-tooltip>
         <el-tooltip class="item" effect="dark" content="导出为图片" placement="bottom">
           <el-button type="text" icon="iconfont icon-tupian" @click="showImage"></el-button>
         </el-tooltip>
@@ -112,7 +132,12 @@
       </el-col>
     </div>
     <!-- 中心画布 -->
-    <div class="graphContainer" id="graphContainer" ref="container"></div>
+    <div
+      class="graphContainer"
+      id="graphContainer"
+      ref="container"
+      :class="{'graphContainer-background':showBackground}"
+    ></div>
     <!-- 右侧样式设置 -->
     <style-select
       @changeDashed="changeDashed"
@@ -224,6 +249,7 @@ export default {
       idSeed: 0,
       normalIdSeed: 0,
       // configOrder: 0,
+      showBackground: true,
       currentNormalType: {},
       normalTypePosition: {
         top: '0',
@@ -1199,6 +1225,41 @@ export default {
       }
     }
     .custom-toolbar {
+      .custom-node {
+        display: inline-block;
+        margin: 10px 0 0 0;
+        width: 28%;
+        height: 60px;
+        border: 1px solid #000000;
+        padding: 5px 0;
+        img {
+          // width: 34px;
+          height: 34px;
+        }
+      }
+      .rectangle-node {
+        width: 45%;
+        height: 40px;
+        margin: 10px 0 0 0;
+        background-color: #ffff;
+        position: relative;
+        border: 1px solid #000000;
+        padding: none;
+        img {
+          position: absolute;
+          left: 0;
+          // width: none;
+          height: 35px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        .node-title {
+          position: absolute;
+          left: 60%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
       .el-collapse-item__content {
         display: flex;
         flex-wrap: wrap;
@@ -1221,7 +1282,9 @@ export default {
     overflow: hidden;
     background-color: #fff !important;
     flex: 1;
-    background-image: url("../../assets/grid.gif");
+  }
+  .graphContainer-background {
+    background-image: url("../../assets/grid.png");
   }
   .top-tools {
     position: absolute;
@@ -1296,6 +1359,13 @@ div.mxPopupMenu {
   }
   svg g path {
     fill: transparent;
+  }
+  .stencil-node {
+    width: 20%;
+  }
+  svg g path {
+    stroke: #515151;
+    -webkit-text-fill-color: #515151;
   }
 }
 .flow {

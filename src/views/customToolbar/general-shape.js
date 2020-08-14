@@ -12,7 +12,7 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "rectangle",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter', // 让锚点以节点为圆心环形分布在节点外围
       arcSize: 20
     }
   },
@@ -42,7 +42,7 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "ellipse",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
 
@@ -57,7 +57,7 @@ export const generalToolbarItems = [
     style: {
       shape: "rhombus",
       margin_left: 10,
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
   {
@@ -71,7 +71,7 @@ export const generalToolbarItems = [
     style: {
       shape: "cylinder",
       margin_left: 10,
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
 
@@ -86,7 +86,7 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "actor",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
 
@@ -101,7 +101,7 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "cloud",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
   {
@@ -115,7 +115,7 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "hexagon",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
     }
   },
   {
@@ -128,7 +128,7 @@ export const generalToolbarItems = [
     height: 80,
     style: {
       shape: 'doubleEllipse',
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
       margin_left: 10,
     }
   },
@@ -143,11 +143,10 @@ export const generalToolbarItems = [
     height: 120,
     style: {
       shape: "swimlane",
-      perimeter: 'ellipsePerimeter',
+      // perimeter: 'ellipsePerimeter',
       margin_left: 10,
     }
   },
-
   {
     index: 11,
     idSeed: 1,
@@ -159,6 +158,27 @@ export const generalToolbarItems = [
     style: {
       margin_left: 10,
       shape: "Text",
+      strokeColor: 'transparent',
+      strokeWidth: '1',
+      html: 1,
+      fillColor: '#FFFFFF',
+      verticalAlign: mxConstants.ALIGN_MIDDLE,
+      align: mxConstants.ALIGN_CENTER,
+      whiteSpace: 'wrap',
+      rounded: 0,
+    }
+  },
+  {
+    index: 12,
+    idSeed: 1,
+    title: "Text",
+    id: "Text",
+    class: "common line",
+    width: 70,
+    height: 20,
+    style: {
+      margin_left: 10,
+      shape: "Line",
       strokeColor: 'transparent',
       strokeWidth: '1',
       html: 1,
