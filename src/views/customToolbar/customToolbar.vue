@@ -549,7 +549,7 @@ export default {
           mouseMove: (sender, me) => {
             // console.log('mouseMove')
             this.graphX = Math.ceil(me.graphX);
-            this.graphY = me.graphY;
+            this.graphY = Math.ceil(me.graphY);
           },
 
           mouseUp: (sender, evt) => {

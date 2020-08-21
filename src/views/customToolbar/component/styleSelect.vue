@@ -136,8 +136,8 @@
     </el-tabs>
     <!-- 鼠标坐标展示 -->
     <div class="graphLocation">
-      <span style="width:60px;display:inline-block;">X:{{parseInt(graphX)}}</span>
-      <span style="width:60px;display:inline-block;">Y:{{parseInt(graphY)}}</span>
+      <span style="width:60px;display:inline-block;">X:{{(graphX)}}</span>
+      <span style="width:60px;display:inline-block;">Y:{{(graphY)}}</span>
     </div>
     <!-- 收缩小工具 -->
     <div class="show-map" ref="showMap"></div>
