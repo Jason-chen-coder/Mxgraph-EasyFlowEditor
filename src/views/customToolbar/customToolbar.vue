@@ -66,7 +66,7 @@
         </el-collapse-item>
       </el-collapse>
     </div>
-    <!-- 画布中的顶部工具栏 -->
+    <!-- 画布的顶部工具栏 -->
     <div class="top-tools">
       <el-col :span="4">
         <div
@@ -1183,7 +1183,7 @@ export default {
 @import "./general-shap.css";
 .customToolbarContainer {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -1195,7 +1195,7 @@ export default {
     text-align: center;
     background-color: #fff;
     border-right: 1px solid #ededed;
-    width: 15%;
+    width: 10%;
     position: relative;
     box-sizing: border-box;
     overflow-y: scroll;
@@ -1313,7 +1313,7 @@ export default {
     padding-left: 30px;
   }
   .style-select {
-    width: 20%;
+    width: 15%;
     background-color: #fff;
     height: 100%;
     position: absolute;

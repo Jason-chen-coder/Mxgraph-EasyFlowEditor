@@ -1,66 +1,6 @@
 <template>
   <div id="app">
-    <el-container>
-      <!-- <el-header class="header">
-        <el-row style="text-align:center;height:100%;line-height:100%">
-          <el-col :span="24" style="text-align:center;height:100%;line-height:100%">
-            <div
-              class="grid-content bg-purple"
-              style="text-align:center;height:100%;line-height:200%;color:#409eff;font-weight:600;font-size:30px;"
-            >Easy editor</div>
-          </el-col>
-        </el-row>
-      </el-header>-->
-      <el-container>
-        <el-aside class="aside" width="200px">
-          <el-row class="menu-row">
-            <el-col>
-              <el-menu
-                default-active="1"
-                style="border-right:none"
-                @open="handleOpen"
-                @close="handleClose"
-                router
-              >
-                <el-menu-item index="HelloWorld">
-                  <i class="el-icon-menu"></i>
-                  <span slot="title">HelloWorld</span>
-                </el-menu-item>
-                <el-menu-item index="Layout">
-                  <i class="el-icon-menu"></i>
-                  <span slot="title">Layout</span>
-                </el-menu-item>
-                <el-menu-item index="toolbar">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">默认工具栏</span>
-                </el-menu-item>
-                <el-menu-item index="customToolbar">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">Easy Editor</span>
-                </el-menu-item>
-                <el-menu-item index="renderModel">
-                  <i class="el-icon-document"></i>
-                  <span slot="title">渲染模式</span>
-                </el-menu-item>
-                <!-- <el-menu-item index="stencilToolbar">
-                  <i class="el-icon-document"></i>
-                  <span slot="title">模板工具箱</span>
-                </el-menu-item>-->
-                <!-- <el-menu-item index="01-editor">
-                  <i class="el-icon-document"></i>
-                  <span slot="title">编辑器-01</span>
-                </el-menu-item>-->
-              </el-menu>
-            </el-col>
-          </el-row>
-        </el-aside>
-        <el-container>
-          <el-main class="main">
-            <router-view></router-view>
-          </el-main>
-        </el-container>
-      </el-container>
-    </el-container>
+    <router-view></router-view>
   </div>
 </template>
 

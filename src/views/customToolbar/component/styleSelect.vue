@@ -1,6 +1,5 @@
 <template>
   <div class="styleTool">
-    <h1 class="title">属性</h1>
     <el-tabs stretch type="border-card">
       <el-tab-pane label="样式">
         <el-form :inline="true" :model="form" class="style-form" size="mini" label-position="left">
@@ -306,14 +305,6 @@ export default {
   transition: all 1s linear;
   .hide-styleTool {
     right: -340px;
-  }
-  .title {
-    padding: 5px;
-    box-sizing: border-box;
-    background-color: #fcfcfc;
-    border-bottom: 1px solid #ededed;
-    text-align: center;
-    line-height: 30px;
   }
   .style-form {
     display: flex;
