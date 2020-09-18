@@ -151,28 +151,35 @@
       ref="container"
       :class="{'graphContainer-background':showBackground}"
     ></div>
-    <!-- 右侧样式设置 -->
-    <style-select
-      @changeDashed="changeDashed"
-      @changeStrokeColor="changeStrokeColor"
-      @changeStrokeWidth="changeStrokeWidth"
-      @changeFontSize="changeFontSize"
-      @changeFontColor="changeFontColor"
-      @changeLabelBackgroundColor="changeLabelBackgroundColor"
-      @changeConfigOrder="changeConfigOrder"
-      @changeFillColor="changeFillColor"
-      @changeShadow="changeShadow"
-      @changeFontStyle="changeFontStyle"
-      @changeNodeimage="changeNodeimage"
-      @edgeChange="edgeChange"
-      :isNode="isNode"
-      :cellStyle="cellStyle"
-      :currentNormalType="currentNormalType"
-      :graphX="graphX"
-      :graphY="graphY"
-      class="style-select"
-      ref="styleSelect"
-    />
+    <!-- 右侧栏 -->
+    <div class="right-bar">
+      <!-- 样式设置 -->
+      <style-select
+        @changeDashed="changeDashed"
+        @changeStrokeColor="changeStrokeColor"
+        @changeStrokeWidth="changeStrokeWidth"
+        @changeFontSize="changeFontSize"
+        @changeFontColor="changeFontColor"
+        @changeLabelBackgroundColor="changeLabelBackgroundColor"
+        @changeConfigOrder="changeConfigOrder"
+        @changeFillColor="changeFillColor"
+        @changeShadow="changeShadow"
+        @changeFontStyle="changeFontStyle"
+        @changeNodeimage="changeNodeimage"
+        @edgeChange="edgeChange"
+        :isNode="isNode"
+        :cellStyle="cellStyle"
+        :currentNormalType="currentNormalType"
+        :graphX="graphX"
+        :graphY="graphY"
+        ref="styleSelect"
+      />
+      <div class="json-viewer">
+        <h4 style="text-align:center">Json数据结构</h4>
+        <json-viewer :value="jsonData" style="height:100%" :expand-depth="5" copyable sort></json-viewer>
+      </div>
+    </div>
+
     <!-- XML数据导入/导出 -->
     <upload-data
       v-if="uploadDataVisible"
@@ -190,7 +197,8 @@ import uploadData from "./component/uploadData"
 // 组元素
 import { grouptoolItems } from './GroupToolbarItems'
 import * as R from "ramda";
-import mx from 'mxgraph'
+import mx from 'mxgraph';
+import _ from 'lodash';
 const mxgraph = mx({})
 import styleSelect from "./component/styleSelect";
 const {
@@ -269,6 +277,13 @@ export default {
       idSeed: 0,
       normalIdSeed: 0,
       // configOrder: 0,
+      jsonData: {
+        cells: {
+          nodes: [],
+          groups: []
+        },
+        edges: []
+      },
       showBackground: true,
       currentNormalType: {},
       normalTypePosition: {
@@ -486,6 +501,7 @@ export default {
         // 添加完节点后自动添加顺序图标
         // this.addPoint(vertex, toolItem['idSeed']);
         toolItem['idSeed']++;
+        vertex['isGroup'] = toolItem['id'].includes('group') ? true : false
       } finally {
         this.graph.getModel().endUpdate();
       }
@@ -518,6 +534,8 @@ export default {
             vertex.dropAble = toolItem['dropAble'];
             vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
             toolItem['idSeed']++;
+            vertex['isGroup'] = toolItem['id'].includes('group') ? true : false
+
           } finally {
             this.graph.getModel().endUpdate();
           }
@@ -555,7 +573,7 @@ export default {
         // 设置节点被拖拽时的样式(预览)
         var createDragPreview = () => {
           var elt = document.createElement('div');
-          elt.style.border = '2px dotted white';
+          elt.style.border = '2px dotted black';
           elt.style.width = `${width}px`;
           elt.style.height = `${height}px`;
           elt.style.backgroundImage = `url(${image})`;
@@ -615,17 +633,17 @@ export default {
       const value = isHtml ? toolItem['html'](tmpIndex) : null;
       this.graph.getModel().beginUpdate();
       try {
-        const cell = this.graph.insertVertex(parent, null, value, realX - (width / 2), realY - (height / 2), width, height, style);
-        cell['title'] = toolItem['title'];
-        cell['dropAble'] = toolItem['dropAble'];
-        cell['id'] = toolItem['id'];
-
+        const vertex = this.graph.insertVertex(parent, null, value, realX - (width / 2), realY - (height / 2), width, height, style);
+        vertex['title'] = toolItem['title'];
+        vertex['dropAble'] = toolItem['dropAble'];
+        vertex['id'] = toolItem['id'];
+        vertex['isGroup'] = toolItem['id'].includes('group') ? true : false
         // 设置连接点
         // cell['constraints'] = toolItem['constraints']
         this.$nextTick(() => {
           const createdCallback = toolItem['created'];
           if (createdCallback instanceof Function) {
-            createdCallback(this.graph, cell, tmpIndex);
+            createdCallback(this.graph, vertex, tmpIndex);
           }
         });
       } finally {
@@ -651,18 +669,30 @@ export default {
       });
       // 新增节点事件
       this.graph.addListener(mxEvent.ADD_CELLS, (sender, evt) => {
-        // let addCell = evt.properties.cells[0];
-        //   if (addCell.vertex) {
-        //     this.$message.info('添加了一个节点');
-        //   } else if (addCell.edge) {
-        //     this.$message.info('添加了一条线');
-        //   }
-        // });
-        console.log('mxEvent', mxEvent);
         this.$nextTick(() => {
           let addCell = evt.properties.cells[0];
-          addCell.parent.id === '1' ? this.$message.success(`新增${addCell.title ? addCell.title : '箭头'}节点成功`) : (addCell.parent.id.includes('group') && this.$message.success(`${addCell.title}节点进入${addCell.parent.title}成功`));
-        });
+          if (addCell.vertex) {
+            // 判断是否为组节点
+            if (addCell.isGroup) {
+              this.$message.info('添加了一个组');
+              let groupObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
+              this.jsonData['cells']['groups'].push(groupObj);
+            } else {
+              let nodeObj = _.pick(addCell, ['id', , 'title', 'parent', 'geometry']);
+              this.jsonData['cells']['nodes'].push(nodeObj);
+              this.$message.info('添加了一个节点');
+            }
+            //  向jsonData中更新数据
+          } else if (addCell.edge) {
+            console.log(addCell)
+            this.$message.info('添加了一条线');
+          }
+        })
+        // console.log('mxEvent', mxEvent);
+        // this.$nextTick(() => {
+        //   let addCell = evt.properties.cells[0];
+        //   addCell.parent.id === '1' ? this.$message.success(`新增${addCell.title ? addCell.title : '箭头'}节点成功`) : (addCell.parent.id.includes('group') && this.$message.success(`${addCell.title}节点进入${addCell.parent.title}成功`));
+        // });
       });
 
       //拖动节点的事件
@@ -936,7 +966,7 @@ export default {
       style = graph.getStylesheet().getDefaultEdgeStyle();
       style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
       style[mxConstants.STYLE_STROKEWIDTH] = '2';
-      style[mxConstants.STYLE_ROUNDED] = false;
+      style[mxConstants.STYLE_ROUNDED] = true;
       // 获取全局Edge、label样式
       var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle();
       // let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
@@ -946,14 +976,22 @@ export default {
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
       mxConstants.STYLE_WHITE_SPACE = 'wrap';
       mxConstants.HANDLE_FILLCOLOR = '#99ccff';
-      mxConstants.HANDLE_STROKECOLOR = '#0088cf';
+      mxConstants.HANDLE_STROKECOLOR = 'transparent';
       mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection';
       mxConstants.STYLE_STYLE_ROTATION = 'rotation';
       // 是否缩放网格
       mxGraphHandler.prototype.scaleGrid = true;
       mxGraph.prototype.pageBreakDashed = false;
-      // 启用导航线帮助定位
+
+      // 指定是否应使用其他单元格对齐当前所选内容的右侧，中间或左侧。默认为false。
       mxGraphHandler.prototype.guidesEnabled = true;
+      mxGraphHandler.prototype.htmlPreview = false;
+      mxGraphHandler.prototype.allowLivePreview = true;
+      // 指定预览形状的颜色。默认为黑色。
+      mxGraphHandler.prototype.previewColor = "red"
+      // 应该使用实时预览的最大单元数。默认值为0，表示没有实时预览。
+      mxGraphHandler.prototype.maxLivePreview = 100;
+
       // Alt 按下禁用导航线
       mxGraphHandler.prototype.useGuidesForEvent = function (me) {
         return !mxEvent.isAltDown(me.getEvent());
@@ -1144,10 +1182,11 @@ export default {
     // 等比例缩放
     autoSize () {
       // 方法一
-      this.editor.execute('actualSize');
+      // this.editor.execute('actualSize');
       //方法二：
-      // this.graph.fit();//自适应
-      // this.graph.center(true, true, 0.5, 0.5);//将画布放到容器中间
+      this.graph.zoomActual();
+      this.graph.fit();//自适应
+      this.graph.center();//将画布放到容器中间
     },
 
     // 生成图片
@@ -1203,6 +1242,8 @@ export default {
         dec.decode(node, graph.getModel());
       } finally {
         this.graph.getModel().endUpdate();
+        // 渲染完成调整位置
+        this.autoSize()
       }
     },
 
@@ -1261,7 +1302,7 @@ export default {
         var createDragPreview = () => {
           //设置鼠标拖拽箭头节点时的样式
           const elt = document.createElement('div');
-          elt.style.border = '2px dotted white';
+          elt.style.border = '2px dotted black';
           elt.style.cursor = 'pointer';
           elt.style.width = `${shapeWidth}px`;
           elt.style.height = `${shapeHeight}px`;
@@ -1282,8 +1323,9 @@ export default {
       const parent = drop ? dropCell : graph.getDefaultParent();
       graph.getModel().beginUpdate();
       try {
-        let vertex = graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, `shape=${shapeItem['name']};`);
-        vertex.customer = true;
+        let cell = graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, `shape=${shapeItem['name']};`);
+        cell['isGroup'] = false
+        cell.customer = true;
       } finally {
         graph.getModel().endUpdate();
       }
@@ -1546,7 +1588,7 @@ export default {
   .el-collapse-item__header {
     padding-left: 30px;
   }
-  .style-select {
+  .right-bar {
     width: 260px;
     background-color: #fff;
     height: 100%;
@@ -1556,6 +1598,15 @@ export default {
     border-left: 1px solid #ededed;
     padding-top: 50px;
     box-sizing: border-box;
+    .json-viewer {
+      overflow: auto;
+      position: absolute;
+      top: 60%;
+      width: 260px;
+      height: 800px;
+      bottom: 0;
+      right: 0;
+    }
   }
   .tools-group {
     display: flex;

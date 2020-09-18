@@ -10,7 +10,6 @@ export const generalToolbarItems = [
     width: 120,
     height: 40,
     style: {
-      margin_left: 10,
       shape: "rectangle",
       // perimeter: 'ellipsePerimeter', // 让锚点以节点为圆心环形分布在节点外围
       arcSize: 20
@@ -25,7 +24,6 @@ export const generalToolbarItems = [
     width: 120,
     height: 60,
     style: {
-      margin_left: 10,
       shape: "triangle",
       direction: 'north'
     }
@@ -40,7 +38,6 @@ export const generalToolbarItems = [
     width: 80,
     height: 80,
     style: {
-      margin_left: 10,
       shape: "ellipse",
       // perimeter: 'ellipsePerimeter',
     }
@@ -56,7 +53,6 @@ export const generalToolbarItems = [
     height: 80,
     style: {
       shape: "rhombus",
-      margin_left: 10,
       // perimeter: 'ellipsePerimeter',
     }
   },
@@ -70,7 +66,6 @@ export const generalToolbarItems = [
     height: 80,
     style: {
       shape: "cylinder",
-      margin_left: 10,
       // perimeter: 'ellipsePerimeter',
     }
   },
@@ -84,7 +79,6 @@ export const generalToolbarItems = [
     width: 60,
     height: 60,
     style: {
-      margin_left: 10,
       shape: "actor",
       // perimeter: 'ellipsePerimeter',
     }
@@ -99,7 +93,6 @@ export const generalToolbarItems = [
     width: 80,
     height: 80,
     style: {
-      margin_left: 10,
       shape: "cloud",
       // perimeter: 'ellipsePerimeter',
     }
@@ -113,7 +106,6 @@ export const generalToolbarItems = [
     width: 80,
     height: 80,
     style: {
-      margin_left: 10,
       shape: "hexagon",
       // perimeter: 'ellipsePerimeter',
     }
@@ -129,7 +121,6 @@ export const generalToolbarItems = [
     style: {
       shape: 'doubleEllipse',
       // perimeter: 'ellipsePerimeter',
-      margin_left: 10,
     }
   },
 
@@ -144,7 +135,6 @@ export const generalToolbarItems = [
     style: {
       shape: "swimlane",
       // perimeter: 'ellipsePerimeter',
-      margin_left: 10,
     }
   },
   {
@@ -156,7 +146,6 @@ export const generalToolbarItems = [
     width: 70,
     height: 20,
     style: {
-      margin_left: 10,
       shape: "Text",
       strokeColor: 'transparent',
       strokeWidth: '1',
@@ -177,7 +166,6 @@ export const generalToolbarItems = [
     width: 70,
     height: 20,
     style: {
-      margin_left: 10,
       shape: "line",
     }
   }

@@ -62,7 +62,7 @@ export const toolbarItems = [
     }
   },
   {
-    id: 'group',
+    id: 'database',
     idSeed: 1,
     icon: database,
     title: '数据库',
