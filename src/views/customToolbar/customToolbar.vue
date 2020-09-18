@@ -46,7 +46,7 @@
             <span class="node-title">{{item['title']}}</span>
           </span>
         </el-collapse-item>
-        <!-- 模板图标 -->
+        <!-- 箭头模板图标 -->
         <el-collapse-item
           v-for="(palette, paletteIndex) in Object.values(palettes)"
           :title="palette['title']"
@@ -63,6 +63,19 @@
             class="stencil-node"
             :key="shapeIndex"
           ></a>
+        </el-collapse-item>
+        <!--分组图标 -->
+        <el-collapse-item title="组元素" name="4">
+          <ul>
+            <li
+              v-for="(item, index) in grouptoolItems"
+              :key="index"
+              class="group-item"
+              ref="grouptoolItem"
+            >
+              <b>{{item.title}}</b>
+            </li>
+          </ul>
         </el-collapse-item>
       </el-collapse>
     </div>
@@ -174,7 +187,11 @@
 import { generalToolbarItems } from "./general-shape"
 import { toolbarItems } from './toolbar'
 import uploadData from "./component/uploadData"
-import mxgraph from "../../graph/index";
+// 组元素
+import { grouptoolItems } from './GroupToolbarItems'
+import * as R from "ramda";
+import mx from 'mxgraph'
+const mxgraph = mx({})
 import styleSelect from "./component/styleSelect";
 const {
   mxStencilRegistry,
@@ -205,26 +222,29 @@ const {
   mxCell,
   mxShape,
   mxConstraintHandler,
+  // mxTriangle,
   mxConnectionConstraint,
   mxPolyline,
   mxVertexHandler,
   mxRectangle,
   mxImageShape,
-  ActiveXObject
-} = mxgraph
+  ActiveXObject,
+} = mxgraph;
 const path = require('path');
 // 配置自定义事件
 Object.assign(mxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED',
 });
 // 导入流程图案例数据
-const xmlData1 = path.join("./data/data1.xml");
-const xmlData2 = path.join("./data/data2.xml");
-const xmlData3 = path.join("./data/data3.xml");
+const xmlData1 = path.join('data/data1.xml');
+const xmlData2 = path.join('data/data2.xml');
+const xmlData3 = path.join('data/data3.xml');
 export default {
   computed: {
+    // 组元素
+    grouptoolItems: () => grouptoolItems,
     toolbarItems: () => toolbarItems,
-    generalToolbarItems: () => generalToolbarItems
+    generalToolbarItems: () => generalToolbarItems,
   },
   components: {
     styleSelect,
@@ -238,14 +258,14 @@ export default {
       graphXml: '',
       activeNames: ['1', '2', '3'],
       isNode: false,
-      cellStyle: "",
+      cellStyle: '',
       graphX: 100,
       graphY: 10,
-      undoMng: "",
+      undoMng: '',
       uploadDataVisible: false,
       isOutputXml: false,
       edgeStyle: 'orthogonalEdgeStyle',
-      outline: "",
+      outline: '',
       idSeed: 0,
       normalIdSeed: 0,
       // configOrder: 0,
@@ -255,16 +275,16 @@ export default {
         top: '0',
         left: '0',
       },
-    }
+    };
   },
   methods: {
-
+    // 创建画布并进行初始化
     createGraph () {
       // 创建graph
       // 方式一：直接构建graph实例
       // this.graph = new mxGraph(this.$refs.container)
-      this.editor = new mxEditor()
-      this.graph = this.editor.graph
+      this.editor = new mxEditor();
+      this.graph = this.editor.graph;
       this.editor.setGraphContainer(this.$refs.container);
       // 配置默认全局样式
       this.configureStylesheet(this.graph);
@@ -276,6 +296,15 @@ export default {
 
       //cell创建支持传入html
       this.graph.setHtmlLabels(true);
+      this.graph.setDropEnabled(true);
+      this.graph.setSplitEnabled(false);
+      // 有效的拖放操作，则返回true
+      this.graph.isValidDropTarget = (target, cells, evt) => {
+        if (this.graph.isSplitEnabled() && this.graph.isSplitTarget(target, cells, evt)) {
+          console.log('拖放');
+          return true;
+        }
+      };
 
       // 禁用分组的收缩功能 方法1:
       // this.graph.isCellFoldable = (cell) => {
@@ -283,20 +312,19 @@ export default {
       // }
       // 禁用分组的收缩功能 方法2:
       this.graph.foldingEnabled = false;
+      // 组内的子元素是否随父元素变化而变化
+      this.graph.recursiveResize = true;
 
       // 设置连线时的预览路径及样式
       this.graph.connectionHandler.createEdgeState = () => {
         // 设置预览的连接线,第三个参数为连接成功后连接线上的label
         var edge = this.graph.createEdge(null, null, null, null, null);
-        console.log(edge)
+        console.log(edge);
         // edge.style += `;edgeStyle=orthogonalEdgeStyle `
         return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
       };
       // 显示中心端口图标
       this.graph.connectionHandler.targetConnectImage = true;
-
-      // 禁止连接线晃动(即连线两端必须在节点上)
-      // this.graph.setAllowDanglingEdges(false);
 
       // 是否开启旋转
       mxVertexHandler.prototype.livePreview = true;
@@ -305,38 +333,40 @@ export default {
       mxVertexHandler.prototype.createSizerShape = function (bounds, index, fillColor) {
         if (this.handleImage != null) {
           bounds = new mxRectangle(bounds.x, bounds.y, this.handleImage.width, this.handleImage.height);
-          var shape = new mxImageShape(bounds, this.handleImage.src);
+          let shape = new mxImageShape(bounds, this.handleImage.src);
           // Allows HTML rendering of the images
           shape.preserveImageAspect = true;
           return shape;
-        }
-        else if (index == mxEvent.ROTATION_HANDLE) {
+        } else if (index == mxEvent.ROTATION_HANDLE) {
           // return new mxDoubleEllipse(bounds, fillColor || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR);
-          // 设置i旋转图标
+          // 设置旋转图标
           bounds = new mxRectangle(bounds.x, bounds.y, 15, 15);
-          var rotationShape = new mxImageShape(bounds, './icon/旋转.svg');
+          let rotationShape = new mxImageShape(bounds, 'icon/rotate.svg');
           rotationShape.preserveImageAspect = true;
           return rotationShape;
-        }
-        else {
+        } else {
           return new mxRectangleShape(bounds, fillColor || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR);
         }
-
       };
-
+      // 设置旋转角度（解决默认旋转180度的bug）
+      mxVertexHandler.prototype.getRotationHandlePosition = function () {
+        let padding = this.getHandlePadding();
+        return new mxPoint(this.bounds.x + this.bounds.width - this.rotationHandleVSpacing + padding.x / 2, this.bounds.y + this.rotationHandleVSpacing - padding.y / 2);
+      };
       // 设置默认组
       // groupBorderSize 设置图形和它的子元素的边距
-      var group = new mxCell('Group', new mxGeometry(), 'group;fontColor=white;');
+      let group = new mxCell('Group', new mxGeometry(), 'group;fontColor=white;');
       group.setVertex(true);
       // 设置组可连接
-      group.setConnectable(true);
+      group.setConnectable(false);
+      // group.setCellsResizable(false);
       this.editor.defaultGroup = group;
-      this.editor.groupBorderSize = 40;
+      this.editor.groupBorderSize = 80;
 
       // 是否根元素
       this.graph.isValidRoot = function (cell) {
         return this.isValidDropTarget(cell);
-      }
+      };
 
       // 是否可以被选中
       this.graph.isCellSelectable = function (cell) {
@@ -349,37 +379,74 @@ export default {
         if (this.isCellLocked(cell)) {
           // 如元素被锁定 返回空标签
           return '';
-        }
-        else if (this.isCellCollapsed(cell)) {
+        } else if (this.isCellCollapsed(cell)) {
           var index = tmp.indexOf('</h1>');
           if (index > 0) {
             tmp = tmp.substring(0, index + 5);
           }
         }
         return tmp;
-      }
+      };
 
       // 目标是否有效
-      this.graph.isValidDropTarget = function (cell, cells, evt) {
-        console.log(cell, cells, evt)
+      this.graph.isValidDropTarget = function (cell) {
+        // console.log(cell, cells, evt);
         return this.isSwimlane(cell);
       };
 
       // 是否根元素
       this.graph.isValidRoot = function (cell) {
         return this.isValidDropTarget(cell);
-      }
-
-      // 是否可以被选中
-      this.graph.isCellSelectable = function (cell) {
-        return !this.isCellLocked(cell);
       };
 
-      // 禁用HTML的泳道标签，避免冲突
+      // 是否可以被选中
+      // this.graph.isCellSelectable(false)
+
+      // 允许重复连接
+      this.graph.setMultigraph(true);
+      // 禁止连接线晃动(即连线两端必须在节点上)
+      this.graph.setAllowDanglingEdges(false);
+      // 允许连线的目标和源是同一元素
+      this.graph.setAllowLoops(false);
+      //边被拖动时始终保持连接
+      this.graph.setDisconnectOnMove(false);
+      // 选择基本元素开启
+      this.graph.setEnabled(true);
+      // 动态改变样式
+      this.graph.getView().updateStyle = true;
+      // 鼠标框选
+      this.rubberBand = new mxRubberband(this.graph);
+      this.graph.setResizeContainer(true);
+
+      // 开启画布平滑移动
+      // this.graph.setPanning(true);
+      this.graph.setPanning = true;
+      // 开启提示
+      this.graph.setTooltips(false);
+      // 允许连线
+      this.graph.setConnectable(true);
+      //移动元素的步长
+      this.graph.gridSize = 3;
+      this.graph.setBorder(160);
+      // 禁止浮动自动连接
+      this.graph.connectionHandler.isConnectableCell = function () {
+        return false;
+      };
+      // 开启方块上的文字编辑功能
+      // this.graph.setCellsEditable(true);
+      // 禁止双击修改内容
+      this.graph.dblClick = (evt, cell) => {
+        var model = this.graph.getModel();
+        if (model.isVertex(cell)) {
+          return false;
+        }
+      };
+      // Disables synchronous loading of resources
+      // 可用于禁用HTML的泳道标签，避免冲突(返回false即可)
       // 判断是否为泳道标签
-      this.graph.isHtmlLabel = function (cell) {
-        return !this.isSwimlane(cell);
-      }
+      // this.graph.isHtmlLabel = function (cell) {
+      //   return this.isSwimlane(cell);
+      // };
       //准备撤销还原功能
       // 构造具有给定历史记录大小的新撤消管理器。默认100步
       this.undoMng = new mxUndoManager();
@@ -388,76 +455,73 @@ export default {
 
       };
       this.graph.getModel().addListener(mxEvent.UNDO, listener);
-      this.graph.getView().addListener(mxEvent.UNDO, listener)
-    },
-
-    // 初始化画布
-    initGraph () {
-      if ((this.graph) == null || (this.graph) == undefined) {
-        return
-      }
-      this.graph.convertValueToString = (cell) => {
-        // 从value中获取显示的内容
-        return cell['value'] ? cell['value'] : cell['title']
-      }
+      this.graph.getView().addListener(mxEvent.UNDO, listener);
       // 创建缩略图
       this.outline = new mxOutline(this.graph, this.$refs.styleSelect.$refs.showMap);
+      if ((this.graph) == null || (this.graph) == undefined) {
+        return;
+      }
+      // 从value中获取显示的内容(如果节点的value为空则显示节点的title)
+      this.graph.convertValueToString = (cell) => {
+        return cell['value'] ? cell['value'] : cell['title'];
+      };
     },
 
-    showNormalTypeSelect (sender, evt) {
-      let cell = evt.properties.cell.state.cell;
-      this.currentNormalType = cell
-
-    },
-
-    // 添加元素
-    addCell (toolItem, x, y) {
-      const { width, height } = toolItem
-      const styleObj = toolItem.style
-      const style = Object.keys(styleObj).map((attr) => `${attr}=${styleObj[attr]}`).join(';')
-      const parent = this.graph.getDefaultParent()
-      this.graph.getModel().beginUpdate()
+    // 新增自定义节点
+    addCustomCell (dropCell, toolItem, x, y) {
+      // 判断是否是放在组元素上
+      const drop = !R.isNil(dropCell);
+      // drop && this.$message.info(`${toolItem['title']}节点进入${dropCell.title}`);
+      const { width, height } = toolItem;
+      const styleObj = toolItem.style;
+      const style = Object.keys(styleObj).map((attr) => `${attr}=${styleObj[attr]}`).join(';');
+      const realX = drop ? x - dropCell.geometry.x : x;
+      const realY = drop ? y - dropCell.geometry.y : y;
+      const parent = drop ? dropCell : this.graph.getDefaultParent();
+      this.graph.getModel().beginUpdate();
       try {
-        let vertex = this.graph.insertVertex(parent, null, null, x, y, width, height, style)
-        // 预设置折叠大小
-        // vertex.geometry.alternateBounds = new mxRectangle(0, 0, 120, 40);
-        vertex.title = toolItem['title']
+        let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style);
+        vertex.title = toolItem['title'];
         vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
         // 添加完节点后自动添加顺序图标
-        this.addPoint(vertex, toolItem['idSeed'])
+        // this.addPoint(vertex, toolItem['idSeed']);
         toolItem['idSeed']++;
       } finally {
-        this.graph.getModel().endUpdate()
+        this.graph.getModel().endUpdate();
       }
-
     },
-
+    // 初始化基础节点
     initGeneralTool () {
       var generalToolbarDomArray = this.$refs.generalToolItems;
       // 判断是否为数组且数组是否为空
       if (!(generalToolbarDomArray instanceof Array || generalToolbarDomArray.length <= 0)) {
-        return
+        return;
       }
       generalToolbarDomArray.forEach((dom, domIndex) => {
-        var toolItem = this.generalToolbarItems[domIndex]
+        var toolItem = this.generalToolbarItems[domIndex];
         var { width, height } = toolItem;
-        var itemClass = (toolItem.class)
-        //定义拖拽后的回调函数
-        var generalDropHandler = (graph, evt, cell, x, y) => {
-          const { width, height } = toolItem
-          const styleObj = toolItem.style
-          const style = Object.keys(styleObj).map((attr) => `${attr}=${styleObj[attr]}`).join(';')
-          const parent = this.graph.getDefaultParent()
-          this.graph.getModel().beginUpdate()
+        var itemClass = (toolItem.class);
+        //新增基础节点
+        var generalDropHandler = (graph, evt, dropCell, x, y) => {
+          const drop = !R.isNil(dropCell);
+          // drop && this.$message.info(`${toolItem['title']}节点进入${dropCell.title}`);
+          const realX = drop ? x - dropCell.geometry.x : x;
+          const realY = drop ? y - dropCell.geometry.y : y;
+          const { width, height } = toolItem;
+          const styleObj = toolItem.style;
+          const style = Object.keys(styleObj).map((attr) => `${attr}=${styleObj[attr]}`).join(';');
+          const parent = drop ? dropCell : this.graph.getDefaultParent();
+          this.graph.getModel().beginUpdate();
           try {
-            let vertex = this.graph.insertVertex(parent, null, null, x - (width / 2), y - (height / 2), width, height, style)
-            vertex.title = toolItem['title']
+            let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style);
+            vertex.title = toolItem['title'];
+            vertex.dropAble = toolItem['dropAble'];
             vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
             toolItem['idSeed']++;
           } finally {
-            this.graph.getModel().endUpdate()
+            this.graph.getModel().endUpdate();
           }
-        }
+        };
         // 设置节点被拖拽时的样式(预览)
         var generalcreateDragPreview = () => {
           var elt = document.createElement('div');
@@ -465,60 +529,168 @@ export default {
           elt.style.height = `${height}px`;
           elt.style.transform = 'translate(-50%,-50%)';
           elt.className = itemClass;
-          return elt
-        }
+          return elt;
+        };
         // 允许拖拽
-        let ds = mxUtils.makeDraggable(dom, this.graph, generalDropHandler, generalcreateDragPreview(), 0, 0, true, true)
+        let ds = mxUtils.makeDraggable(dom, this.graph, generalDropHandler, generalcreateDragPreview(), 0, 0, true, true);
         ds.setGuidesEnabled(true);
-      })
+      });
     },
 
-    // 初始化工具栏
-    initToolbar () {
+    // 初始化自定义图标
+    initCustomToolbar () {
       // 获取工具栏中的自定义节点的dom
-      var toolbarDomArray = this.$refs.toolItem
+      var toolbarDomArray = this.$refs.toolItem;
       if (!(toolbarDomArray instanceof Array) || toolbarDomArray.length <= 0) {
-        return
+        return;
       }
       toolbarDomArray.forEach((dom, domIndex) => {
-        var toolItem = this.toolbarItems[domIndex]
-        var { width, height } = toolItem
-        var image = toolItem.style.image
+        var toolItem = this.toolbarItems[domIndex];
+        var { width, height } = toolItem;
+        var image = toolItem.style.image;
         //定义拖拽后的回调函数
         var dropHandler = (graph, evt, cell, x, y) => {
-          this.addCell(toolItem, x, y)
-        }
+          this.addCustomCell(cell, toolItem, x, y);
+        };
         // 设置节点被拖拽时的样式(预览)
         var createDragPreview = () => {
-          var elt = document.createElement('div')
-          elt.style.border = '2px dotted black'
-          elt.style.width = `${width}px`
-          elt.style.height = `${height}px`
-          elt.style.backgroundImage = `url(${image})`
-          elt.style.backgroundSize = `contain`
+          var elt = document.createElement('div');
+          elt.style.border = '2px dotted white';
+          elt.style.width = `${width}px`;
+          elt.style.height = `${height}px`;
+          elt.style.backgroundImage = `url(${image})`;
+          elt.style.backgroundSize = `contain`;
+          elt.style.transform = 'translate(-50%,-50%)';
           elt.style.backgroundRepeat = 'no-repeat';
-          return elt
-        }
+          return elt;
+        };
         // 允许拖拽
-        let ds = mxUtils.makeDraggable(dom, this.graph, dropHandler, createDragPreview(), 0, 0, true, true)
+        let ds = mxUtils.makeDraggable(dom, this.graph, dropHandler, createDragPreview(), 0, 0, false, true, true);
         ds.setGuidesEnabled(true);
+      });
+    },
+    // 拖拽组元素
+    makeToolbarDraggable () {
+      const grouptoolItem = this.$refs.grouptoolItem;
+      if (!(grouptoolItem instanceof Array)) {
+        return;
+      }
+      grouptoolItem.forEach((item, index) => {
+        const toolItem = this.grouptoolItems[index];
+        const { height, width } = toolItem;
+        // 创建拖拽时的预览图形
+        const createDragPreview = () => {
+          const elt = document.createElement('div');
+          elt.style.border = '2px dotted black';
+          elt.style.width = `${width}px`;
+          elt.style.height = `${height}px`;
+          elt.style.transform = 'translate(-50%,-50%)';
+          elt.className = toolItem.class;
+          return elt;
+        };
+        // drop的处理函数
+        const dropHandler = (graph, evt, cell, x, y) => {
+          this.instanceCell(cell, toolItem, x, y);
+        };
+        // 获取拖放的对象
+        const getDropTarget = (graph, x, y) => {
+          const cell = graph.getCellAt(x, y);
+          return R.propOr(null, 'dropAble', cell) ? cell : null;
+        };
+        mxUtils.makeDraggable(item, this.graph, dropHandler, createDragPreview(index), 0, 0, false, true, true, getDropTarget);
+      });
+    },
+    // 新增组元素
+    instanceCell (dropCell, toolItem, x, y) {
+      const drop = !R.isNil(dropCell);
+      // drop && this.$message.info(`${toolItem['title']}节点入${dropCell.title}`);
+      const styleObj = toolItem['style'] || {};
+      const style = Object.keys(styleObj).map((key) => `${key}=${styleObj[key]}`).join(';');
+      const realX = drop ? x - dropCell.geometry.x : x;
+      const realY = drop ? y - dropCell.geometry.y : y;
+      const { height, width } = toolItem;
+      const parent = drop ? dropCell : this.graph.getDefaultParent();
+      const isHtml = Object.is('1', toolItem['style']['html']);
+      const tmpIndex = Date.now();
+      const value = isHtml ? toolItem['html'](tmpIndex) : null;
+      this.graph.getModel().beginUpdate();
+      try {
+        const cell = this.graph.insertVertex(parent, null, value, realX - (width / 2), realY - (height / 2), width, height, style);
+        cell['title'] = toolItem['title'];
+        cell['dropAble'] = toolItem['dropAble'];
+        cell['id'] = toolItem['id'];
 
-      })
+        // 设置连接点
+        // cell['constraints'] = toolItem['constraints']
+        this.$nextTick(() => {
+          const createdCallback = toolItem['created'];
+          if (createdCallback instanceof Function) {
+            createdCallback(this.graph, cell, tmpIndex);
+          }
+        });
+      } finally {
+        this.graph.getModel().endUpdate();
+      }
     },
 
     // 基础配置函数
-    configOption () {
-      // 鼠标框选 
-      this.rubberBand = new mxRubberband(this.graph)
-      // 启动盘事件键
-      this.keyHandler = new mxKeyHandler(this.graph)
-      // 键盘按下删除键绑定事件
-      this.keyHandler.bindKey(46, () => {
-        let cells = this.graph.removeCells(this.graph.getSelectionCells());
-        this.graph.removeCells(cells, true);
-      })
+    eventCenter () {
 
       // 给graph添加事件
+      // 监听自定义事件
+      this.graph.addListener(mxEvent.NORMAL_TYPE_CLICKED, (sender, evt) => {
+        let cell = evt.properties.cell.state.cell;
+        this.currentNormalType = cell;
+      });
+      // this.graph.addListener(mxEvent.VERTEX_START_MOVE, (sender, evt) => {
+      //   console.log('VERTEX_START_MOVE', sender, evt);
+      // });
+      // 画布平移事件
+      this.graph.addListener(mxEvent.PAN, (sender, evt) => {
+        console.log('画布平移了', sender, evt);
+      });
+      // 新增节点事件
+      this.graph.addListener(mxEvent.ADD_CELLS, (sender, evt) => {
+        // let addCell = evt.properties.cells[0];
+        //   if (addCell.vertex) {
+        //     this.$message.info('添加了一个节点');
+        //   } else if (addCell.edge) {
+        //     this.$message.info('添加了一条线');
+        //   }
+        // });
+        console.log('mxEvent', mxEvent);
+        this.$nextTick(() => {
+          let addCell = evt.properties.cells[0];
+          addCell.parent.id === '1' ? this.$message.success(`新增${addCell.title ? addCell.title : '箭头'}节点成功`) : (addCell.parent.id.includes('group') && this.$message.success(`${addCell.title}节点进入${addCell.parent.title}成功`));
+        });
+      });
+
+      //拖动节点的事件
+      this.graph.addListener(mxEvent.CELLS_MOVED, (sender, evt) => {
+        // console.log(this.graph, 'graph');
+        let cellsName = [];
+        this.$nextTick(() => {
+          evt.properties.cells.forEach(item => {
+            item.parent.id.includes('group') && cellsName.push(item.title);
+          });
+          evt.properties.cells[0].parent.id !== '1' && this.$message.info(`${[...cellsName]}节点进入${evt.properties.cells[0].parent.title}`);
+        });
+      });
+      // 删除节点触发事件
+      this.graph.addListener(mxEvent.CELLS_REMOVED, (sender, evt) => {
+        this.$nextTick(() => {
+          let removeCells = evt.properties.cells;
+          let cellsName = [];
+          removeCells.forEach(item => {
+            cellsName.push(item.title);
+          });
+          this.$message.success(`移除${[...cellsName]}节点成功`);
+        });
+      });
+
+    },
+    // 配置鼠标事件
+    configMouseEvent () {
       this.graph.addMouseListener(
         {
           currentState: null,
@@ -526,10 +698,10 @@ export default {
 
           mouseDown: (sender, evt) => {
             if (!evt.state) {
-              console.log('点击了画布')
+              console.log('点击了画布');
               return;
             } else if (evt.state.cell.edge) {
-              console.log('点击了连线')
+              console.log('点击了连线');
               return;
             }
 
@@ -539,10 +711,10 @@ export default {
               clickNormalType = cell.style.includes('normalType');
             }
             if (clickNormalType) {
-              // 使用 mxGraph 事件中心，触发自定义事件
+              // 使用 mxGraph 事件中心，注册自定义事件
               this.graph.fireEvent(new mxEventObject(mxEvent.NORMAL_TYPE_CLICKED, 'cell', evt));
             } else {
-              return
+              return;
             }
           },
 
@@ -553,71 +725,95 @@ export default {
           },
 
           mouseUp: (sender, evt) => {
-            console.log("mouseUp")
-            if (evt.sourceState == undefined) {
-              return;
+            console.log('mouseUp');
+            if (evt.sourceState === undefined) {
+              return false;
             } else {
               var cell = evt.sourceState.cell;
+              // console.log(cell);
               //  var cell = this.graph.getSelectionCell();
               if (cell) {
-                cell.vertex ? this.isNode = true : this.isNode = false
+                cell.vertex ? this.isNode = true : this.isNode = false;
                 var getcellStyle = cell.getStyle() ? cell.getStyle() : null;
                 if (!this.isNode) {
-                  getcellStyle ? this.edgeStyle = getcellStyle : 'orthogonalEdgeStyle'
-                }
-                console.log("getcellStyle", getcellStyle)
-                if (getcellStyle) {
-                  var arr = getcellStyle.split(";")
-                  // arr.pop()
-                  var styleObject = {}
-                  arr.forEach((item => {
-                    styleObject[item.split("=")[0]] = item.split("=")[1]
-                  }))
-                  this.cellStyle = styleObject
-                  // if (this.isNode) {
-
-                  // }
+                  getcellStyle ? this.edgeStyle = getcellStyle : 'orthogonalEdgeStyle';
+                } else {
+                  // console.log('getcellStyle', getcellStyle);
+                  if (getcellStyle) {
+                    var arr = getcellStyle.split(';');
+                    // arr.pop()
+                    var styleObject = {};
+                    arr.forEach(item => {
+                      styleObject[item.split('=')[0]] = item.split('=')[1];
+                    });
+                    this.cellStyle = styleObject;
+                  }
                 }
               } else {
-                this.$message.error("请选择节点或者连线")
+                this.$message.error('请选择节点或者连线');
               }
             }
           },
         });
-      // 监听自定义事件
-      this.graph.addListener(mxEvent.NORMAL_TYPE_CLICKED, this.showNormalTypeSelect);
+    },
+    //配置键盘事件
+    configKeyEvent () {
+      // 启动盘事件键
+      this.keyHandler = new mxKeyHandler(this.graph);
+      // 键盘按下删除键绑定事件
+      this.keyHandler.bindKey(46, () => {
+        const cells = this.graph.getSelectionCells() || [];
+        this.graph.removeCells(cells, true);
+      });
+      this.keyHandler.bindControlKey(65, () => {
+        this.graph.selectAll();
+      });
+      this.keyHandler.bindControlKey(67, () => {
+        this.copy();
+      });
+      this.keyHandler.bindControlKey(88, () => {
+        this.cut();
+      });
+      this.keyHandler.bindControlKey(86, () => {
+        this.paste();
+      });
+      this.keyHandler.bindControlKey(89, () => {
+        this.goForward();
+      });
+      this.keyHandler.bindControlKey(90, () => {
+        this.goBack();
+      });
 
-      this.graph.setResizeContainer(true);
-      // 禁用浏览器默认的右键菜单栏 
-      mxEvent.disableContextMenu(this.$refs.container)
-
-      // 自定义右键菜单栏
+    },
+    //配置右键菜单栏
+    configMenu () {
+      // 禁用浏览器默认的右键菜单栏
+      mxEvent.disableContextMenu(this.$refs.container);
       this.graph.popupMenuHandler.factoryMethod = (menu) => {
         menu.addItem('输出所有节点', null, () => {
           Object.values(this.graph.getModel().cells).forEach((cell) => {
-            console.log(cell)
-          })
-        })
+            console.log(cell);
+          });
+        });
 
-        menu.addSeparator()
+        menu.addSeparator();
         menu.addItem('复制', null, () => {
-          let selectionCells = this.graph.getSelectionCells();
-          mxClipboard.copy(this.graph, selectionCells);
-        })
+          this.copy();
+        });
 
         menu.addItem('粘贴', null, () => {
-          mxClipboard.paste(this.graph);
-        })
+          this.paste();
+        });
 
-        menu.addSeparator()
+        menu.addSeparator();
         menu.addItem('组合', null, () => {
-          this.enGroup()
-        })
+          this.enGroup();
+        });
 
         menu.addItem('分解', null, () => {
           this.graph.ungroupCells(this.graph.getSelectionCells());
-        })
-        menu.addSeparator()
+        });
+        menu.addSeparator();
         menu.addItem('流动的线(测试)', null, () => {
           let cell = this.graph.getSelectionCell();
           if (cell && cell.edge) {
@@ -627,91 +823,67 @@ export default {
             state.shape.node.getElementsByTagName('path')[0].setAttribute('stroke', 'lightGray');
             state.shape.node.getElementsByTagName('path')[1].setAttribute('class', 'flow');
           } else {
-            this.$message.error("请选择连线")
+            this.$message.error('请选择连线');
           }
-        })
-        menu.addSeparator()
-        menu.addItem('配置完成', null, () => {
-          let cell = this.graph.getSelectionCell().children[0];
-          let cellArrayStyle = cell.getStyle().split(';');
-          cellArrayStyle.shift();
-          let cellStyle = {}
-          cellArrayStyle.forEach(item => {
-            cellStyle[item.split('=')[0]] = item.split('=')[1]
-          })
-          let cellImage = cellStyle['image'].replace('unselect', 'selected');
-          this.graph.setCellStyles(mxConstants.STYLE_IMAGE, cellImage, [cell]);
-          this.graph.refresh(cell)
-        })
-
+        });
+        menu.addSeparator();
+        // menu.addItem('配置完成', null, () => {
+        //   let cell = this.graph.getSelectionCell().children[0];
+        //   let cellArrayStyle = cell.getStyle().split(';');
+        //   cellArrayStyle.shift();
+        //   let cellStyle = {};
+        //   cellArrayStyle.forEach(item => {
+        //     cellStyle[item.split('=')[0]] = item.split('=')[1];
+        //   });
+        //   let cellImage = cellStyle['image'].replace('unselect', 'selected');
+        //   this.graph.setCellStyles(mxConstants.STYLE_IMAGE, cellImage, [cell]);
+        //   this.graph.refresh(cell);
+        // });
+        menu.addItem('全选', null, () => {
+          this.graph.selectAll();
+        });
+        menu.addItem('选中所有节点', null, () => {
+          this.graph.selectCells(true, false);
+        });
+        menu.addItem('选中所有连线', null, () => {
+          this.graph.selectCells(false, true);
+        });
         // 分割符号
-        menu.addSeparator()
+        menu.addSeparator();
         menu.addItem('修改样式', null, () => {
           var cell = this.graph.getSelectionCell();
           if (cell) {
-            cell.vertex ? this.isNode = true : this.isNode = false
-            var getcellStyle = cell.getStyle() ? cell.getStyle() : "";
+            cell.vertex ? this.isNode = true : this.isNode = false;
+            var getcellStyle = cell.getStyle() ? cell.getStyle() : '';
             if (getcellStyle) {
-              var arr = getcellStyle.split(";")
+              var arr = getcellStyle.split(';');
               //弹出最后一个空样式
               // arr.pop()
-              var styleObject = {}
+              var styleObject = {};
               arr.forEach((item => {
-                styleObject[item.split("=")[0]] = item.split("=")[1]
-              }))
-              this.cellStyle = styleObject
+                styleObject[item.split('=')[0]] = item.split('=')[1];
+              }));
+              this.cellStyle = styleObject;
               // if (this.isNode) {
 
               // }
             }
           } else {
-            this.$message.error("请选择节点或者连线")
+            this.$message.error('请选择节点或者连线');
           }
-        })
-      }
-      // 启用工具提示，新连接平滑移动  
-      this.graph.setPanning(true);
-
-      // 开启提示
-      this.graph.setTooltips(false);
-      // 允许连线
-      this.graph.setConnectable(true)
-
-      // 开启方块上的文字编辑功能
-      this.graph.setCellsEditable(true)
-
-      // 是否缩放网格
-      mxGraphHandler.prototype.scaleGrid = true;
-
-      // 启用导航线帮助定位
-      mxGraphHandler.prototype.guidesEnabled = true;
-      // Alt 按下禁用导航线
-      mxGraphHandler.prototype.useGuidesForEvent = function (me) {
-        return !mxEvent.isAltDown(me.getEvent());
+        });
       };
-      // 导航线颜色
-      mxConstants.GUIDE_COLOR = "#1a73e8";
-      // 导航线宽度
-      mxConstants.GUIDE_STROKEWIDTH = 2;
-      // 导航线自动连接到目标
-      mxEdgeHandler.prototype.snapToTerminals = true;
-      // 自动导航目标
-      mxEdgeHandler.prototype.snapToTerminals = true;
-
-      // 选择基本元素开启
-      this.graph.setEnabled(true);
     },
-
     //  配置全局样式
     configureStylesheet (graph) {
       // 设置节点的文字可被移动
-      graph.vertexLabelsMovable = true;
+      graph.vertexLabelsMovable = false;
       // 设置鼠标悬浮至节点或者连线时高亮显示的颜色
       new mxCellTracker(graph, '#409eff');
       var style = new Object();
       style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
       style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
+      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
       style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
       style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
       style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
@@ -766,24 +938,47 @@ export default {
       style[mxConstants.STYLE_STROKEWIDTH] = '2';
       style[mxConstants.STYLE_ROUNDED] = false;
       // 获取全局Edge、label样式
-      var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle()
+      var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle();
       // let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
       // 设置连线风格(设置为正交折线)
       edgeStyle['edgeStyle'] = 'orthogonalEdgeStyle';
 
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
       mxConstants.STYLE_WHITE_SPACE = 'wrap';
-      mxConstants.HANDLE_FILLCOLOR = '#99ccff'
-      mxConstants.HANDLE_STROKECOLOR = '#0088cf'
-      mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
+      mxConstants.HANDLE_FILLCOLOR = '#99ccff';
+      mxConstants.HANDLE_STROKECOLOR = '#0088cf';
+      mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection';
       mxConstants.STYLE_STYLE_ROTATION = 'rotation';
-      //移动元素的步长
-      this.graph.gridSize = 3;
-      this.graph.setBorder(160);
-      // Sets the image to be used for creating new connections
-      mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
-      // 设定连接点的位置、可编辑状态和图标
-      mxConstraintHandler.prototype.pointImage = new mxImage('./icon/dot.gif', 8, 8);
+      // 是否缩放网格
+      mxGraphHandler.prototype.scaleGrid = true;
+      mxGraph.prototype.pageBreakDashed = false;
+      // 启用导航线帮助定位
+      mxGraphHandler.prototype.guidesEnabled = true;
+      // Alt 按下禁用导航线
+      mxGraphHandler.prototype.useGuidesForEvent = function (me) {
+        return !mxEvent.isAltDown(me.getEvent());
+      };
+      // 导航线颜色
+      mxConstants.GUIDE_COLOR = '#1a73e8';
+      // 导航线宽度
+      mxConstants.GUIDE_STROKEWIDTH = 2;
+      // 导航线自动连接到目标
+      mxEdgeHandler.prototype.snapToTerminals = true;
+      // 自动导航目标
+      mxEdgeHandler.prototype.snapToTerminals = true;
+      // 选中线条时的颜色
+      mxConstants.EDGE_SELECTION_COLOR = '#a81f14';
+      // 选中节点时选中框的颜色
+      mxConstants.VERTEX_SELECTION_COLOR = '#99ccff';
+      //折叠-/展开+图标大小
+      // mxGraph.prototype.collapsedImage = new mxImage('images/collapsed.gif', 15, 15);
+      // mxGraph.prototype.expandedImage = new mxImage('images/expanded.gif', 15, 15);
+
+      // 配置节点中心的连接图标
+      mxConnectionHandler.prototype.connectImage = new mxImage('icon/dot.gif', 10, 10);
+
+      // 设定锚点的位置、可编辑状态和图标
+      mxConstraintHandler.prototype.pointImage = new mxImage('icon/dot.svg', 10, 10);
       mxShape.prototype.constraints = [
         new mxConnectionConstraint(new mxPoint(0, 0), true),
         new mxConnectionConstraint(new mxPoint(0.25, 0), true),
@@ -802,9 +997,15 @@ export default {
         new mxConnectionConstraint(new mxPoint(0.75, 1), true),
         new mxConnectionConstraint(new mxPoint(1, 1), true)];
       mxPolyline.prototype.constraints = null;
+      // 保留(可用于拖拽预览)
+      // const oldCreatePreviewShape = mxGraphHandler.prototype.createPreviewShape;
+      // mxGraphHandler.prototype.createPreviewShape = function createPreviewShape(...args) {
+      //   graph.fireEvent(new mxEventObject(mxEvent.VERTEX_START_MOVE));
+      //   return oldCreatePreviewShape.apply(this, args);
+      // };
     },
 
-    //设置虚线样式
+    //设置连线样式
     changeDashed (value) {
       var cell = this.graph.getSelectionCells();
       this.graph.setCellStyles(mxConstants.STYLE_DASHED, value, [...cell]);
@@ -868,32 +1069,32 @@ export default {
 
     // 删除节点
     deleteNode () {
-      this.graph.removeCells()
+      this.graph.removeCells();
     },
 
     // 修改连线样式
     edgeChange (value) {
       try {
         var cell = this.graph.getSelectionCells();
-        this.graph.setCellStyles("edgeStyle", value, [...cell]);
-        let style = cell[0].style
-        let valStr = cell[0].value
-        this.graph.removeCells(cell)
+        this.graph.setCellStyles('edgeStyle', value, [...cell]);
+        let style = cell[0].style;
+        let valStr = cell[0].value;
+        this.graph.removeCells(cell);
         let parent = this.graph.getDefaultParent();
         let v1 = '';
         let v2 = '';
         // 获取ID单元
         parent['children'].forEach(item => {
-          item['id'] === cell[0].source.id ? v1 = item : false
-          item['id'] === cell[0].target.id ? v2 = item : false
-        })
+          item['id'] === cell[0].source.id ? v1 = item : false;
+          item['id'] === cell[0].target.id ? v2 = item : false;
+        });
         this.graph.getModel().beginUpdate();
-        this.graph.insertEdge(parent, null, valStr, v1, v2, style)
+        this.graph.insertEdge(parent, null, valStr, v1, v2, style);
         this.graph.getModel().endUpdate();
-        this.$message.success("切换连线样式成功")
+        this.$message.success('切换连线样式成功');
       } catch (error) {
-        this.$message.error("切换连线样式失败")
-        console.log(error)
+        this.$message.error('切换连线样式失败');
+        console.log(error);
       }
     },
 
@@ -902,38 +1103,51 @@ export default {
       this.currentNormalType.title = val.newConfigOrder;
       // 修改指定cell的背景图片
       this.graph.setCellStyles(mxConstants.STYLE_IMAGE, `./images/order/unselect-${val.newConfigOrder}.png`, [this.currentNormalType]);
-      this.graph.refresh(this.currentNormalType)
+      this.graph.refresh(this.currentNormalType);
     },
 
+    //复制
+    copy () {
+      let selectionCells = this.graph.getSelectionCells();
+      mxClipboard.copy(this.graph, selectionCells);
+    },
+    //粘贴
+    paste () {
+      mxClipboard.paste(this.graph);
+    },
+    //剪切
+    cut () {
+      var cells = [];
+      cells = this.graph.getSelectionCells();
+      mxClipboard.cut(this.graph, cells);
+    },
     // 前进
     goForward () {
-      // 还原
       this.undoMng.redo();
     },
 
     // 撤退
     goBack () {
-      // 撤销
       this.undoMng.undo();
     },
 
     // 放大
     zoomIn () {
-      this.graph.zoomIn()
+      this.graph.zoomIn();
     },
 
     // 缩小
     zoomOut () {
-      this.graph.zoomOut()
+      this.graph.zoomOut();
     },
 
     // 等比例缩放
     autoSize () {
-      this.editor.execute('actualSize')
+      // 方法一
+      this.editor.execute('actualSize');
+      //方法二：
       // this.graph.fit();//自适应
       // this.graph.center(true, true, 0.5, 0.5);//将画布放到容器中间
-      // // var sc = graph.getView().getScale();//获取当前的缩放比例
-      // // this.graph.zoomTo(Math.round(sc / 6));//在缩放一半，否则是满屏状态，不好看
     },
 
     // 生成图片
@@ -942,33 +1156,35 @@ export default {
     },
 
     enGroup () {
-      this.editor.groupCells(this.graph.getSelectionCells());
+      this.editor.graph.setSelectionCell(this.editor.groupCells());
+      this.$message.success('组合成功');
+      // this.editor.groupCells(null, 0, this.graph.getSelectionCells());
     },
 
     // 开始导入xml文件
     inPutXml () {
       this.isOutputXml = false;
       this.uploadDataVisible = true;
-      this.graphXml = ''
+      this.graphXml = '';
     },
 
     // 导入xml文件后更新视图
     uploadPaintFlow (newvalue) {
-      this.graph.selectAll()
-      this.graph.removeCells(this.graph.getSelectionCells())
+      this.graph.selectAll();
+      this.graph.removeCells(this.graph.getSelectionCells());
       setTimeout(() => {
-        this.decode(newvalue, this.graph)
-        this.$message.success("渲染成功")
-      }, 1000)
+        this.decode(newvalue, this.graph);
+        this.$message.success('渲染成功');
+      }, 1000);
     },
 
     createXmlDom (str) {
       if (document.all) { //判断浏览器是否是IE
-        var xmlDom = new ActiveXObject("Microsoft.XMLDOM");
+        var xmlDom = new ActiveXObject('Microsoft.XMLDOM');
         xmlDom.loadXML(str);
         return xmlDom;
       } else {
-        return (new DOMParser()).parseFromString(str, "text/xml");
+        return (new DOMParser()).parseFromString(str, 'text/xml');
       }
     },
 
@@ -986,7 +1202,7 @@ export default {
         var dec = new mxCodec(node.ownerDocument);
         dec.decode(node, graph.getModel());
       } finally {
-        this.graph.getModel().endUpdate()
+        this.graph.getModel().endUpdate();
       }
     },
 
@@ -994,31 +1210,36 @@ export default {
     outPutXml () {
       this.isOutputXml = true;
       this.uploadDataVisible = true;
-      this.graphXml = this.encode(this.graph)
+      this.graphXml = this.encode(this.graph);
     },
 
     // 导出xml数据
     encode (graph) {
-      const encoder = new mxCodec()
-      const result = encoder.encode(graph.getModel())
-      return mxUtils.getPrettyXml(result)
+      const encoder = new mxCodec();
+      const result = encoder.encode(graph.getModel());
+      return mxUtils.getPrettyXml(result);
     },
-
+    //添加箭头组函数
     addStencilPalette (title, name, file) {
-      let req = mxUtils.load(file)
-      let root = req.getDocumentElement()
-      let shape = root.firstChild
-      this.$set(this.palettes, name, { title, name, shapes: [] })
+      let req = mxUtils.load(file);
+      let root = req.getDocumentElement();
+      let shape = root.firstChild;
+      this.$set(this.palettes, name, { title, name, shapes: [] });
       while (shape != null) {
         if (shape.nodeType === mxConstants.NODETYPE_ELEMENT) {
-          const shapeName = shape.getAttribute('name')
-          const h = shape.getAttribute('h')
+          const shapeName = shape.getAttribute('name');
+          const h = shape.getAttribute('h');
           // shape.querySelector('path').setAttribute('fill', 'transparent')
-          const w = shape.getAttribute('w')
-          mxStencilRegistry.addStencil(shapeName, new mxStencil(shape))
-          this.palettes[name]['shapes'].push({ name: shape.getAttribute('name'), width: w / 2, height: h / 2, fill: 'transparent' })
+          const w = shape.getAttribute('w');
+          mxStencilRegistry.addStencil(shapeName, new mxStencil(shape));
+          this.palettes[name]['shapes'].push({
+            name: shape.getAttribute('name'),
+            width: w / 2,
+            height: h / 2,
+            fill: 'transparent',
+          });
         }
-        shape = shape.nextSibling
+        shape = shape.nextSibling;
       }
     },
 
@@ -1026,130 +1247,140 @@ export default {
     initStencilToolBar () {
       var stencilDomArray = this.$refs.stencilDragItem;
       if (!(stencilDomArray instanceof Array) || stencilDomArray.length <= 0 || (this.graph == null || this.graph == undefined)) {
-        return
+        return;
       }
       stencilDomArray.forEach(dom => {
-        const shapeIndex = dom.getAttribute('shapeIndex')
-        const paletteIndex = dom.getAttribute('paletteIndex')
-        const shapeItem = Object.values(this.palettes)[paletteIndex]['shapes'][shapeIndex]
-        const shapeWidth = shapeItem['width']
-        const shapeHeight = shapeItem['height']
+        const shapeIndex = dom.getAttribute('shapeIndex');
+        const paletteIndex = dom.getAttribute('paletteIndex');
+        const shapeItem = Object.values(this.palettes)[paletteIndex]['shapes'][shapeIndex];
+        const shapeWidth = shapeItem['width'];
+        const shapeHeight = shapeItem['height'];
         const stencilDragHandler = (graph, evt, cell, x, y) => {
-          this.instanceGraph(this.graph, shapeItem, x, y, shapeWidth, shapeHeight)
-        }
+          this.instanceGraph(this.graph, shapeItem, x, y, shapeWidth, shapeHeight, cell);
+        };
         var createDragPreview = () => {
-          //设置鼠标拖拽节点时的样式
-          const elt = document.createElement('div')
-          elt.style.border = '2px dotted black'
-          elt.style.width = `${shapeWidth}px`
-          elt.style.height = `${shapeHeight}px`
-          return elt
-        }
-        dom.appendChild(this.createThumb(shapeItem, shapeWidth, shapeHeight))
-
-        mxUtils.makeDraggable(dom, this.graph, stencilDragHandler, createDragPreview(), 0, 0, false, true)
-      })
+          //设置鼠标拖拽箭头节点时的样式
+          const elt = document.createElement('div');
+          elt.style.border = '2px dotted white';
+          elt.style.cursor = 'pointer';
+          elt.style.width = `${shapeWidth}px`;
+          elt.style.height = `${shapeHeight}px`;
+          elt.style.transform = 'translate(-50%,-50%)';
+          return elt;
+        };
+        dom.appendChild(this.createThumb(shapeItem, shapeWidth, shapeHeight));
+        mxUtils.makeDraggable(dom, this.graph, stencilDragHandler, createDragPreview(), 0, 0, false, true);
+      });
     },
 
-    instanceGraph (graph, shapeItem, x, y, width, height) {
-      const stencilParent = graph.getDefaultParent()
-      graph.getModel().beginUpdate()
+    // 新增箭头节点
+    instanceGraph (graph, shapeItem, x, y, width, height, dropCell) {
+      const drop = !R.isNil(dropCell);
+      // drop && this.$message.info(`箭头节点入${dropCell.title}`);
+      const realX = drop ? x - dropCell.geometry.x : x;
+      const realY = drop ? y - dropCell.geometry.y : y;
+      const parent = drop ? dropCell : graph.getDefaultParent();
+      graph.getModel().beginUpdate();
       try {
-        let vertex = graph.insertVertex(stencilParent, null, null, x, y, width, height, `shape=${shapeItem['name']};`)
-
-        vertex.customer = true
+        let vertex = graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, `shape=${shapeItem['name']};`);
+        vertex.customer = true;
       } finally {
-        graph.getModel().endUpdate()
+        graph.getModel().endUpdate();
       }
     },
 
-    // 拖拽结束是新增的箭头节点
+    // 拖拽结束时新增的箭头节点
     createThumb (item, width, height) {
-      const tmpGraph = new mxGraph(document.createElement('div'))
-      const thumbBorder = 2
-      tmpGraph.labelsVisible = false
-      tmpGraph.view.scaleAndTranslate(1, 0, 0)
-      this.instanceGraph(tmpGraph, item, 0, 0, width, height)
-      const bounds = tmpGraph.getGraphBounds()
-      const s = Math.floor(Math.min((width - 2 * thumbBorder) / bounds.width, (height - 2 * thumbBorder) / bounds.height) * 100) / 100
+      const tmpGraph = new mxGraph(document.createElement('div'));
+      const thumbBorder = 2;
+      tmpGraph.labelsVisible = false;
+      tmpGraph.view.scaleAndTranslate(1, 0, 0);
+      this.instanceGraph(tmpGraph, item, 0, 0, width, height);
+      const bounds = tmpGraph.getGraphBounds();
+      const s = Math.floor(Math.min((width - 2 * thumbBorder) / bounds.width, (height - 2 * thumbBorder) / bounds.height) * 100) / 100;
 
-      tmpGraph.view.scaleAndTranslate(s, Math.floor((width - bounds.width * s) / 2 / s - bounds.x), Math.floor((height - bounds.height * s) / 2 / s - bounds.y))
+      tmpGraph.view.scaleAndTranslate(s, Math.floor((width - bounds.width * s) / 2 / s - bounds.x), Math.floor((height - bounds.height * s) / 2 / s - bounds.y));
 
-      const node = tmpGraph.view.getCanvas().ownerSVGElement.cloneNode(true)
+      const node = tmpGraph.view.getCanvas().ownerSVGElement.cloneNode(true);
 
-      node.style.position = 'relative'
-      node.style.overflow = 'hidden'
-      node.style.cursor = 'move'
-      node.style.width = `${width}px`
-      node.style.height = `${height}px`
-      node.style.left = `${thumbBorder}px`
-      node.style.top = `${thumbBorder}px`
-      node.style.display = 'inline-block'
-      return node
+      node.style.position = 'relative';
+      node.style.overflow = 'hidden';
+      node.style.cursor = 'pointer';
+      node.style.width = `${width}px`;
+      node.style.height = `${height}px`;
+      node.style.left = `${thumbBorder}px`;
+      node.style.top = `${thumbBorder}px`;
+      node.style.display = 'inline-block';
+      return node;
     },
 
     // 添加序号图标
-    addPoint (cell, number) {
-      const normalTypeVertex = this.graph.insertVertex(cell, null, null,
-        1, 1, 30, 30,
-        `port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-${number}.png;spacingLeft=18;spacingBottom=18`, true);
-      // 固定序号图标的位置.不随节点变大而改变位置
-      normalTypeVertex.geometry.offset = new mxPoint(-18, -18);
-      // 序号图标无法连接
-      normalTypeVertex.setConnectable(false);
-      normalTypeVertex.id = (cell.id).split('-')[0] + `-unselect-${number}`;
-      normalTypeVertex.value = number;
-      normalTypeVertex.geometry.relative = true;
-      // 将新增的图标鼠标悬浮换成手势的图案
-      const oldGetCursorForCell = mxGraph.prototype.getCursorForCell;
-      this.graph.getCursorForCell = function (...args) {
-        const [cell] = args;
-        if (cell.edge || cell.style == undefined) {
-          return
-        }
-        return cell.style.includes('normalType') ?
-          'pointer' :
-          oldGetCursorForCell.apply(this, args);
-      };
-
-    },
+    // addPoint(cell, number) {
+    //   const normalTypeVertex = this.graph.insertVertex(cell, null, null,
+    //     1, 1, 30, 30,
+    //     `port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-${number}.png;spacingLeft=18;spacingBottom=18`, true);
+    //   // 固定序号图标的位置.不随节点变大而改变位置
+    //   normalTypeVertex.geometry.offset = new mxPoint(-18, -18);
+    //   // 序号图标无法连接
+    //   normalTypeVertex.setConnectable(false);
+    //   normalTypeVertex.id = (cell.id).split('-')[0] + `-unselect-${number}`;
+    //   normalTypeVertex.value = number;
+    //   normalTypeVertex.geometry.relative = true;
+    //   // 将新增的图标鼠标悬浮换成手势的图案
+    //   const oldGetCursorForCell = mxGraph.prototype.getCursorForCell;
+    //   this.graph.getCursorForCell = function (...args) {
+    //     const [cell] = args;
+    //     if (cell.edge || cell.style == undefined) {
+    //       return;
+    //     }
+    //     return cell.style.includes('normalType') ?
+    //       'pointer' :
+    //       oldGetCursorForCell.apply(this, args);
+    //   };
+    // },
 
     // 加载案例流程图
     loadFlowCase (index) {
       this.$confirm('请确认您当前流程图数据已保存至本地 ?', '提示', {
         confirmButtonText: '我已保存',
         cancelButtonText: '取消加载',
-        type: 'warning'
+        type: 'warning',
       }).then(() => {
-        let loadData = "";
+        let loadData = '';
         switch (index) {
-          case 1: loadData = xmlData1; break
-          case 2: loadData = xmlData2; break
-          case 3: loadData = xmlData3; break
+          case 1:
+            loadData = xmlData1;
+            break;
+          case 2:
+            loadData = xmlData2;
+            break;
+          case 3:
+            loadData = xmlData3;
+            break;
         }
-        let newXml = mxUtils.load(loadData).request.response
-        this.graph.selectAll()
-        this.graph.removeCells(this.graph.getSelectionCells())
+        console.log('loadData', loadData);
+        let newXml = mxUtils.load(loadData).request.response;
+        this.graph.selectAll();
+        this.graph.removeCells(this.graph.getSelectionCells());
         setTimeout(() => {
-          this.decode(newXml, this.graph)
+          this.decode(newXml, this.graph);
 
-          this.$message.success("加载流程图案例成功")
-        }, 1000)
+          this.$message.success('加载流程图案例成功');
+        }, 1000);
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消加载流程图案例'
+          message: '已取消加载流程图案例',
         });
       });
-    }
+    },
   },
 
   mounted () {
     // 检测浏览器兼容性
     if (!mxClient.isBrowserSupported()) {
       this.$message.error('当前浏览器不支持拓扑图功能，请更换浏览器访问，建议使用Chrome浏览器访问!');
-    }
-    else {
+    } else {
       // Overridden to define per-shape connection points
       mxGraph.prototype.getAllConnectionConstraints = function (terminal) {
         if (terminal != null && terminal.shape != null) {
@@ -1157,28 +1388,31 @@ export default {
             if (terminal.shape.stencil.constraints != null) {
               return terminal.shape.stencil.constraints;
             }
-          }
-          else if (terminal.shape.constraints != null) {
+          } else if (terminal.shape.constraints != null) {
             return terminal.shape.constraints;
           }
         }
         return null;
       };
-      this.createGraph()
-      this.initGraph()
-      this.configOption()
-      this.addStencilPalette('箭头组', 'arrows', path.join('./stencil/arrows.xml'))
+      this.createGraph();
+      this.eventCenter();
+      this.configMouseEvent();
+      this.configKeyEvent();
+      this.configMenu();
+      this.addStencilPalette('箭头组', 'arrows', path.join('./stencil/arrows.xml'));
       this.$nextTick(() => {
-        this.initToolbar();
-        this.initGeneralTool()
+        this.initCustomToolbar();
+        this.initGeneralTool();
         this.initStencilToolBar();
-      })
-
+        this.makeToolbarDraggable();
+      });
     }
-  }
+  },
+  beforeDestroy () {
+    this.graph.destroy();
+  },
 }
 </script>
-
 <style lang="less">
 @import "./general-shap.css";
 .customToolbarContainer {
@@ -1284,7 +1518,7 @@ export default {
     flex: 1;
   }
   .graphContainer-background {
-    background-image: url("../../assets/grid.png");
+    background-image: url("../../assets/grid.gif");
   }
   .top-tools {
     position: absolute;
@@ -1313,7 +1547,7 @@ export default {
     padding-left: 30px;
   }
   .style-select {
-    width: 15%;
+    width: 260px;
     background-color: #fff;
     height: 100%;
     position: absolute;
@@ -1368,6 +1602,7 @@ div.mxPopupMenu {
     -webkit-text-fill-color: #515151;
   }
 }
+
 .flow {
   stroke-dasharray: 8;
   animation: dash 0.5s linear;
@@ -1377,5 +1612,14 @@ div.mxPopupMenu {
   to {
     stroke-dashoffset: -16;
   }
+}
+.group-item {
+  cursor: pointer;
+  height: 40px;
+  margin: 5px 0;
+  line-height: 40px;
+  width: 80%;
+  display: inline-block;
+  border: 1px solid #eeee;
 }
 </style>

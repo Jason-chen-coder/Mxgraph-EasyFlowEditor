@@ -171,22 +171,14 @@ export const generalToolbarItems = [
   {
     index: 12,
     idSeed: 1,
-    title: "Text",
-    id: "Text",
+    title: "line",
+    id: "line",
     class: "common line",
     width: 70,
     height: 20,
     style: {
       margin_left: 10,
-      shape: "Line",
-      strokeColor: 'transparent',
-      strokeWidth: '1',
-      html: 1,
-      fillColor: '#FFFFFF',
-      verticalAlign: mxConstants.ALIGN_MIDDLE,
-      align: mxConstants.ALIGN_CENTER,
-      whiteSpace: 'wrap',
-      rounded: 0,
+      shape: "line",
     }
   }
 ]

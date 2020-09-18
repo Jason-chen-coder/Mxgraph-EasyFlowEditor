@@ -1,7 +1,5 @@
 import mx from 'mxgraph'
-const mxgraph = mx({
-  // mxBasePath: './'
-})
+const mxgraph = mx({})
 // decode bug https://github.com/jgraph/mxgraph/issues/49
 window.mxGraph = mxgraph.mxGraph
 window.mxGraphModel = mxgraph.mxGraphModel
