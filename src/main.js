@@ -9,7 +9,6 @@ import JsonViewer from 'vue-json-viewer'
 Vue.use(JsonViewer)
 Vue.use(ElementUI);
 Vue.config.productionTip = false
-
 new Vue({
   render: h => h(App),
   router

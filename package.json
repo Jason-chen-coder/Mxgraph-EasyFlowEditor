@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "element-ui": "^2.13.2",
     "exports-loader": "^1.1.0",
+    "jquery": "^3.5.1",
     "less-loader": "^6.1.2",
     "lodash": "^4.17.20",
     "mxgraph": "^4.2.0",
@@ -19,7 +20,8 @@
     "vue": "^2.6.11",
     "vue-codemirror": "^4.0.6",
     "vue-json-viewer": "^2.2.14",
-    "vue-router": "^3.3.4"
+    "vue-router": "^3.3.4",
+    "x2js": "^3.4.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

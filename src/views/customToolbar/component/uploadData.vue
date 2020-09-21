@@ -2,7 +2,7 @@
   <el-dialog
     :title="isOutputXml ? '数据导出':'数据导入'"
     :visible.sync="centerDialogVisible"
-    width="70%"
+    width="70%;"
     center
     @close="close"
   >
@@ -30,12 +30,24 @@
       </div>
     </el-upload>
     <!--codemirror插件-->
-    <codemirror
-      :value="currentNodeData"
-      v-model="currentNodeData"
-      :options="options"
-      class="codemirror"
-    ></codemirror>
+    <div style="display:flex">
+      <codemirror
+        :value="currentNodeData"
+        v-model="currentNodeData"
+        :options="options"
+        :style="{'width': isOutputXml ? '50%':'100%'}"
+        class="codemirror"
+      ></codemirror>
+      <!-- xml转json -->
+      <json-viewer
+        v-if="isOutputXml"
+        class="xmlToJson"
+        :value="xml2json"
+        :expand-depth="5"
+        copyable
+        sort
+      ></json-viewer>
+    </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="cancelUpload">取 消</el-button>
       <el-button type="primary" @click="confirmUpload" v-if="!isOutputXml">导入</el-button>
@@ -69,11 +81,13 @@ import 'codemirror/addon/fold/foldcode'
 import 'codemirror/addon/fold/foldgutter'
 import 'codemirror/addon/fold/brace-fold'
 import 'codemirror/addon/fold/comment-fold'
+import X2JS from '../x2js'
 
 export default {
   props: ['graphXml', 'isOutputXml'],
   data () {
     return {
+      xml2json: '',
       uploadFiles: [],
       centerDialogVisible: false,
       currentNodeData: "",
@@ -99,7 +113,11 @@ export default {
   watch: {
     currentNodeData: {
       handler (newvalue) {
-        this.currentNodeData = newvalue
+        // let xmljson = x2js.xml2js(newvalue) //xml2js方法，传入xml格式的数据，返回json对象
+        //创建一个x2js对象进行转换
+        var x2js = new X2JS();
+        this.xml2json = x2js.xml_str2json(newvalue);
+        // this.currentNodeData = newvalue
       },
       immediate: true,
       deep: true
@@ -110,6 +128,7 @@ export default {
     this.currentNodeData = this.graphXml
   },
   methods: {
+
     close () {
       this.centerDialogVisible = false
       this.$parent.uploadDataVisible = false;
@@ -188,5 +207,16 @@ export default {
   top: -30px;
   left: 10px;
   content: "数据预览 :";
+}
+.xmlToJson {
+  width: 50%;
+  height: 100%;
+}
+.xmlToJson::before {
+  position: absolute;
+  font-size: 17px;
+  top: 0px;
+  left: 10px;
+  content: "XML转JSON :";
 }
 </style>
