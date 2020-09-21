@@ -685,14 +685,11 @@ export default {
             //  向jsonData中更新数据
           } else if (addCell.edge) {
             console.log(addCell)
+            let lineObj = _.pick(addCell, ['id', 'edge', 'source', 'parent', 'geometry', 'value']);
+            this.jsonData['edges'].push(lineObj);
             this.$message.info('添加了一条线');
           }
         })
-        // console.log('mxEvent', mxEvent);
-        // this.$nextTick(() => {
-        //   let addCell = evt.properties.cells[0];
-        //   addCell.parent.id === '1' ? this.$message.success(`新增${addCell.title ? addCell.title : '箭头'}节点成功`) : (addCell.parent.id.includes('group') && this.$message.success(`${addCell.title}节点进入${addCell.parent.title}成功`));
-        // });
       });
 
       //拖动节点的事件
@@ -710,11 +707,24 @@ export default {
       this.graph.addListener(mxEvent.CELLS_REMOVED, (sender, evt) => {
         this.$nextTick(() => {
           let removeCells = evt.properties.cells;
-          let cellsName = [];
+          console.log(removeCells, 'removeCells')
           removeCells.forEach(item => {
-            cellsName.push(item.title);
+            // 拿每一个cellId在jsonData中进行遍历,并进行移除
+            if (item.vertex) {
+              // 判断是否为组节点
+              if (item.isGroup) {
+                this.$message.info(`移除了${item.id}组`);
+                this.jsonData['cells']['groups'].splice(this.jsonData['cells']['groups'].findIndex(jsonItem => { return jsonItem.id === item.id }), 1)
+              } else {
+                this.$message.info(`移除${item.id}节点`);
+                this.jsonData['cells']['nodes'].splice(this.jsonData['cells']['nodes'].findIndex(jsonItem => { return jsonItem.id === item.id }), 1)
+              }
+            } else if (item.edge) {
+              this.$message.info('移除了线');
+              this.jsonData['edges'].splice(this.jsonData['edges'].findIndex(jsonItem => { return jsonItem.id === item.id }), 1)
+            }
+            // this.jsonData.forEach(item)
           });
-          this.$message.success(`移除${[...cellsName]}节点成功`);
         });
       });
 
@@ -792,8 +802,7 @@ export default {
       this.keyHandler = new mxKeyHandler(this.graph);
       // 键盘按下删除键绑定事件
       this.keyHandler.bindKey(46, () => {
-        const cells = this.graph.getSelectionCells() || [];
-        this.graph.removeCells(cells, true);
+        this.deleteNode()
       });
       this.keyHandler.bindControlKey(65, () => {
         this.graph.selectAll();
@@ -813,7 +822,6 @@ export default {
       this.keyHandler.bindControlKey(90, () => {
         this.goBack();
       });
-
     },
     //配置右键菜单栏
     configMenu () {
@@ -1107,7 +1115,8 @@ export default {
 
     // 删除节点
     deleteNode () {
-      this.graph.removeCells();
+      var cells = this.graph.getSelectionCells();
+      this.graph.removeCells([...cells]);
     },
 
     // 修改连线样式
@@ -1439,7 +1448,6 @@ export default {
       this.createGraph();
       this.eventCenter();
       this.configMouseEvent();
-      this.configKeyEvent();
       this.configMenu();
       this.addStencilPalette('箭头组', 'arrows', path.join('./stencil/arrows.xml'));
       this.$nextTick(() => {
@@ -1447,6 +1455,7 @@ export default {
         this.initGeneralTool();
         this.initStencilToolBar();
         this.makeToolbarDraggable();
+        this.configKeyEvent();
       });
     }
   },
@@ -1601,9 +1610,9 @@ export default {
     .json-viewer {
       overflow: auto;
       position: absolute;
-      top: 60%;
+      top: 30%;
       width: 260px;
-      height: 800px;
+      height: 70%;
       bottom: 0;
       right: 0;
     }

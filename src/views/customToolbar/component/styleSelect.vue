@@ -301,7 +301,7 @@ export default {
 <style lang="less">
 .styleTool {
   width: 100%;
-  height: 100%;
+  height: 30%;
   transition: all 1s linear;
   .hide-styleTool {
     right: -340px;
