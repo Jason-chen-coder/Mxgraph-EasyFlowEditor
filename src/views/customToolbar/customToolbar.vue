@@ -230,6 +230,7 @@ const {
   mxCell,
   mxShape,
   mxConstraintHandler,
+  mxEllipse,
   // mxTriangle,
   mxConnectionConstraint,
   mxPolyline,
@@ -678,7 +679,7 @@ export default {
               let groupObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
               this.jsonData['cells']['groups'].push(groupObj);
             } else {
-              let nodeObj = _.pick(addCell, ['id', , 'title', 'parent', 'geometry']);
+              let nodeObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
               this.jsonData['cells']['nodes'].push(nodeObj);
               this.$message.info('添加了一个节点');
             }
@@ -1024,7 +1025,12 @@ export default {
       mxConnectionHandler.prototype.connectImage = new mxImage('icon/dot.gif', 10, 10);
 
       // 设定锚点的位置、可编辑状态和图标
-      mxConstraintHandler.prototype.pointImage = new mxImage('icon/dot.svg', 10, 10);
+      mxConstraintHandler.prototype.pointImage = new mxImage('icon/dot.svg', 10, 10)
+      // 设置锚点上的高亮颜色
+      mxConstraintHandler.prototype.createHighlightShape = function () {
+        return new mxEllipse(null, '#409eff99', '#409eff99', 14)
+      }
+
       mxShape.prototype.constraints = [
         new mxConnectionConstraint(new mxPoint(0, 0), true),
         new mxConnectionConstraint(new mxPoint(0.25, 0), true),
