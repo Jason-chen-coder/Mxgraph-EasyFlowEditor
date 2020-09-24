@@ -93,11 +93,13 @@
       </el-tab-pane>
       <el-tab-pane label="文本">
         <el-form :inline="true" :model="form" class="style-form" size="mini" label-position="left">
+          <el-form-item label="文字内容">
+            <el-input v-model="cellTextValue" @change="$emit('textValueChange', cellTextValue)"></el-input>
+          </el-form-item>
           <el-form-item label="字体大小">
             <el-input-number
               v-model="form.fontSize"
               @change="$emit('changeFontSize', form.fontSize)"
-              label="字体大小"
             ></el-input-number>
           </el-form-item>
           <el-row>
@@ -144,7 +146,7 @@
 </template>
 <script>
 export default {
-  props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'currentNormalType'],
+  props: ['isNode', 'cellStyle', 'graphY', 'graphX', 'currentNormalType', 'textValue'],
   data () {
     return {
       edgeOptions: [
@@ -170,6 +172,7 @@ export default {
       fontIsStrickout: false,
       newConfigOrder: 0,
       newConfigOrderId: '',
+      cellTextValue: '',
       fontStyle: 0,
       predefineColors: [
         '#ff4500',
@@ -245,7 +248,6 @@ export default {
   watch: {
     cellStyle: {
       handler (newvalue) {
-        console.log('newvalue', newvalue)
         this.form.dashed = newvalue.dashed ? newvalue.dashed : '0';
         this.form.strokeWidth = newvalue.strokeWidth;
         this.form.strokeColor = newvalue.strokeColor;
@@ -289,6 +291,9 @@ export default {
       handler (newvalue) {
         this.$emit("changeFontStyle", newvalue)
       }
+    },
+    textValue (newValue) {
+      this.cellTextValue = newValue;
     }
   },
   methods: {

@@ -167,6 +167,8 @@
         @changeFontStyle="changeFontStyle"
         @changeNodeimage="changeNodeimage"
         @edgeChange="edgeChange"
+        @textValueChange="textValueChange"
+        :textValue="textValue"
         :isNode="isNode"
         :cellStyle="cellStyle"
         :currentNormalType="currentNormalType"
@@ -176,7 +178,7 @@
       />
       <div class="json-viewer">
         <h4 style="text-align:center">Json数据结构</h4>
-        <json-viewer :value="jsonData" style="height:100%" :expand-depth="5" copyable sort></json-viewer>
+        <json-viewer :value="jsonData" style="height:80%" copyable sort></json-viewer>
       </div>
     </div>
 
@@ -271,6 +273,7 @@ export default {
       graphX: 100,
       graphY: 10,
       undoMng: '',
+      textValue: '',
       uploadDataVisible: false,
       isOutputXml: false,
       edgeStyle: 'orthogonalEdgeStyle',
@@ -335,12 +338,9 @@ export default {
       this.graph.connectionHandler.createEdgeState = () => {
         // 设置预览的连接线,第三个参数为连接成功后连接线上的label
         var edge = this.graph.createEdge(null, null, null, null, null);
-        console.log(edge);
         // edge.style += `;edgeStyle=orthogonalEdgeStyle `
         return new mxCellState(this.graph.view, edge, this.graph.getCellStyle(edge));
       };
-      // 显示中心端口图标
-      this.graph.connectionHandler.targetConnectImage = true;
 
       // 是否开启旋转
       mxVertexHandler.prototype.livePreview = true;
@@ -374,7 +374,7 @@ export default {
       let group = new mxCell('Group', new mxGeometry(), 'group;fontColor=white;');
       group.setVertex(true);
       // 设置组可连接
-      group.setConnectable(false);
+      group.setConnectable(true);
       // group.setCellsResizable(false);
       this.editor.defaultGroup = group;
       this.editor.groupBorderSize = 80;
@@ -384,10 +384,10 @@ export default {
         return this.isValidDropTarget(cell);
       };
 
-      // 是否可以被选中
-      this.graph.isCellSelectable = function (cell) {
-        return !this.isCellLocked(cell);
-      };
+      // // 是否可以被选中
+      // this.graph.isCellSelectable = function (cell) {
+      //   return !this.isCellLocked(cell);
+      // };
 
       // 返回元素
       this.graph.getLabel = function (cell) {
@@ -416,7 +416,7 @@ export default {
       };
 
       // 是否可以被选中
-      // this.graph.isCellSelectable(false)
+      this.graph.isCellSelectable(true)
 
       // 允许重复连接
       this.graph.setMultigraph(true);
@@ -438,16 +438,13 @@ export default {
       // this.graph.setPanning(true);
       this.graph.setPanning = true;
       // 开启提示
-      this.graph.setTooltips(false);
+      this.graph.setTooltips(true);
       // 允许连线
       this.graph.setConnectable(true);
       //移动元素的步长
       this.graph.gridSize = 3;
       this.graph.setBorder(160);
-      // 禁止浮动自动连接
-      this.graph.connectionHandler.isConnectableCell = function () {
-        return false;
-      };
+
       // 开启方块上的文字编辑功能
       // this.graph.setCellsEditable(true);
       // 禁止双击修改内容
@@ -679,7 +676,7 @@ export default {
               let groupObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
               this.jsonData['cells']['groups'].push(groupObj);
             } else {
-              let nodeObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
+              let nodeObj = _.pick(addCell, ['id', , 'title', 'parent', 'geometry']);
               this.jsonData['cells']['nodes'].push(nodeObj);
               this.$message.info('添加了一个节点');
             }
@@ -774,11 +771,16 @@ export default {
               // console.log(cell);
               //  var cell = this.graph.getSelectionCell();
               if (cell) {
+                this.textValue = cell['value'] ? cell['value'] : cell['title'];
+                console.log(this.textValue, 'cellValue')
+                console.log('cellValuie', cell)
                 cell.vertex ? this.isNode = true : this.isNode = false;
                 var getcellStyle = cell.getStyle() ? cell.getStyle() : null;
                 if (!this.isNode) {
+                  // 点击的不是节点
                   getcellStyle ? this.edgeStyle = getcellStyle : 'orthogonalEdgeStyle';
                 } else {
+                  // 点击的是节点
                   // console.log('getcellStyle', getcellStyle);
                   if (getcellStyle) {
                     var arr = getcellStyle.split(';');
@@ -978,13 +980,16 @@ export default {
       style[mxConstants.STYLE_ROUNDED] = true;
       // 获取全局Edge、label样式
       var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle();
-      // let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
+      let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
+      labelStyle[mxConstants.STYLE_WHITE_SPACE] = 'wrap'; //自动换行
+      console.log(labelStyle, 'labelStyle')
       // 设置连线风格(设置为正交折线)
       edgeStyle['edgeStyle'] = 'orthogonalEdgeStyle';
 
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
-      mxConstants.STYLE_WHITE_SPACE = 'wrap';
-      mxConstants.HANDLE_FILLCOLOR = '#99ccff';
+      style[mxConstants.STYLE_WHITE_SPACE] = 'wrap'
+
+      mxConstants.HANDLE_FILLCOLOR = '#409eff';
       mxConstants.HANDLE_STROKECOLOR = 'transparent';
       mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection';
       mxConstants.STYLE_STYLE_ROTATION = 'rotation';
@@ -1011,24 +1016,36 @@ export default {
       mxConstants.GUIDE_STROKEWIDTH = 2;
       // 导航线自动连接到目标
       mxEdgeHandler.prototype.snapToTerminals = true;
-      // 自动导航目标
-      mxEdgeHandler.prototype.snapToTerminals = true;
-      // 选中线条时的颜色
-      mxConstants.EDGE_SELECTION_COLOR = '#a81f14';
+      // 选中线条时的虚线颜色
+      mxConstants.EDGE_SELECTION_COLOR = '#99ccff';
+      // mxConstants.DEFAULT_INVALID_COLOR = 'yellow';
+      // mxConstants.INVALID_CONNECT_TARGET_COLOR = 'yellow';
+      // 连线(未满足连线要求)时预览的颜色
+      mxConstants.INVALID_COLOR = '#99ccff';
+      // 连线(满足连线要求)时预览的颜色
+      mxConstants.VALID_COLOR = 'blue';
+      // mxConstants.GUIDE_COLOR = 'yellow';
+      // mxConstants.LOCKED_HANDLE_FILLCOLOR = '#24bcab';
       // 选中节点时选中框的颜色
       mxConstants.VERTEX_SELECTION_COLOR = '#99ccff';
+
       //折叠-/展开+图标大小
       // mxGraph.prototype.collapsedImage = new mxImage('images/collapsed.gif', 15, 15);
       // mxGraph.prototype.expandedImage = new mxImage('images/expanded.gif', 15, 15);
 
       // 配置节点中心的连接图标
-      mxConnectionHandler.prototype.connectImage = new mxImage('icon/dot.gif', 10, 10);
-
+      mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
+      // 显示中心端口图标
+      graph.connectionHandler.targetConnectImage = false;
+      // 是否开启浮动自动连接
+      this.graph.connectionHandler.isConnectableCell = function () {
+        return true;
+      };
       // 设定锚点的位置、可编辑状态和图标
       mxConstraintHandler.prototype.pointImage = new mxImage('icon/dot.svg', 10, 10)
       // 设置锚点上的高亮颜色
       mxConstraintHandler.prototype.createHighlightShape = function () {
-        return new mxEllipse(null, '#409eff99', '#409eff99', 14)
+        return new mxEllipse(null, '#409eff99', '#409eff99', 5)
       }
 
       mxShape.prototype.constraints = [
@@ -1049,12 +1066,6 @@ export default {
         new mxConnectionConstraint(new mxPoint(0.75, 1), true),
         new mxConnectionConstraint(new mxPoint(1, 1), true)];
       mxPolyline.prototype.constraints = null;
-      // 保留(可用于拖拽预览)
-      // const oldCreatePreviewShape = mxGraphHandler.prototype.createPreviewShape;
-      // mxGraphHandler.prototype.createPreviewShape = function createPreviewShape(...args) {
-      //   graph.fireEvent(new mxEventObject(mxEvent.VERTEX_START_MOVE));
-      //   return oldCreatePreviewShape.apply(this, args);
-      // };
     },
 
     //设置连线样式
@@ -1151,6 +1162,12 @@ export default {
       }
     },
 
+    // 修改节点文本内容
+    textValueChange (value) {
+      var cell = this.graph.getSelectionCells();
+      console.log(value, '节点文本新内容', this.graph);
+      this.graph.cellLabelChanged(cell[0], value)
+    },
     changeConfigOrder (val) {
       // 获取当前的normalType元素,并更新他的title
       this.currentNormalType.title = val.newConfigOrder;
@@ -1616,7 +1633,7 @@ export default {
     .json-viewer {
       overflow: auto;
       position: absolute;
-      top: 30%;
+      top: 35%;
       width: 260px;
       height: 70%;
       bottom: 0;
