@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title="isOutputXml ? '数据导出':'数据导入'"
+    :title="isOutputXml ? '数据导出' : '数据导入'"
     :visible.sync="centerDialogVisible"
     width="70%;"
     center
@@ -24,18 +24,17 @@
         <em>点击上传</em>
         <div slot="tip" class="el-upload__tip">
           只能上传
-          <em>xml</em> 文件，且最大文件数量不超过
-          <em>1</em> 个
+          <em>xml</em> 文件，且最大文件数量不超过 <em>1</em> 个
         </div>
       </div>
     </el-upload>
     <!--codemirror插件-->
-    <div style="display:flex">
+    <div style="display: flex">
       <codemirror
         :value="currentNodeData"
         v-model="currentNodeData"
         :options="options"
-        :style="{'width': isOutputXml ? '50%':'100%'}"
+        :style="{ width: isOutputXml ? '50%' : '100%' }"
         class="codemirror"
       ></codemirror>
       <!-- xml转json -->
@@ -50,8 +49,12 @@
     </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="cancelUpload">取 消</el-button>
-      <el-button type="primary" @click="confirmUpload" v-if="!isOutputXml">导入</el-button>
-      <el-button type="primary" @click="saveXmlFile" v-if="isOutputXml">另存为XML文件</el-button>
+      <el-button type="primary" @click="confirmUpload" v-if="!isOutputXml"
+        >导入</el-button
+      >
+      <el-button type="primary" @click="saveXmlFile" v-if="isOutputXml"
+        >另存为XML文件</el-button
+      >
     </span>
   </el-dialog>
 </template>

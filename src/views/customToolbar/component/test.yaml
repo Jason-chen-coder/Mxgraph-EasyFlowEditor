@@ -1,0 +1,17 @@
+
+rules_folder: example_rules 	      //用来加载rule的目录，默认是example_rules
+run_every: 			                    //ElastAlert多久查询一次Elasticsearch
+  minutes: 1
+buffer_time:			                  //用来设置请求里时间字段的范围
+   minutes: 15
+es_host: 192.168.232.191 	          //elasticsearch的host地址,每个规则都可以拥有自己的Elasticsearch主机
+es_port: 9200 			                //elasticsearch 对应的端口号
+es_url_prefix: elasticsearch 	      // 可选的，es url前缀
+es_send_get_body_as: GET  	        // 可选的，查询es的方式，默认是GET,如果由于某种原因失败，则可以传递“ GET”，“ POST”或“ source”。
+use_ssl: True			                  //可选的，选择是否用SSL连接es，true或者false
+verify_certs: True 		              //可选的，是否验证TLS证书，设置为true或者false，默认为- true
+es_username: someusername           //es认证的username和password,如果未使用可注释
+es_password: somepassword
+writeback_index: elastalert_status   //elastalert产生的日志在elasticsearch中的创建的索引
+alert_time_limit: 			             //失败重试的时间限制
+ days: 2

@@ -3,15 +3,33 @@
     <!-- 左侧节点/放大缩小工具 菜单 -->
     <div class="toolbarContainer">
       <div class="aside-button-group">
-        <el-button-group style="margin:10px 0 ">
-          <el-tooltip class="item" effect="dark" content="放大" placement="bottom">
+        <el-button-group style="margin: 10px 0">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="放大"
+            placement="bottom"
+          >
             <el-button icon="el-icon-zoom-in" @click="zoomIn"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="缩小" placement="bottom">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="缩小"
+            placement="bottom"
+          >
             <el-button icon="el-icon-zoom-out" @click="zoomOut"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="等比缩放" placement="bottom">
-            <el-button @click="autoSize" icon="iconfont icon-expandalt-fill"></el-button>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="等比缩放"
+            placement="bottom"
+          >
+            <el-button
+              @click="autoSize"
+              icon="iconfont icon-expandalt-fill"
+            ></el-button>
           </el-tooltip>
         </el-button-group>
       </div>
@@ -27,7 +45,7 @@
             :key="item['index']"
             ref="generalToolItems"
           >
-            <span class="generalTooltitle">{{item['text']}}</span>
+            <span class="generalTooltitle">{{ item["text"] }}</span>
           </span>
         </el-collapse-item>
         <el-collapse-item name="2" class="custom-toolbar">
@@ -36,14 +54,14 @@
           <span
             v-for="item in toolbarItems"
             style
-            :class="{'rectangle-node':item['nodeType']==='rectangle'} "
+            :class="{ 'rectangle-node': item['nodeType'] === 'rectangle' }"
             class="custom-node"
             :key="item['title']"
             ref="toolItem"
           >
             <img style :src="item['icon']" />
             <br />
-            <span class="node-title">{{item['title']}}</span>
+            <span class="node-title">{{ item["title"] }}</span>
           </span>
         </el-collapse-item>
         <!-- 箭头模板图标 -->
@@ -73,7 +91,7 @@
               class="group-item"
               ref="grouptoolItem"
             >
-              <b>{{item.title}}</b>
+              <b>{{ item.title }}</b>
             </li>
           </ul>
         </el-collapse-item>
@@ -84,18 +102,52 @@
       <el-col :span="4">
         <div
           class="grid-content bg-purple"
-          style="color: rgb(64, 158, 255);font-weight: 800;font-size: 22px;margin-left: 44px;"
-        >Easy Editor</div>
+          style="
+            color: rgb(64, 158, 255);
+            font-weight: 800;
+            font-size: 22px;
+            margin-left: 44px;
+          "
+        >
+          Easy Editor
+        </div>
       </el-col>
       <el-col :span="12" class="tools-group">
-        <el-tooltip class="item" effect="dark" content="组合" placement="bottom">
-          <el-button type="text" icon="iconfont icon-zuhe" @click="enGroup"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="组合"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-zuhe"
+            @click="enGroup"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="导入xml文件" placement="bottom">
-          <el-button type="text" icon="iconfont icon-fileplus-fill" @click="inPutXml"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="导入xml文件"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-fileplus-fill"
+            @click="inPutXml"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="导出xml文件" placement="bottom">
-          <el-button type="text" icon="iconfont icon-xmloutput" @click="outPutXml"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="导出xml文件"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-xmloutput"
+            @click="outPutXml"
+          ></el-button>
         </el-tooltip>
         <el-tooltip
           class="item"
@@ -107,40 +159,96 @@
           <el-button
             type="text"
             icon="iconfont icon-dituleiwanggequ-copy"
-            @click="showBackground=false"
+            @click="showBackground = false"
           ></el-button>
         </el-tooltip>
-        <el-tooltip v-else class="item" effect="dark" content="显示网格背景" placement="bottom">
+        <el-tooltip
+          v-else
+          class="item"
+          effect="dark"
+          content="显示网格背景"
+          placement="bottom"
+        >
           <el-button
             type="text"
             icon="iconfont icon-fangxingweixuanzhong-copy"
-            @click="showBackground=true"
+            @click="showBackground = true"
           ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="导出为图片" placement="bottom">
-          <el-button type="text" icon="iconfont icon-tupian" @click="showImage"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="导出为图片"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-tupian"
+            @click="showImage"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="树形布局" placement="bottom">
-          <el-button type="text" icon="iconfont icon-Directory-tree"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="树形布局"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-Directory-tree"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="撤销" placement="bottom">
-          <el-button type="text" icon="iconfont icon-reply" @click="goBack"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="撤销"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-reply"
+            @click="goBack"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="前进" placement="bottom">
-          <el-button type="text" icon="iconfont icon-share" @click="goForward"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="前进"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-share"
+            @click="goForward"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="删除" placement="bottom">
-          <el-button type="text" icon="el-icon-delete-solid" @click="deleteNode"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="删除"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="el-icon-delete-solid"
+            @click="deleteNode"
+          ></el-button>
         </el-tooltip>
       </el-col>
       <el-col :span="8">
         <div
           class="grid-content bg-purple"
-          style="display:flex;justify-content: flex-end;padding-right:20px"
+          style="display: flex; justify-content: flex-end; padding-right: 20px"
         >
-          <el-button round size="medium" @click="loadFlowCase(1)">化工流程案例</el-button>
-          <el-button round size="medium" @click="loadFlowCase(2)">组件管理案例</el-button>
-          <el-button round size="medium" @click="loadFlowCase(3)">Vue生命周期案例</el-button>
+          <el-button round size="medium" @click="loadFlowCase(1)"
+            >化工流程案例</el-button
+          >
+          <el-button round size="medium" @click="loadFlowCase(2)"
+            >组件管理案例</el-button
+          >
+          <el-button round size="medium" @click="loadFlowCase(3)"
+            >Vue生命周期案例</el-button
+          >
         </div>
       </el-col>
     </div>
@@ -149,7 +257,7 @@
       class="graphContainer"
       id="graphContainer"
       ref="container"
-      :class="{'graphContainer-background':showBackground}"
+      :class="{ 'graphContainer-background': showBackground }"
     ></div>
     <!-- 右侧栏 -->
     <div class="right-bar">
@@ -177,8 +285,13 @@
         ref="styleSelect"
       />
       <div class="json-viewer">
-        <h4 style="text-align:center">Json数据结构</h4>
-        <json-viewer :value="jsonData" style="height:80%" copyable sort></json-viewer>
+        <h4 style="text-align: center">Json数据结构</h4>
+        <json-viewer
+          :value="jsonData"
+          style="height: 80%"
+          copyable
+          sort
+        ></json-viewer>
       </div>
     </div>
 
@@ -676,7 +789,7 @@ export default {
               let groupObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
               this.jsonData['cells']['groups'].push(groupObj);
             } else {
-              let nodeObj = _.pick(addCell, ['id', , 'title', 'parent', 'geometry']);
+              let nodeObj = _.pick(addCell, ['id', 'title', 'parent', 'geometry']);
               this.jsonData['cells']['nodes'].push(nodeObj);
               this.$message.info('添加了一个节点');
             }
