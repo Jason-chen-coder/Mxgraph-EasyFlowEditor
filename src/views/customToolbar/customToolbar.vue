@@ -416,9 +416,9 @@ export default {
     createGraph () {
       // 创建graph
       // 方式一：直接构建graph实例
-      this.graph = new mxGraph(this.$refs.container)
+      // this.graph = new mxGraph(this.$refs.container)
       this.editor = new mxEditor();
-      // this.graph = this.editor.graph;
+      this.graph = this.editor.graph;
       this.editor.setGraphContainer(this.$refs.container);
       // 配置默认全局样式
       this.configureStylesheet(this.graph);
@@ -553,7 +553,7 @@ export default {
       // this.graph.setPanning(true);
       this.graph.setPanning = true;
       // 开启提示
-      this.graph.setTooltips(true);
+      this.graph.setTooltips(false);
       // 允许连线
       this.graph.setConnectable(true);
       //移动元素的步长
