@@ -329,7 +329,7 @@ const {
   mxConstants,
   mxImage,
   mxCellState,
-  mxConnectionHandler,
+  // mxConnectionHandler,
   mxCodec,
   mxRectangleShape,
   mxPoint,
@@ -347,6 +347,8 @@ const {
   mxConstraintHandler,
   mxEllipse,
   // mxTriangle,
+  mxSvgCanvas2D,
+  mxImageExport,
   mxConnectionConstraint,
   mxPolyline,
   mxVertexHandler,
@@ -414,9 +416,9 @@ export default {
     createGraph () {
       // 创建graph
       // 方式一：直接构建graph实例
-      // this.graph = new mxGraph(this.$refs.container)
+      this.graph = new mxGraph(this.$refs.container)
       this.editor = new mxEditor();
-      this.graph = this.editor.graph;
+      // this.graph = this.editor.graph;
       this.editor.setGraphContainer(this.$refs.container);
       // 配置默认全局样式
       this.configureStylesheet(this.graph);
@@ -1146,8 +1148,8 @@ export default {
       // mxGraph.prototype.collapsedImage = new mxImage('images/collapsed.gif', 15, 15);
       // mxGraph.prototype.expandedImage = new mxImage('images/expanded.gif', 15, 15);
 
-      // 配置节点中心的连接图标
-      mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
+      // 配置节点中心的连接图标(注釋掉即可指定錨點連接到另一個節點的錨點上)
+      // mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
       // 显示中心端口图标
       graph.connectionHandler.targetConnectImage = false;
       // 是否开启浮动自动连接
@@ -1158,7 +1160,7 @@ export default {
       mxConstraintHandler.prototype.pointImage = new mxImage('icon/dot.svg', 10, 10)
       // 设置锚点上的高亮颜色
       mxConstraintHandler.prototype.createHighlightShape = function () {
-        return new mxEllipse(null, '#409eff99', '#409eff99', 5)
+        return new mxEllipse(null, '#409eff99', '#409eff99', 15)
       }
 
       mxShape.prototype.constraints = [
@@ -1337,8 +1339,65 @@ export default {
     // 生成图片
     showImage () {
       this.editor.execute('show');//直接页面跳转,并以svg流程图
+      // 下载svg流程图
+      console.log('this.gtaph', this.graph)
+      const svg = this.exportModelSvg();
+      const blob = new Blob([svg], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      let link = document.createElement('a');
+      link.href = url;
+      link.download = 'model.svg';
+      link.click();
     },
 
+    exportModelSvg () {
+      let scale = this.graph.view.scale;
+      let bounds = this.graph.getGraphBounds();
+      let border = 10;
+
+      // Prepares SVG document that holds the output
+      let svgDoc = mxUtils.createXmlDocument();
+      let root = (svgDoc.createElementNS != null) ?
+        svgDoc.createElementNS(mxConstants.NS_SVG, 'svg') : svgDoc.createElement('svg');
+
+      if (root.style != null) {
+        root.style.backgroundColor = '#FFFFFF';
+      } else {
+        root.setAttribute('style', 'background-color:#FFFFFF');
+      }
+
+      if (svgDoc.createElementNS == null) {
+        root.setAttribute('xmlns', mxConstants.NS_SVG);
+      }
+      let width = Math.ceil(bounds.width * scale / scale + 2 * border);
+      let height = Math.ceil(bounds.height * scale / scale + 2 * border);
+      root.setAttribute('class', 'svg-container');
+      root.setAttribute('width', width + 'px');
+      root.setAttribute('height', height + 'px');
+      root.setAttribute('viewBox', "0 0 " + width + " " + height);
+      root.setAttribute('xmlns:xlink', mxConstants.NS_XLINK);
+      root.setAttribute('version', '1.1');
+
+      // Adds group for anti-aliasing via transform
+      let group = (svgDoc.createElementNS != null) ?
+        svgDoc.createElementNS(mxConstants.NS_SVG, 'g') : svgDoc.createElement('g');
+      group.setAttribute('transform', 'translate(0.5,0.5)');
+      root.appendChild(group);
+      svgDoc.appendChild(root);
+
+      // Renders graph. Offset will be multiplied with state's scale when painting state.
+      let svgCanvas = new mxSvgCanvas2D(group);
+      svgCanvas.translate(Math.floor(border / scale - bounds.x), Math.floor(border / scale - bounds.y));
+      svgCanvas.scale(scale);
+
+      let imgExport = new mxImageExport();
+      imgExport.drawState(this.graph.getView().getState(this.graph.model.root), svgCanvas);
+
+      //let xml = encodeURIComponent(mxUtils.getXml(root)); //no need
+      let xml = mxUtils.getXml(root);
+      return xml;
+
+    },
     enGroup () {
       this.editor.graph.setSelectionCell(this.editor.groupCells());
       this.$message.success('组合成功');
