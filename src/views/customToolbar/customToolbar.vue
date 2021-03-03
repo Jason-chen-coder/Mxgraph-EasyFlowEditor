@@ -190,12 +190,49 @@
         <el-tooltip
           class="item"
           effect="dark"
+          content="环形布局"
+          placement="bottom"
+        >
+          <el-button
+            @click="graphLayout(true, 'circleLayout')"
+            type="text"
+            icon="el-icon-stopwatch"
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip
+          class="item"
+          effect="dark"
           content="树形布局"
           placement="bottom"
         >
           <el-button
             type="text"
+            @click="graphLayout(true, 'compactTreeLayout')"
             icon="iconfont icon-Directory-tree"
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="随机布局"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            @click="graphLayout(true, 'randomLayout')"
+            icon="el-icon-c-scale-to-original"
+          ></el-button>
+        </el-tooltip>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="分层布局"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            @click="graphLayout(true, 'hierarchicalLayout')"
+            icon="el-icon-files"
           ></el-button>
         </el-tooltip>
         <el-tooltip
@@ -347,6 +384,11 @@ const {
   mxConstraintHandler,
   mxEllipse,
   // mxTriangle,
+  mxFastOrganicLayout,
+  mxHierarchicalLayout,
+  mxCompactTreeLayout,
+  mxMorphing,
+  mxCircleLayout,
   mxSvgCanvas2D,
   mxImageExport,
   mxConnectionConstraint,
@@ -561,14 +603,14 @@ export default {
       this.graph.setBorder(160);
 
       // 开启方块上的文字编辑功能
-      // this.graph.setCellsEditable(true);
-      // 禁止双击修改内容
-      this.graph.dblClick = (evt, cell) => {
-        var model = this.graph.getModel();
-        if (model.isVertex(cell)) {
-          return false;
-        }
-      };
+      this.graph.setCellsEditable(true);
+      // 禁止双击修改内容(弃用)
+      // this.graph.dblClick = (evt, cell) => {
+      //   var model = this.graph.getModel();
+      //   if (model.isVertex(cell)) {
+      //     return false;
+      //   }
+      // };
       // Disables synchronous loading of resources
       // 可用于禁用HTML的泳道标签，避免冲突(返回false即可)
       // 判断是否为泳道标签
@@ -608,7 +650,7 @@ export default {
       const parent = drop ? dropCell : this.graph.getDefaultParent();
       this.graph.getModel().beginUpdate();
       try {
-        let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style);
+        let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style + ';whiteSpace=wrap;word-break=break-all');
         vertex.title = toolItem['title'];
         vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
         // 添加完节点后自动添加顺序图标
@@ -617,6 +659,56 @@ export default {
         vertex['isGroup'] = toolItem['id'].includes('group') ? true : false
       } finally {
         this.graph.getModel().endUpdate();
+      }
+    },
+    // 布局
+    graphLayout (animate, layoutType) {
+      this.graph.getModel().beginUpdate()
+      try {
+        if (layoutType === 'randomLayout') {
+          // 随机布局
+          mxFastOrganicLayout.prototype.minDistanceLimit = 100
+          // eslint-disable-next-line new-cap
+          var layout = new mxFastOrganicLayout(this.graph)
+          layout.forceConstant = 500
+          layout.execute(this.graph.getDefaultParent())
+        } else if (layoutType === 'hierarchicalLayout') {
+          // 分层布局
+          mxHierarchicalLayout.prototype.intraCellSpacing = 300
+          mxHierarchicalLayout.prototype.fineTuning = false
+          mxHierarchicalLayout.prototype.traverseAncestors = false
+          mxHierarchicalLayout.prototype.resizeParent = true
+          // 无关系实体之间的间距
+          mxHierarchicalLayout.prototype.interHierarchySpacing = 200
+          // 层级之间的距离
+          mxHierarchicalLayout.prototype.interRankCellSpacing = 800
+
+          // eslint-disable-next-line new-cap
+          var hierarchicallayout = new mxHierarchicalLayout(this.graph, mxConstants.DIRECTION_NORTH)
+          hierarchicallayout.execute(this.graph.getDefaultParent())
+        } else if (layoutType === 'compactTreeLayout') {
+          // 树形布局
+          // eslint-disable-next-line new-cap
+          var compactTreelayout = new mxCompactTreeLayout(this.graph)
+          compactTreelayout.execute(this.graph.getDefaultParent())
+        } else if (layoutType === 'circleLayout') {
+          // 圆形布局
+          // eslint-disable-next-line new-cap
+          var circleLayout = new mxCircleLayout(this.graph, 400)
+          circleLayout.execute(this.graph.getDefaultParent())
+        }
+      } finally {
+        // 是否开启布局动画
+        if (animate) {
+          // eslint-disable-next-line new-cap
+          var morph = new mxMorphing(this.graph, 20, 7.7, 40)
+          morph.addListener(mxEvent.DONE, () => {
+            this.graph.getModel().endUpdate()
+          })
+          morph.startAnimation()
+        } else {
+          this.graph.getModel().endUpdate()
+        }
       }
     },
     // 初始化基础节点
@@ -642,8 +734,8 @@ export default {
           const parent = drop ? dropCell : this.graph.getDefaultParent();
           this.graph.getModel().beginUpdate();
           try {
-            let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style);
-            vertex.title = toolItem['title'];
+            let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style + ';whiteSpace=wrap;word-break=break-all');
+            vertex.title = `<div style='word-break:break-all'>`+toolItem['title']+'</div>';
             vertex.dropAble = toolItem['dropAble'];
             vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
             toolItem['idSeed']++;
@@ -746,7 +838,7 @@ export default {
       const value = isHtml ? toolItem['html'](tmpIndex) : null;
       this.graph.getModel().beginUpdate();
       try {
-        const vertex = this.graph.insertVertex(parent, null, value, realX - (width / 2), realY - (height / 2), width, height, style);
+        const vertex = this.graph.insertVertex(parent, null, value, realX - (width / 2), realY - (height / 2), width, height, style + ';whiteSpace=wrap;word-break=break-all');
         vertex['title'] = toolItem['title'];
         vertex['dropAble'] = toolItem['dropAble'];
         vertex['id'] = toolItem['id'];
@@ -1052,6 +1144,9 @@ export default {
       style[mxConstants.STYLE_FONTFAMILY] = 'Verdana';    // 字体风格
       style[mxConstants.STYLE_FONTSIZE] = '12';           // 字体大小
       style[mxConstants.STYLE_FONTSTYLE] = '0';           // 斜体字
+      style[mxConstants.WORD_WRAP] = 'normal';             // 文字换行    word-break: break-all;
+      style[mxConstants['word-break']] = 'break-all';             // 文字换行
+      style[mxConstants.STYLE_WHITE_SPACE] = 'wrap';             // 文字换行
       style[mxConstants.STYLE_ROUNDED] = false;             // 圆角
       style[mxConstants.STYLE_IMAGE_WIDTH] = '28';        // 图片宽度
       style[mxConstants.STYLE_IMAGE_HEIGHT] = '28';       // 图片高度
@@ -1096,13 +1191,13 @@ export default {
       // 获取全局Edge、label样式
       var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle();
       let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
-      labelStyle[mxConstants.STYLE_WHITE_SPACE] = 'wrap'; //自动换行
+      // labelStyle[mxConstants.STYLE_WHITE_SPACE] = 'wrap'; //自动换行
       console.log(labelStyle, 'labelStyle')
       // 设置连线风格(设置为正交折线)
       edgeStyle['edgeStyle'] = 'orthogonalEdgeStyle';
 
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
-      style[mxConstants.STYLE_WHITE_SPACE] = 'wrap'
+      // style[mxConstants.STYLE_WHITE_SPACE] = 'wrap'
 
       mxConstants.HANDLE_FILLCOLOR = '#409eff';
       mxConstants.HANDLE_STROKECOLOR = 'transparent';
@@ -1527,7 +1622,7 @@ export default {
       const parent = drop ? dropCell : graph.getDefaultParent();
       graph.getModel().beginUpdate();
       try {
-        let cell = graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, `shape=${shapeItem['name']};`);
+        let cell = graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, `shape=${shapeItem['name']};whiteSpace=wrap;word-break=break-all;`);
         cell['isGroup'] = false
         cell.customer = true;
       } finally {
@@ -1620,8 +1715,14 @@ export default {
         });
       });
     },
+    handleScroll (e) {
+      if (e.wheelDelta === 120) {
+        this.graph.zoomIn()
+      } else {
+        this.graph.zoomOut()
+      }
+    },
   },
-
   mounted () {
     // 检测浏览器兼容性
     if (!mxClient.isBrowserSupported()) {
@@ -1653,8 +1754,10 @@ export default {
         this.configKeyEvent();
       });
     }
+    document.getElementById('graphContainer').addEventListener('mousewheel', this.handleScroll, true) // 监听（绑定）滚轮滚动事件
   },
-  beforeDestroy () {
+  destroyed () {
+    document.getElementById('graphContainer').removeEventListener('mousewheel', this.handleScroll) //  离开页面清除（移除）滚轮滚动事件
     this.graph.destroy();
   },
 }
