@@ -119,7 +119,10 @@ API 方法使用总结：
     source 和 target –参数定义了节点要连接的节点;注意,源节点 和目标节点需要已经被加入到模型中。
 
 **注意:**
-1.mxGraph 事物的更新(插入新元素时)一定要放在 beginUpdate 和 endUpdate 里面。一次 beginUpdate 必须对应一次 endUpdate 2.由于 mxGraph 配置了默认的样式(节点字体、连线等元素样式)和默认的配置所以样式看起来比较单一;我们可以在绘制图形前修改 mxGraph 默认配置好的配置项,来达到我们想要的效果;
+
+1.mxGraph 事物的更新(插入新元素时)一定要放在 beginUpdate 和 endUpdate 里面。一次 beginUpdate 必须对应一次 endUpdate
+
+2.由于 mxGraph 配置了默认的样式(节点字体、连线等元素样式)和默认的配置所以样式看起来比较单一;我们可以在绘制图形前修改 mxGraph 默认配置好的配置项,来达到我们想要的效果;
 
 3.mxgraph 的自定义配置
 
@@ -212,7 +215,9 @@ export default {
 </style>
 ```
 
-注意: 1.我们在配置中会用到 mxGraph 中其他的模块,所以我们使用到 mxGraph 的哪个方法就得把它们 import 进来。
+注意:
+
+1.我们在配置中会用到 mxGraph 中其他的模块,所以我们使用到 mxGraph 的哪个方法就得把它们 import 进来。
 
 2.mxGraph 中有三个主要的组件：mxGraph、mxGraphModel、mxCell。mxGraph 是用户直接操作的图，图的所有状态都保存在 mxGraphModel 中，而图中的顶点和边都是用 mxCell 定义。
 
@@ -341,10 +346,7 @@ position: absolute;
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165805725.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
-```
-	5.3修改连线样式
-
-```
+5.3 修改连线样式
 
 ```js
     mxEdgeStyle 中定义了线的各种样式：Loop、ElbowConnector、SideToSide等等，可以通过以下方式自定义连线样式：
