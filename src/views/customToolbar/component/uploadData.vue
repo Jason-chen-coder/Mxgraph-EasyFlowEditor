@@ -84,7 +84,7 @@ import 'codemirror/addon/fold/foldcode'
 import 'codemirror/addon/fold/foldgutter'
 import 'codemirror/addon/fold/brace-fold'
 import 'codemirror/addon/fold/comment-fold'
-import X2JS from '../x2js'
+import X2JS from 'x2js'
 
 export default {
   props: ['graphXml', 'isOutputXml'],
@@ -119,7 +119,7 @@ export default {
         // let xmljson = x2js.xml2js(newvalue) //xml2js方法，传入xml格式的数据，返回json对象
         //创建一个x2js对象进行转换
         var x2js = new X2JS();
-        this.xml2json = x2js.xml_str2json(newvalue);
+        this.xml2json = x2js.xml2js(newvalue);
         // this.currentNodeData = newvalue
       },
       immediate: true,

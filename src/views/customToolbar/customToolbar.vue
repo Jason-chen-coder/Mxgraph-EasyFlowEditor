@@ -366,7 +366,7 @@ const {
   mxConstants,
   mxImage,
   mxCellState,
-  // mxConnectionHandler,
+  mxConnectionHandler,
   mxCodec,
   mxRectangleShape,
   mxPoint,
@@ -654,7 +654,7 @@ export default {
         vertex.title = toolItem['title'];
         vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
         // 添加完节点后自动添加顺序图标
-        // this.addPoint(vertex, toolItem['idSeed']);
+        this.addPoint(vertex, toolItem['idSeed']);
         toolItem['idSeed']++;
         vertex['isGroup'] = toolItem['id'].includes('group') ? true : false
       } finally {
@@ -735,7 +735,7 @@ export default {
           this.graph.getModel().beginUpdate();
           try {
             let vertex = this.graph.insertVertex(parent, null, null, realX - (width / 2), realY - (height / 2), width, height, style + ';whiteSpace=wrap;word-break=break-all');
-            vertex.title = `<div style='word-break:break-all'>`+toolItem['title']+'</div>';
+            vertex.title = `<div style='word-break:break-all'>` + toolItem['title'] + '</div>';
             vertex.dropAble = toolItem['dropAble'];
             vertex.id = toolItem['id'] + '-' + toolItem['idSeed'];
             toolItem['idSeed']++;
@@ -1244,7 +1244,7 @@ export default {
       // mxGraph.prototype.expandedImage = new mxImage('images/expanded.gif', 15, 15);
 
       // 配置节点中心的连接图标(注釋掉即可指定錨點連接到另一個節點的錨點上)
-      // mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
+      mxConnectionHandler.prototype.connectImage = new mxImage('./icon/connectionpoint.png', 14, 14);
       // 显示中心端口图标
       graph.connectionHandler.targetConnectImage = false;
       // 是否开启浮动自动连接
@@ -1656,29 +1656,29 @@ export default {
     },
 
     // 添加序号图标
-    // addPoint(cell, number) {
-    //   const normalTypeVertex = this.graph.insertVertex(cell, null, null,
-    //     1, 1, 30, 30,
-    //     `port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-${number}.png;spacingLeft=18;spacingBottom=18`, true);
-    //   // 固定序号图标的位置.不随节点变大而改变位置
-    //   normalTypeVertex.geometry.offset = new mxPoint(-18, -18);
-    //   // 序号图标无法连接
-    //   normalTypeVertex.setConnectable(false);
-    //   normalTypeVertex.id = (cell.id).split('-')[0] + `-unselect-${number}`;
-    //   normalTypeVertex.value = number;
-    //   normalTypeVertex.geometry.relative = true;
-    //   // 将新增的图标鼠标悬浮换成手势的图案
-    //   const oldGetCursorForCell = mxGraph.prototype.getCursorForCell;
-    //   this.graph.getCursorForCell = function (...args) {
-    //     const [cell] = args;
-    //     if (cell.edge || cell.style == undefined) {
-    //       return;
-    //     }
-    //     return cell.style.includes('normalType') ?
-    //       'pointer' :
-    //       oldGetCursorForCell.apply(this, args);
-    //   };
-    // },
+    addPoint (cell, number) {
+      const normalTypeVertex = this.graph.insertVertex(cell, null, null,
+        null, null, 30, 30,
+        `port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-${number}.png;spacingLeft=-45px;spacingBottom=-45px`);
+      // 固定序号图标的位置.不随节点变大而改变位置
+      // normalTypeVertex.geometry.offset = new mxPoint(45, 45);
+      // 序号图标无法连接
+      // normalTypeVertex.setConnectable(false);
+      normalTypeVertex.id = (cell.id).split('-')[0] + `-unselect-${number}`;
+      normalTypeVertex.value = number;
+      normalTypeVertex.geometry.relative = true;
+      // 将新增的图标鼠标悬浮换成手势的图案
+      // const oldGetCursorForCell = mxGraph.prototype.getCursorForCell;
+      // this.graph.getCursorForCell = function (...args) {
+      //   const [cell] = args;
+      //   if (cell.edge || cell.style == undefined) {
+      //     return;
+      //   }
+      //   return cell.style.includes('normalType') ?
+      //     'pointer' :
+      //     oldGetCursorForCell.apply(this, args);
+      // };
+    },
 
     // 加载案例流程图
     loadFlowCase (index) {
