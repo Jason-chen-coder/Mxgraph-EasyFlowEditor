@@ -4,7 +4,9 @@
 
 mxGraph 是一个 JavaScript 图表库，可以快速创建交互式图形和图表应用程序，这些应用程序可以在其供应商支持的任何主要浏览器中运行。mxGraph 提供图形绘制、图形可视化、图形交互、图形布局、图形分析等能力， 适用于工作流程图、BPMN 图、网络图、UML 图、循环图、组织结构图、MindMap 图、机架图、甘特图、信息图、平面图等绘制。
 mxGraph 在 2005 年创建，作为商业项目一直持续到 2016 年，2016 年创建者以 Apache 2.0 开源协议在 GitHub 上公布源码。
+
 官方产品(Draw.io): [https://app.diagrams.net/](https://app.diagrams.net/)
+
 官方 API ：[http://jgraph.github.io/mxgraph/docs/js-api](https://app.diagrams.net/)
 GitHub 库：jgraph/mxgraph
 
@@ -24,7 +26,8 @@ mxGraph 是用户直接操作的图，图的所有状态都保存;在 mxGraphMod
 mxGraph 的功能依赖关系如图所示：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165359553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
-除此之外，mxGraph 还有 mxClient、组结构、复杂管理等部分组成，并提供 editor、io、handler、shape、view、util、layout 等 API。具体框架结构如下。
+    除此之外，mxGraph 还有 mxClient、组结构、复杂管理等部分组成，并提供 editor、io、handler、shape、view、util、layout 等 API。具体框架结构如下。
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165408607.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
 ```
@@ -90,6 +93,7 @@ export default {
 ```
 
 第四步:运行效果
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165600359.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
 API 方法使用总结：
@@ -101,16 +105,24 @@ API 方法使用总结：
 –会创建一个 mxCell 对象并返回。
 
 **方法的参数：**
-parent – 组结构中此图元的直接父图元。我们会很快谈论到组结构，但现在我们直接使用 graph.getDefaultParent();作为默认的父图元，就像在 HelloWorld 这个例子一样。
-id – 描述此单元的全局唯一身份号码，总是一个字符串。主要用于外部对这单元的引用。如果你不想自己维护这些号码，只需要传入一个空参数并确保 mxGraphModel.isCreateIds()返回真即可。这样，模型就会管理这些号码，并保证它们的唯一性。
-value – 此单元的用户对象。用户对象只是一些对象，可以让您把应用程序的商务逻辑与 mxGraph 的可视化呈现相关联。在手册的后面有详细地描述，这里我们就只用字符 串就好，并把它们显示成节点和边的标签。
-x, y, width, height – 就像名字提到的，这是节点的左上角的 x 和 y 的位置以及它的宽度和高度。
-style – 将被应用到节点的样式描述。关于样式，很快会有更详细的描述，简单来讲，就是一个特定格式的字符串。这个字符串有零个或多个样式名字和一些键/值配对，用来覆盖全局设置或者创立新的样式。除非我们要创建自己的样式，我们可以直接使用这些现有的设置。
-source 和 target –参数定义了节点要连接的节点;注意,源节点 和目标节点需要已经被加入到模型中。
+
+    parent – 组结构中此图元的直接父图元。我们会很快谈论到组结构，但现在我们直接使用 graph.getDefaultParent();作为默认的父图元，就像在 HelloWorld 这个例子一样。
+
+    id – 描述此单元的全局唯一身份号码，总是一个字符串。主要用于外部对这单元的引用。如果你不想自己维护这些号码，只需要传入一个空参数并确保 mxGraphModel.isCreateIds()返回真即可。这样，模型就会管理这些号码，并保证它们的唯一性。
+
+    value – 此单元的用户对象。用户对象只是一些对象，可以让您把应用程序的商务逻辑与 mxGraph 的可视化呈现相关联。在手册的后面有详细地描述，这里我们就只用字符 串就好，并把它们显示成节点和边的标签。
+
+    x, y, width, height – 就像名字提到的，这是节点的左上角的 x 和 y 的位置以及它的宽度和高度。
+
+    style – 将被应用到节点的样式描述。关于样式，很快会有更详细的描述，简单来讲，就是一个特定格式的字符串。这个字符串有零个或多个样式名字和一些键/值配对，用来覆盖全局设置或者创立新的样式。除非我们要创建自己的样式，我们可以直接使用这些现有的设置。
+
+    source 和 target –参数定义了节点要连接的节点;注意,源节点 和目标节点需要已经被加入到模型中。
+
 **注意:**
 1.mxGraph 事物的更新(插入新元素时)一定要放在 beginUpdate 和 endUpdate 里面。一次 beginUpdate 必须对应一次 endUpdate 2.由于 mxGraph 配置了默认的样式(节点字体、连线等元素样式)和默认的配置所以样式看起来比较单一;我们可以在绘制图形前修改 mxGraph 默认配置好的配置项,来达到我们想要的效果;
 
 3.mxgraph 的自定义配置
+
 js 代码如下:
 
 ```js
@@ -201,14 +213,20 @@ export default {
 ```
 
 注意: 1.我们在配置中会用到 mxGraph 中其他的模块,所以我们使用到 mxGraph 的哪个方法就得把它们 import 进来。
+
 2.mxGraph 中有三个主要的组件：mxGraph、mxGraphModel、mxCell。mxGraph 是用户直接操作的图，图的所有状态都保存在 mxGraphModel 中，而图中的顶点和边都是用 mxCell 定义。
-3.insertVertex 做了三件事，先是设置几何信息，然后创建一个节点，最后将这个节点添加到画布。insertEdge 与 insertVertex 类似，方法中的几何信息四个数字分别对应 X、 Y、 宽、 高 ;坐标是以 graph 的左上角为原点。 3.当用户对 mxGraph 进行操作时，所有操作都映射到对 mxGraphModel 中保存的状态进行修改，而 mxGraphModel 中保存的状态也就是 mxCell 的状态。
+
+3.insertVertex 做了三件事，先是设置几何信息，然后创建一个节点，最后将这个节点添加到画布。insertEdge 与 insertVertex 类似，方法中的几何信息四个数字分别对应 X、 Y、 宽、 高 ;坐标是以 graph 的左上角为原点。
+
+4.当用户对 mxGraph 进行操作时，所有操作都映射到对 mxGraphModel 中保存的状态进行修改，而 mxGraphModel 中保存的状态也就是 mxCell 的状态。
+
 运行效果:
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165656158.png)
 
 4.绘制具备树形结构的拓扑图
 对于自动布局，我们可以根据官网提供的 mxHierarchicalLayout 模块,它提供了 getLayout 钩子。可以重写它以返回给定 cell 的子节点的布局算法。
+
 代码如下:
 
 ```js
@@ -295,10 +313,12 @@ export default {
 ```
 
 运行效果:
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165709326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
 关于 mxGraph，官方 API 文档不友好，介绍简单;API 文档也是全是英文，官网的 Demo 倒是不少，不过有的拉下来在自己的环境下跑会报错，只有根据官方的 demo 不断地尝试和理解才能解决使用上的问题，目前只基本掌握基础使用部分，个人使用心得还会继续更新。 5.辅助功能演示：
 通过以上三个 demo 的演示，相信大家对 mxgraph 已经有大致的了解了；下面在 demo 基础上我们针对一些辅助功能进行演示：
+
 5.1 选择线框
 
 ```js
@@ -316,6 +336,8 @@ position: absolute;
 }
 
 ```
+
+运行效果:
 
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165805725.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
@@ -344,6 +366,8 @@ graph.getModel().setStyle(e1, 'edgeStyle=myEdgeStyle');
 
 ```
 
+运行效果:
+
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210302165835344.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
 也可以在定义好自定义样式后，直接修改连线的默认样式：
@@ -371,9 +395,13 @@ mxGraphHandler.prototype.guidesEnabled = true
 ```
 
 针对上述功能，我们下一步进行 mxgraph 拓扑图编辑工具的开发说明：
+
 初始化画布:
+
 导入 mxgraph 的资源的由于源代码中已有且各个功能注释已写的较明确在这里就暂不赘述了,主要以功能性方面进行介绍;下面将初始化画布分解为 6 个步骤讲解
+
 第一步:首先 mxgraph 将会检测当前浏览器是否支持 mxgraph,若不支持将会弹出警告并终止操作
+
 第二步:.创建画布:
 
 ```js
@@ -392,10 +420,15 @@ createGraph () {
 ```
 
 我们在获取画布的 dom 元素(this.\$ref.container)之后即可进行初始化;此步骤相当于告诉 mxgraph 我们将在那个 dom 元素上进行绘图;剩下的就是画布的配置项,各个配置的具体功能代码中备注
+
 第三步:配置事件中心:此步骤将会配置各个事件
+
 3.1 监听 新增 cell 事件:
+
 (在 mxgraph 中,节点和连线都是 cell),当我们向画布新增 cell 时就会触发该事件;我们还可以配置其他的事件,所有事件都在 mxEvent 中,直接在控制台打印出,mxEvent 就可以知道有什么事件,配置方法直接参考 ADD_CELLS 即可
+
 第四步:配置鼠标事件:
+
 我们可以配置鼠标事件来监听我们鼠标在画布中的操作
 
 ```js
@@ -446,7 +479,9 @@ createGraph () {
 ```
 
 各个事件函数的形参即可获取当前鼠标操作的元素信息
+
 第五步:.配置画布中的右键菜单
+
 首先 mxEvent.disableContextMenu(this.\$refs.container) 告诉 mxgraph 你要在画布中配置右键菜单,并使用 popupMenuHandler 进行菜单项新增
 
 ```js
@@ -480,6 +515,7 @@ configMenu () {
 ```
 
 第六步:.初始化左侧工具栏:
+
 此处是重点,在此处配置后左侧的节点列表即可进行拖拽,并可通过拖拽节点到画布新增节点
 
 ```js
@@ -551,9 +587,11 @@ var generalToolbarDomArray = this.$refs.generalToolItems
 ### 6.4 当节点新增到画布之后会自动触发 ADD_CELLS 事件
 
 注意：
+
 左侧节点列表上方的搜索功能.在执行搜索后 generalToolbarDomArray 会改变, 所以在过滤完节点列表之后 我们要手动再执行一遍 initGeneralTool 函数,这样新的节点列表才可被拖拽新增
 
-第七步:.自动布局
+第七步:自动布局
+
 mxgraph 提供了几种自动布局的 API,直接调用 graphLayout 即可
 
 ```js
