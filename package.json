@@ -2,10 +2,32 @@
   "name": "mxgraph-easyeditor",
   "version": "0.1.0",
   "private": true,
+  "pre-commit": [
+    "pre-commit"
+  ],
+  "main": "./main.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "preinstall": "bash ./scripts/init_files.sh",
+    "dev": "cross-env BABEL_ENV=development ./node_modules/.bin/webpack-dev-server --progress --devtool eval-source-map --config build/webpack.dev.conf.js",
+    "start": "yarn lint && yarn dll && yarn dev",
+    "del:dll": "./node_modules/.bin/rimraf vendor",
+    "compile:dll": "./node_modules/.bin/webpack --config build/webpack.dll.conf.js --colors --profile",
+    "dll": "yarn del:dll && yarn compile:dll",
+    "build:report": "npm_config_report=true node --max_old_space_size=4096 build/build.js",
+    "pre-commit": "echo 'Pre-commit checks...' && yarn switch-source-in && yarn lint2",
+    "switch-source-in": "bash ./scripts/switch_source.sh i",
+    "lint3": "./node_modules/.bin/eslint --fix --ext .js,.jsx,.ts,.tsx,.vue src && ./node_modules/.bin/tslint --fix 'src/**/*{.ts,.tsx}'",
+    "test": "cross-env NODE_ENV=test jest --config jest.config.js",
+    "del:components": "./node_modules/.bin/rimraf components",
+    "copy": "./node_modules/.bin/gulp copy",
+    "babel": "./node_modules/.bin/babel components -d components",
+    "components": "yarn del:components && yarn copy && yarn babel",
+    "deploy": "node --max_old_space_size=4096 build/build.js",
+    "clean:node": "rm -Rf ./node_modules",
+    "change:version": "./node/node ./ci_script/changeVersion.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
