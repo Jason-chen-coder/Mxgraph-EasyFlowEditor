@@ -8,6 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const productionGzipExtensions = ['js', 'css', 'html']
+
 module.exports = {
   publicPath: './',
   outputDir: 'dist',
@@ -25,19 +26,26 @@ module.exports = {
     ],
     optimization: {
       splitChunks: {
-        chunks: 'all',
+        chunks: "all",
         name: false,
         minSize: 0,
         cacheGroups: {
-          defaultVendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10
+          commons: {
+            minChunks: 2,//表示被引用次数，默认为1；
+            maxInitialRequests: 5, //最大的初始化加载次数，默认为 3；
+            minSize: 0, // 模块的文件体积超过 0 byte就抽取到common中
+            name: 'chunk-commons',//抽取出来文件的名字，默认为 true，表示自动生成文件名
           },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true
-          }
+          elementUI: {
+            name: "chunk-element-ui", // 单独将 elementUI 拆包
+            priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]element-ui[\\/]/,
+          },
+          mxgraph: {
+            name: "chunk-mxgraph", // 单独将 elementUI 拆包
+            priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+            test: /[\\/]node_modules[\\/]mxgraph[\\/]/,
+          },
         }
       },
       minimizer: [new UglifyJsPlugin(

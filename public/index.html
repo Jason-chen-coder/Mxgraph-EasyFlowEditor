@@ -1,3 +1,11 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: Jason chen
+ * @Date: 2020-06-26 16:53:08
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2021-08-14 16:09:34
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +19,32 @@
   </title>
 </head>
 
-<body>
+<body style="width:100%;height:100vh">
   <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
   <script src="./mxClient.min.js"></script>
+  <script>
+    // 节流 
+    let canDo = true;
+    function throttle(fn, delay = 200) {
+      return function () {
+        console.log('----aa---');
+        if (!canDo) {
+          return false;
+        }
+        canDo = false;
+        setTimeout(() => {
+          // fn();
+          canDo = true;
+        }, delay)
+      }
+    }
+
+    window.onscroll = throttle()
+  </script>
 </body>
 
 </html>

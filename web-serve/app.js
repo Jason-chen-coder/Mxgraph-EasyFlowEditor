@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: Jason chen
+ * @Date: 2021-08-12 18:00:06
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2021-08-16 15:02:54
+ */
 const express = require('express');
 // 代理
 // const proxy = require('http-proxy-middleware');
@@ -21,16 +29,12 @@ function setCustomCacheControl (res, currentFilePath) {
     res.setHeader('Cache-Control', 'no-cache');
   }
 }
+// 打包后的静态资源目录
+app.use(express.static('../dist'));
 
-app.use(express.static('../deploy'));
-
-// const PROXY_EDSP = process.env.PROXY_EDSP || 'http://10.22.0.137:31801/edsp';
-const PROXY_EDSP = 'http://10.22.0.137:31801/edsp';
-const PROXY_LOADER = process.env.PROXY_LOADER || 'http://10.22.0.230:8080';
-
-console.log('PROXY_EDSP: ', PROXY_EDSP);
-console.log('PROXY_LOADER: ', PROXY_LOADER);
 // 代理
+
+// const PROXY_EDSP = 'http://10.22.0.137:31801/edsp';
 // app.use(
 //   '/edsp',
 //   proxy({
@@ -41,16 +45,7 @@ console.log('PROXY_LOADER: ', PROXY_LOADER);
 //     changeOrigin: true,
 //   }),
 // );
-// app.use(
-//   '/loader',
-//   proxy({
-//     target: PROXY_LOADER,
-//     pathRewrite: {
-//       '/loader': '',
-//     },
-//     changeOrigin: true,
-//   }),
-// );
+
 
 app.listen(9900, (req, res) => {
   console.log(req, res);
