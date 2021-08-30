@@ -3,8 +3,8 @@
  * @version: 
  * @Author: Jason chen
  * @Date: 2020-06-26 17:46:26
- * @LastEditors: sueRimn
- * @LastEditTime: 2021-08-17 11:23:34
+ * @LastEditors: Jason chen
+ * @LastEditTime: 2021-08-30 15:13:17
  */
 // 导入 vue-router
 import Vue from 'vue';
@@ -21,15 +21,15 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      component: () => import("../views/customToolbar/customToolbar.vue"),
+      component: () => import(/*webpackChunkName: "my-customToolbar-chunk"*/ "../views/customToolbar/customToolbar.vue"),
     },
     {
       path: "/customToolbar",
-      component: () => import("../views/customToolbar/customToolbar.vue")
+      component: () => import(/*webpackChunkName: "my-customToolbar-chunk"*/ "../views/customToolbar/customToolbar.vue")
     },
     {
       path: "/renderModel",
-      component: () => import("../views/renderModel/index.vue")
+      component: () => import(/*webpackChunkName: "renderModel-chunk"*/"../views/renderModel/index.vue")
     }
   ]
 })
