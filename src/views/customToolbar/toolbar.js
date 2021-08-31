@@ -1,10 +1,10 @@
 // import {
-//   mxConstants as mxConstants
+//   MxConstants as MxConstants
 // } from 'mxgraph-js'
 // const closeIcon = require('@/assets/icon/delete.png')
 
-import mxgraph from "../../graph/index";
-const { mxConstants } = mxgraph;
+import { MxConstants } from "../../graph/index";
+// const { MxConstants } = mxgraph;
 const boxDomain = './icon/boxDomain.png'
 const center = './icon/center.png'
 const database = './icon/database.png'
@@ -32,11 +32,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF',
       strokeColor: '#000000',
       strokeWidth: '1',
-      shape: mxConstants.SHAPE_LABEL,
-      align: mxConstants.ALIGN_TOP,
-      verticalAlign: mxConstants.ALIGN_BOTTOM,
-      imageAlign: mxConstants.ALIGN_CENTER, // 背景图的水平方向的定位
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 背景图垂直方向的定位
+      shape: MxConstants.SHAPE_LABEL,
+      align: MxConstants.ALIGN_TOP,
+      verticalAlign: MxConstants.ALIGN_BOTTOM,
+      imageAlign: MxConstants.ALIGN_CENTER, // 背景图的水平方向的定位
+      imageVerticalAlign: MxConstants.ALIGN_TOP, // 背景图垂直方向的定位
       image: boxDomain
     }
   },
@@ -53,11 +53,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_TOP, // 图形方向对其方式
       image: center // 图形
     }
   },
@@ -74,11 +74,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_TOP, // 图形方向对其方式
       image: database // 图形
     }
   },
@@ -95,11 +95,11 @@ export const toolbarItems = [
   //     fillColor: '#FFFFFF', // 填充色
   //     strokeColor: '#000000', // 线条颜色
   //     strokeWidth: '1', // 线条粗细
-  //     shape: mxConstants.SHAPE_LABEL, // 形状
-  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     shape: MxConstants.SHAPE_LABEL, // 形状
+  //     align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: MxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: MxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: MxConstants.ALIGN_TOP, // 图形方向对其方式
   //     image: authorizate // 图形
   //   }
   // },
@@ -116,11 +116,11 @@ export const toolbarItems = [
   //     fillColor: '#FFFFFF', // 填充色
   //     strokeColor: '#000000', // 线条颜色
   //     strokeWidth: '1', // 线条粗细
-  //     shape: mxConstants.SHAPE_LABEL, // 形状
-  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     shape: MxConstants.SHAPE_LABEL, // 形状
+  //     align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: MxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: MxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: MxConstants.ALIGN_TOP, // 图形方向对其方式
   //     image: cluster // 图形
   //   }
   // },
@@ -137,11 +137,11 @@ export const toolbarItems = [
   //     fillColor: '#FFFFFF', // 填充色
   //     strokeColor: '#000000', // 线条颜色
   //     strokeWidth: '1', // 线条粗细
-  //     shape: mxConstants.SHAPE_LABEL, // 形状
-  //     align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-  //     verticalAlign: mxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
-  //     imageAlign: mxConstants.ALIGN_CENTER, // 图形水平方向对其方式
-  //     imageVerticalAlign: mxConstants.ALIGN_TOP, // 图形方向对其方式
+  //     shape: MxConstants.SHAPE_LABEL, // 形状
+  //     align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+  //     verticalAlign: MxConstants.ALIGN_BOTTOM, // 垂直方向对其方式
+  //     imageAlign: MxConstants.ALIGN_CENTER, // 图形水平方向对其方式
+  //     imageVerticalAlign: MxConstants.ALIGN_TOP, // 图形方向对其方式
   //     image: exchange // 图形
   //   },
   // },
@@ -158,11 +158,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: elasticsearch // 图形
     },
   },
@@ -179,11 +179,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: kibana // 图形
     },
   },
@@ -200,11 +200,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: logstash // 图形
     },
   },
@@ -221,11 +221,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: KAFKA // 图形
     },
   },
@@ -242,11 +242,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: beats // 图形
     },
   },
@@ -263,11 +263,11 @@ export const toolbarItems = [
       fillColor: '#FFFFFF', // 填充色
       strokeColor: '#000000', // 线条颜色
       strokeWidth: '1', // 线条粗细
-      shape: mxConstants.SHAPE_LABEL, // 形状
-      align: mxConstants.ALIGN_CENTER, // 水平方向对其方式
-      verticalAlign: mxConstants.ALIGN_CENTER, // 垂直方向对其方式
-      imageAlign: mxConstants.ALIGN_LEFT, // 图形水平方向对其方式
-      imageVerticalAlign: mxConstants.ALIGN_CENTER, // 图形方向对其方式
+      shape: MxConstants.SHAPE_LABEL, // 形状
+      align: MxConstants.ALIGN_CENTER, // 水平方向对其方式
+      verticalAlign: MxConstants.ALIGN_CENTER, // 垂直方向对其方式
+      imageAlign: MxConstants.ALIGN_LEFT, // 图形水平方向对其方式
+      imageVerticalAlign: MxConstants.ALIGN_CENTER, // 图形方向对其方式
       image: redis // 图形
     },
   },

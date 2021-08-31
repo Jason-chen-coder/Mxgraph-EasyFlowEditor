@@ -2,9 +2,9 @@
  * @Descripttion: 
  * @version: 
  * @Author: Jason chen
- * @Date: 2020-07-09 17:04:43
+ * @Date: 2021-08-31 11:10:34
  * @LastEditors: Jason chen
- * @LastEditTime: 2021-08-31 11:14:26
+ * @LastEditTime: 2021-08-31 11:13:05
  */
 const mx = require('mxgraph')
 
@@ -24,6 +24,10 @@ const mxgraph = mx({
   // 可选的全局配置变量来指定资源文件的扩展名。
   // mxResourceExtension: '.txt'
 })
+
+// Object.keys(mxgraph).forEach((key) => {
+//   window[key] = mxgraph[key];
+// });
 
 const MxCell = mxgraph.mxCell
 const MxConstants = mxgraph.mxConstants

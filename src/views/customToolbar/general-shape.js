@@ -1,5 +1,5 @@
-import mxgraph from "../../graph/index";
-const { mxConstants } = mxgraph;
+import { MxConstants } from "../../graph/index";
+// const { MxConstants } = mxgraph;
 export const generalToolbarItems = [
   {
     index: 0,
@@ -151,8 +151,8 @@ export const generalToolbarItems = [
       strokeWidth: '1',
       html: 1,
       fillColor: '#FFFFFF',
-      verticalAlign: mxConstants.ALIGN_MIDDLE,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_MIDDLE,
+      align: MxConstants.ALIGN_CENTER,
       whiteSpace: 'wrap',
       rounded: 0,
     }

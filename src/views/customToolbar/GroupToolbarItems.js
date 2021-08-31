@@ -1,6 +1,6 @@
-import mxgraph from '../../graph/index';
+import { MxConstants } from '../../graph/index';
 
-const { mxConstants } = mxgraph;
+// const { MxConstants } = mxgraph;
 export const grouptoolItems = [
   {
     title: '分组1',
@@ -16,8 +16,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -48,8 +48,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -80,8 +80,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -112,8 +112,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -144,8 +144,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -176,8 +176,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);
@@ -208,8 +208,8 @@ export const grouptoolItems = [
       fillColor: '#409eff',
       strokeColor: '#629EA0',
       fontColor: '#000000',
-      verticalAlign: mxConstants.ALIGN_TOP,
-      align: mxConstants.ALIGN_CENTER,
+      verticalAlign: MxConstants.ALIGN_TOP,
+      align: MxConstants.ALIGN_CENTER,
     },
     created (graph, cell, index) {
       const deleteIconDom = document.querySelector(`.deleteIcon_${index}`);

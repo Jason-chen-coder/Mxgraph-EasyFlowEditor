@@ -5,21 +5,53 @@
       <el-col :span="4">
         <div
           class="grid-content bg-purple"
-          style="color: rgb(64, 158, 255);font-weight: 800;font-size: 22px;margin-left: 44px;"
-        >Easy Editor</div>
+          style="
+            color: rgb(64, 158, 255);
+            font-weight: 800;
+            font-size: 22px;
+            margin-left: 44px;
+          "
+        >
+          Easy Editor
+        </div>
       </el-col>
       <el-col :span="12" class="tools-group">
-        <el-tooltip class="item" effect="dark" content="放大" placement="bottom">
-          <el-button icon="el-icon-zoom-in" style="font-size:18px" type="text" @click="zoomIn"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="放大"
+          placement="bottom"
+        >
+          <el-button
+            icon="el-icon-zoom-in"
+            style="font-size: 18px"
+            type="text"
+            @click="zoomIn"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="缩小" placement="bottom">
-          <el-button icon="el-icon-zoom-out" style="font-size:18px" type="text" @click="zoomOut"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="缩小"
+          placement="bottom"
+        >
+          <el-button
+            icon="el-icon-zoom-out"
+            style="font-size: 18px"
+            type="text"
+            @click="zoomOut"
+          ></el-button>
         </el-tooltip>
-        <el-tooltip class="item" effect="dark" content="等比缩放" placement="bottom">
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="等比缩放"
+          placement="bottom"
+        >
           <el-button
             @click="autoSize"
             type="text"
-            style="font-size:16px"
+            style="font-size: 16px"
             icon="iconfont icon-expandalt-fill"
           ></el-button>
         </el-tooltip>
@@ -29,8 +61,17 @@
         <!-- <el-tooltip class="item" effect="dark" content="显示网格背景" placement="bottom">
           <el-button type="text" icon="iconfont icon-dituleiwanggequ-copy"></el-button>
         </el-tooltip>-->
-        <el-tooltip class="item" effect="dark" content="导出为图片" placement="bottom">
-          <el-button type="text" icon="iconfont icon-tupian" @click="showImage"></el-button>
+        <el-tooltip
+          class="item"
+          effect="dark"
+          content="导出为图片"
+          placement="bottom"
+        >
+          <el-button
+            type="text"
+            icon="iconfont icon-tupian"
+            @click="showImage"
+          ></el-button>
         </el-tooltip>
         <!-- <el-tooltip class="item" effect="dark" content="树形布局" placement="bottom">
           <el-button type="text" icon="iconfont icon-Directory-tree"></el-button>
@@ -39,41 +80,47 @@
       <el-col :span="8">
         <div
           class="grid-content bg-purple"
-          style="display:flex;justify-content: flex-end;padding-right:20px"
+          style="display: flex; justify-content: flex-end; padding-right: 20px"
         >
-          <el-button round size="medium" @click="loadFlowCase(1)">组件关系</el-button>
-          <el-button round size="medium" @click="loadFlowCase(2)">部署流程</el-button>
-          <el-button round size="medium" @click="loadFlowCase(3)">Vue生命周期案例</el-button>
+          <el-button round size="medium" @click="loadFlowCase(1)"
+            >组件关系</el-button
+          >
+          <el-button round size="medium" @click="loadFlowCase(2)"
+            >部署流程</el-button
+          >
+          <el-button round size="medium" @click="loadFlowCase(3)"
+            >Vue生命周期案例</el-button
+          >
         </div>
       </el-col>
     </div>
     <!-- 中心画布 -->
-    <div class="graphContainer" id="graphContainer" ref="container"></div>]
+    <div class="graphContainer" id="graphContainer" ref="container"></div>
+    ]
   </div>
 </template>
 <script>
 // 导入自定义图标数组
-import mxgraph from "../../graph/index";
-const {
-  mxEvent,
-  mxGraph,
-  mxEditor,
-  mxUtils,
-  mxGraphHandler,
-  mxConstants,
-  mxCodec,
-  mxRectangleShape,
-  mxCellTracker,
-  mxClient,
-  mxPerimeter,
-  mxEventObject,
-  mxGeometry,
-  mxCell,
+import {
+  MxEvent,
+  MxGraph,
+  MxEditor,
+  MxUtils,
+  MxGraphHandler,
+  MxConstants,
+  MxCodec,
+  MxRectangleShape,
+  MxCellTracker,
+  MxClient,
+  MxPerimeter,
+  MxEventObject,
+  MxGeometry,
+  MxCell,
   ActiveXObject
-} = mxgraph
+} from "../../graph/index"
 const path = require('path');
 // 配置自定义事件
-Object.assign(mxEvent, {
+Object.assign(MxEvent, {
   NORMAL_TYPE_CLICKED: 'NORMAL_TYPE_CLICKED',
 });
 // 导入流程图案例数据
@@ -112,16 +159,16 @@ export default {
   methods: {
 
     createGraph () {
-      this.editor = new mxEditor()
+      this.editor = new MxEditor()
       this.graph = this.editor.graph
       this.editor.setGraphContainer(this.$refs.container);
       // 配置默认全局样式
       this.configureStylesheet(this.graph);
       // 去锯齿效果
-      mxRectangleShape.prototype.crisp = true;
+      MxRectangleShape.prototype.crisp = true;
       // 定义全局变量，如。用于触发建立新的连接的活动区域的最小尺寸（以像素为单位），该部分（100％）的小区区域被用于触发新的连接，以及一些窗口和“下拉菜菜单选择
-      mxConstants.MIN_HOTSPOT_SIZE = 16;
-      mxConstants.DEFAULT_HOTSPOT = 1;
+      MxConstants.MIN_HOTSPOT_SIZE = 16;
+      MxConstants.DEFAULT_HOTSPOT = 1;
 
       //cell创建支持传入html
       this.graph.setHtmlLabels(true);
@@ -142,7 +189,7 @@ export default {
 
       // 设置默认组
       // groupBorderSize 设置图形和它的子元素的边距
-      var group = new mxCell('Group', new mxGeometry(), 'group;fontColor=white;');
+      var group = new MxCell('Group', new MxGeometry(), 'group;fontColor=white;');
       group.setVertex(false);
       // 设置组可连接
       group.setConnectable(false);
@@ -150,7 +197,7 @@ export default {
       this.editor.groupBorderSize = 40;
       // 返回元素
       this.graph.getLabel = function (cell) {
-        var tmp = mxGraph.prototype.getLabel.apply(this, arguments); // "supercall"
+        var tmp = MxGraph.prototype.getLabel.apply(this, arguments); // "supercall"
         if (this.isCellLocked(cell)) {
           // 如元素被锁定 返回空标签
           return '';
@@ -230,8 +277,8 @@ export default {
               clickNormalType = cell.style.includes('normalType');
             }
             if (clickNormalType) {
-              // 使用 mxGraph 事件中心，触发自定义事件
-              this.graph.fireEvent(new mxEventObject(mxEvent.NORMAL_TYPE_CLICKED, 'cell', evt));
+              // 使用 MxGraph 事件中心，触发自定义事件
+              this.graph.fireEvent(new MxEventObject(MxEvent.NORMAL_TYPE_CLICKED, 'cell', evt));
             } else {
               return
             }
@@ -276,11 +323,11 @@ export default {
           },
         });
       // 监听自定义事件
-      this.graph.addListener(mxEvent.NORMAL_TYPE_CLICKED, this.showNormalTypeSelect);
+      this.graph.addListener(MxEvent.NORMAL_TYPE_CLICKED, this.showNormalTypeSelect);
 
       this.graph.setResizeContainer(false);
       // 禁用浏览器默认的右键菜单栏 
-      mxEvent.disableContextMenu(this.$refs.container)
+      MxEvent.disableContextMenu(this.$refs.container)
 
       // 自定义右键菜单栏
       this.graph.popupMenuHandler.factoryMethod = (menu) => {
@@ -304,13 +351,13 @@ export default {
       // 禁止改变元素大小
       this.graph.setCellsResizable(false);
       // 是否缩放网格
-      mxGraphHandler.prototype.scaleGrid = false;
+      MxGraphHandler.prototype.scaleGrid = false;
 
       // 启用导航线帮助定位
-      mxGraphHandler.prototype.guidesEnabled = false;
+      MxGraphHandler.prototype.guidesEnabled = false;
       // Alt 按下禁用导航线
-      mxGraphHandler.prototype.useGuidesForEvent = function (me) {
-        return !mxEvent.isAltDown(me.getEvent());
+      MxGraphHandler.prototype.useGuidesForEvent = function (me) {
+        return !MxEvent.isAltDown(me.getEvent());
       };
 
       // 选择基本元素开启
@@ -322,64 +369,64 @@ export default {
       // 设置节点的文字可被移动
       graph.vertexLabelsMovable = false;
       // 设置鼠标悬浮至节点或者连线时高亮显示的颜色
-      new mxCellTracker(graph, '#409eff');
+      new MxCellTracker(graph, '#409eff');
       var style = new Object();
-      style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_LABEL;
-      style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
-      style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-      style[mxConstants.STYLE_IMAGE_ALIGN] = mxConstants.ALIGN_CENTER;
-      style[mxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = mxConstants.ALIGN_CENTER;
-      // style[mxConstants.STYLE_SPACING_TOP] = 6;
-      style[mxConstants.STYLE_SPACING_LEFT] = 5;
-      // style[mxConstants.STYLE_GRADIENTCOLOR] = 'skyblue'; // 渐变颜色
-      style[mxConstants.STYLE_STROKECOLOR] = '#5d65df';   // 线条颜色
-      style[mxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
-      style[mxConstants.STYLE_FONTCOLOR] = '#1d258f';     // 字体颜色
-      style[mxConstants.STYLE_FONTFAMILY] = 'Verdana';    // 字体风格
-      style[mxConstants.STYLE_FONTSIZE] = '12';           // 字体大小
-      style[mxConstants.STYLE_FONTSTYLE] = '0';           // 斜体字
-      style[mxConstants.STYLE_ROUNDED] = false;             // 圆角
-      style[mxConstants.STYLE_IMAGE_WIDTH] = '28';        // 图片宽度
-      style[mxConstants.STYLE_IMAGE_HEIGHT] = '28';       // 图片高度
-      style[mxConstants.STYLE_OPACITY] = '100';            // 节点透明度(不包含字体)
+      style[MxConstants.STYLE_SHAPE] = MxConstants.SHAPE_LABEL;
+      style[MxConstants.STYLE_PERIMETER] = MxPerimeter.RectanglePerimeter;
+      style[MxConstants.STYLE_VERTICAL_ALIGN] = MxConstants.ALIGN_CENTER;
+      style[MxConstants.STYLE_ALIGN] = MxConstants.ALIGN_CENTER;
+      style[MxConstants.STYLE_IMAGE_ALIGN] = MxConstants.ALIGN_CENTER;
+      style[MxConstants.STYLE_IMAGE_VERTICAL_ALIGN] = MxConstants.ALIGN_CENTER;
+      // style[MxConstants.STYLE_SPACING_TOP] = 6;
+      style[MxConstants.STYLE_SPACING_LEFT] = 5;
+      // style[MxConstants.STYLE_GRADIENTCOLOR] = 'skyblue'; // 渐变颜色
+      style[MxConstants.STYLE_STROKECOLOR] = '#5d65df';   // 线条颜色
+      style[MxConstants.STYLE_FILLCOLOR] = '#FFFFFF';
+      style[MxConstants.STYLE_FONTCOLOR] = '#1d258f';     // 字体颜色
+      style[MxConstants.STYLE_FONTFAMILY] = 'Verdana';    // 字体风格
+      style[MxConstants.STYLE_FONTSIZE] = '12';           // 字体大小
+      style[MxConstants.STYLE_FONTSTYLE] = '0';           // 斜体字
+      style[MxConstants.STYLE_ROUNDED] = false;             // 圆角
+      style[MxConstants.STYLE_IMAGE_WIDTH] = '28';        // 图片宽度
+      style[MxConstants.STYLE_IMAGE_HEIGHT] = '28';       // 图片高度
+      style[MxConstants.STYLE_OPACITY] = '100';            // 节点透明度(不包含字体)
       graph.getStylesheet().putDefaultVertexStyle(style);
 
       style = new Object();
-      style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_SWIMLANE;
-      style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-      style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_TOP;
-      style[mxConstants.STYLE_FILLCOLOR] = '#409eff';
-      // style[mxConstants.STYLE_GRADIENTCOLOR] = '#409eff';
-      style[mxConstants.STYLE_STROKECOLOR] = '#409eff';
-      style[mxConstants.STYLE_FONTCOLOR] = '#000000';
-      style[mxConstants.STYLE_ROUNDED] = false;
-      style[mxConstants.STYLE_OPACITY] = '80';
-      style[mxConstants.STYLE_STARTSIZE] = '30';
-      style[mxConstants.STYLE_FONTSIZE] = '16';
-      style[mxConstants.STYLE_FONTSTYLE] = 1;
+      style[MxConstants.STYLE_SHAPE] = MxConstants.SHAPE_SWIMLANE;
+      style[MxConstants.STYLE_PERIMETER] = MxPerimeter.RectanglePerimeter;
+      style[MxConstants.STYLE_ALIGN] = MxConstants.ALIGN_CENTER;
+      style[MxConstants.STYLE_VERTICAL_ALIGN] = MxConstants.ALIGN_TOP;
+      style[MxConstants.STYLE_FILLCOLOR] = '#409eff';
+      // style[MxConstants.STYLE_GRADIENTCOLOR] = '#409eff';
+      style[MxConstants.STYLE_STROKECOLOR] = '#409eff';
+      style[MxConstants.STYLE_FONTCOLOR] = '#000000';
+      style[MxConstants.STYLE_ROUNDED] = false;
+      style[MxConstants.STYLE_OPACITY] = '80';
+      style[MxConstants.STYLE_STARTSIZE] = '30';
+      style[MxConstants.STYLE_FONTSIZE] = '16';
+      style[MxConstants.STYLE_FONTSTYLE] = 1;
       graph.getStylesheet().putCellStyle('group', style);
 
       style = new Object();
-      style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_IMAGE;
-      style[mxConstants.STYLE_FONTCOLOR] = '#774400';
-      style[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
-      style[mxConstants.STYLE_PERIMETER_SPACING] = '6';
-      style[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_LEFT;
-      style[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
-      style[mxConstants.STYLE_FONTSIZE] = '10';
-      style[mxConstants.STYLE_FONTSTYLE] = 2;
-      style[mxConstants.STYLE_IMAGE_WIDTH] = '16';
-      style[mxConstants.STYLE_IMAGE_HEIGHT] = '16';
-      style[mxConstants.STYLE_BACKGROUNDCOLOR] = 'transparent';
+      style[MxConstants.STYLE_SHAPE] = MxConstants.SHAPE_IMAGE;
+      style[MxConstants.STYLE_FONTCOLOR] = '#774400';
+      style[MxConstants.STYLE_PERIMETER] = MxPerimeter.RectanglePerimeter;
+      style[MxConstants.STYLE_PERIMETER_SPACING] = '6';
+      style[MxConstants.STYLE_ALIGN] = MxConstants.ALIGN_LEFT;
+      style[MxConstants.STYLE_VERTICAL_ALIGN] = MxConstants.ALIGN_MIDDLE;
+      style[MxConstants.STYLE_FONTSIZE] = '10';
+      style[MxConstants.STYLE_FONTSTYLE] = 2;
+      style[MxConstants.STYLE_IMAGE_WIDTH] = '16';
+      style[MxConstants.STYLE_IMAGE_HEIGHT] = '16';
+      style[MxConstants.STYLE_BACKGROUNDCOLOR] = 'transparent';
       graph.getStylesheet().putCellStyle('port', style);
 
 
       style = graph.getStylesheet().getDefaultEdgeStyle();
-      style[mxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
-      style[mxConstants.STYLE_STROKEWIDTH] = '2';
-      style[mxConstants.STYLE_ROUNDED] = false;
+      style[MxConstants.STYLE_LABEL_BACKGROUNDCOLOR] = '#FFFFFF';
+      style[MxConstants.STYLE_STROKEWIDTH] = '2';
+      style[MxConstants.STYLE_ROUNDED] = false;
       // 获取全局Edge、label样式
       var edgeStyle = this.graph.getStylesheet().getDefaultEdgeStyle()
       // let labelStyle = this.graph.getStylesheet().getDefaultVertexStyle();
@@ -387,11 +434,11 @@ export default {
       edgeStyle['edgeStyle'] = 'orthogonalEdgeStyle';
 
       // 选中 cell/edge 后的伸缩大小的点/拖动连线位置的点的颜色
-      mxConstants.STYLE_WHITE_SPACE = 'wrap';
-      mxConstants.HANDLE_FILLCOLOR = '#99ccff'
-      mxConstants.HANDLE_STROKECOLOR = '#0088cf'
-      mxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
-      mxConstants.STYLE_STYLE_ROTATION = 'rotation';
+      MxConstants.STYLE_WHITE_SPACE = 'wrap';
+      MxConstants.HANDLE_FILLCOLOR = '#99ccff'
+      MxConstants.HANDLE_STROKECOLOR = '#0088cf'
+      MxConstants.STYLE_ANCHOR_POINT_DIRECTION = 'anchorPointDirection'
+      MxConstants.STYLE_STYLE_ROTATION = 'rotation';
     },
 
     // 放大
@@ -444,13 +491,13 @@ export default {
       this.graph.getModel().beginUpdate();
       try {
         // 渲染流程图 方法一:
-        // const xmlDocument = mxUtils.parseXml(graphXml)
-        // const decoder = new mxCodec(xmlDocument)
+        // const xmlDocument = MxUtils.parseXml(graphXml)
+        // const decoder = new MxCodec(xmlDocument)
         // decoder.decode(xmlDocument.documentElement, graph.getModel())
         // 渲染流程图 方法二:
         var xmlDoc = this.createXmlDom(graphXml);
         var node = xmlDoc.documentElement;
-        var dec = new mxCodec(node.ownerDocument);
+        var dec = new MxCodec(node.ownerDocument);
         dec.decode(node, graph.getModel());
       } finally {
         this.graph.getModel().endUpdate()
@@ -465,9 +512,9 @@ export default {
 
     // 导出xml数据
     encode (graph) {
-      const encoder = new mxCodec()
+      const encoder = new MxCodec()
       const result = encoder.encode(graph.getModel())
-      return mxUtils.getPrettyXml(result)
+      return MxUtils.getPrettyXml(result)
     },
     // 加载案例流程图
     loadFlowCase (index) {
@@ -478,7 +525,7 @@ export default {
         case 2: loadData = xmlData2; break
         case 3: loadData = xmlData3; break
       }
-      let newXml = mxUtils.load(loadData).request.response
+      let newXml = MxUtils.load(loadData).request.response
       this.graph.selectAll()
       this.graph.removeCells(this.graph.getSelectionCells())
       setTimeout(() => {
@@ -491,12 +538,12 @@ export default {
 
   mounted () {
     // 检测浏览器兼容性
-    if (!mxClient.isBrowserSupported()) {
+    if (!MxClient.isBrowserSupported()) {
       this.$message.error('当前浏览器不支持拓扑图功能，请更换浏览器访问，建议使用Chrome浏览器访问!');
     }
     else {
       // Overridden to define per-shape connection points
-      mxGraph.prototype.getAllConnectionConstraints = function (terminal) {
+      MxGraph.prototype.getAllConnectionConstraints = function (terminal) {
         if (terminal != null && terminal.shape != null) {
           if (terminal.shape.stencil != null) {
             if (terminal.shape.stencil.constraints != null) {
