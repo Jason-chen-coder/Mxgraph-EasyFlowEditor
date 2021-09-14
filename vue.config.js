@@ -7,14 +7,17 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const productionGzipExtensions = ['js', 'css', 'html']
 
 module.exports = {
   publicPath: './',
   outputDir: 'dist',
   lintOnSave: true,
+  quite: true,
   configureWebpack: {
     plugins: [
+      new ProgressBarPlugin(),
       new BundleAnalyzerPlugin(),
       new CompressionWebpackPlugin({
         filename: '[path].gz[query]',
