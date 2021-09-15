@@ -14,7 +14,6 @@ module.exports = {
   publicPath: './',
   outputDir: 'dist',
   lintOnSave: true,
-  quite: true,
   configureWebpack: {
     plugins: [
       new ProgressBarPlugin(),

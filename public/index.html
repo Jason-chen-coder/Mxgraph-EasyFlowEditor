@@ -3,8 +3,8 @@
  * @version: 
  * @Author: Jason chen
  * @Date: 2020-06-26 16:53:08
- * @LastEditors: sueRimn
- * @LastEditTime: 2021-08-14 16:09:34
+ * @LastEditors: Jason chen
+ * @LastEditTime: 2021-09-15 17:39:36
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +17,110 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
+  <style>
+    body,
+    html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      box-shadow: inset 0px 0px 90px rgba(0, 0, 0, 0.5);
+      margin: 0px;
+      padding: 0px;
+      position: relative;
+    }
+
+    .circle-item {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    .circle-item .inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+      border: 5px solid rgba(64, 158, 255, 0.7);
+      border-right: none;
+      border-top: none;
+      backgroudn-clip: padding;
+      box-shadow: inset 0px 0px 10px rgba(64, 158, 255, 0.15);
+    }
+
+    @-webkit-keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .circle-item:nth-of-type(0) {
+      transform: rotate(0deg);
+    }
+
+    .circle-item:nth-of-type(0) .inner {
+      -webkit-animation: spin 2s infinite linear;
+      animation: spin 2s infinite linear;
+    }
+
+    .circle-item:nth-of-type(1) {
+      transform: rotate(70deg);
+    }
+
+    .circle-item:nth-of-type(1) .inner {
+      -webkit-animation: spin 2s infinite linear;
+      animation: spin 2s infinite linear;
+    }
+
+    .circle-item:nth-of-type(2) {
+      transform: rotate(140deg);
+    }
+
+    .circle-item:nth-of-type(2) .inner {
+      -webkit-animation: spin 2s infinite linear;
+      animation: spin 2s infinite linear;
+    }
+
+
+
+    .circle-box {
+      -webkit-animation: spin 5s infinite linear;
+      animation: spin 5s infinite linear;
+      width: 100px;
+      height: 102px;
+      border-radius: 100%;
+    }
+
+    .loading-box {
+      width: 100px;
+      height: 102px;
+    }
+
+    .loading-box,
+    .loading-text,
+    .center-locat {
+      position: absolute;
+      color: #409eff;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 
 <body style="width:100%;height:100vh">
@@ -24,27 +128,29 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
   </noscript>
+  <div class="loading-box">
+    <span class="loading-text" style="line-height: 1;">Loading...</span>
+    <div class='circle-box'>
+      <div class='circle-item'>
+        <div class='inner'></div>
+      </div>
+      <div class='circle-item'>
+        <div class='inner'></div>
+      </div>
+      <div class='circle-item'>
+        <div class='inner'></div>
+      </div>
+      <div class='circle-item'>
+        <div class='inner'></div>
+      </div>
+      <div class='circle-item'>
+        <div class='inner'></div>
+      </div>
+    </div>
+  </div>
   <div id="app"></div>
   <script src="./mxClient.min.js"></script>
-  <script>
-    // 节流 
-    let canDo = true;
-    function throttle(fn, delay = 200) {
-      return function () {
-        console.log('----aa---');
-        if (!canDo) {
-          return false;
-        }
-        canDo = false;
-        setTimeout(() => {
-          // fn();
-          canDo = true;
-        }, delay)
-      }
-    }
-
-    window.onscroll = throttle()
-  </script>
 </body>
+
 
 </html>
