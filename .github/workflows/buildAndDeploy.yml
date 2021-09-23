@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest # 我们选择使用最新的ubuntu系统
     steps:
     - name: checkout
-      uses: actions/checkout@V1.0-beat # 将代码拷贝到虚机中
+      uses: actions/checkout@master # 将代码拷贝到虚机中
 
     - name: buildAndDeploy
       uses: JamesIves/github-pages-deploy-action@releases/v2
