@@ -1,4 +1,3 @@
-# 工作流名称，不设置的话默认取配置文件名
 name: buildAndDeploy
 on:
   push
@@ -10,9 +9,9 @@ jobs:
       uses: actions/checkout@master # 将代码拷贝到虚机中
 
     - name: buildAndDeploy
-      uses: JamesIves/github-pages-deploy-action@master
+      uses: JamesIves/github-pages-deploy-action@master 
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }} # 使用刚新建的secret
-        BRANCH: V1.0-beat # 存放产物的分支名称
+        BRANCH: gh-pages # 存放产物的分支名称
         FOLDER: dist # 存放build后产物的目录
         BUILD_SCRIPT: npm install && npm run build # 执行的命令
