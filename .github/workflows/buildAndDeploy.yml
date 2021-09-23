@@ -6,7 +6,7 @@ name: Build and Deploy
 on: 
   push:
     branches:
-      - V1.0-beat
+      - master
 # 工作流执行的一个或多个任务
 jobs:
   # 任务名称
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout 🛎️
         # 使用的操作 actions，可以使用公共仓库，本地仓库，别人的仓库的action
         # 拉取代码
-        uses: actions/checkout@V1.0-beat
+        uses: actions/checkout@master
 
       - name: Build and Deploy
         # 构建发布 Github pages
