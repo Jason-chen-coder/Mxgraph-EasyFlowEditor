@@ -1,4 +1,4 @@
-# mxgraph-easyeditor
+# Mxgraph-EasyFlowEditor
 
 ## 1.什么是 mxgraph
 
@@ -653,7 +653,7 @@ mxgraph 提供了几种自动布局的 API,直接调用 graphLayout 即可
 
 ## 项目源码欢迎 star:
 
-[项目源码地址](https://github.com/Jason-chen-coder/mxgraph-EasyEditor):
+[项目源码地址](https://github.com/Jason-chen-coder/Mxgraph-EasyFlowEditor):
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20210608102620212.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
 ## 推荐文章:
@@ -669,13 +669,13 @@ mxgraph 提供了几种自动布局的 API,直接调用 graphLayout 即可
 ## Project setup
 
 ```
-yarn 
+yarn
 ```
 
 ### Compiles and hot-reloads for development
 
 ```
-yarn serve 
+yarn serve
 ```
 
 ### Compiles and minifies for production
@@ -683,7 +683,6 @@ yarn serve
 ```
 yarn build
 ```
-
 
 ### Customize configuration
 

@@ -767,6 +767,7 @@ export default {
       if (!(toolbarDomArray instanceof Array) || toolbarDomArray.length <= 0) {
         return;
       }
+
       toolbarDomArray.forEach((dom, domIndex) => {
         var toolItem = this.toolbarItems[domIndex];
         var { width, height } = toolItem;

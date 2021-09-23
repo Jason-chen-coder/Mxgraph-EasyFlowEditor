@@ -11,7 +11,9 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const productionGzipExtensions = ['js', 'css', 'html']
 
 module.exports = {
-  publicPath: './',
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/Mxgraph-EasyFlowEditor/'
+    : '/',
   outputDir: 'dist',
   lintOnSave: true,
   configureWebpack: {

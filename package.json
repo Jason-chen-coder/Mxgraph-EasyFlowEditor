@@ -1,7 +1,8 @@
 {
-  "name": "mxgraph-easyeditor",
+  "name": "Mxgraph-EasyFlowEditor",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Jason-chen-coder.github.io/Mxgraph-EasyFlowEditor",
   "pre-commit": [
     "pre-commit"
   ],
