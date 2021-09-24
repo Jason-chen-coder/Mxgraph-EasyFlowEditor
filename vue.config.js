@@ -3,12 +3,12 @@ const path = require('path');
 function resolve (dir) {
   return path.join(__dirname, dir);
 }
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const productionGzipExtensions = ['js', 'css', 'html']
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// const CompressionWebpackPlugin = require('compression-webpack-plugin');
+// const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+// const productionGzipExtensions = ['js', 'css', 'html']
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
@@ -18,15 +18,15 @@ module.exports = {
   lintOnSave: true,
   configureWebpack: {
     plugins: [
-      new ProgressBarPlugin(),
-      new BundleAnalyzerPlugin(),
-      new CompressionWebpackPlugin({
-        filename: '[path].gz[query]',
-        algorithm: 'gzip',
-        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$',),
-        threshold: 10240,//仅处理大于此大小的资产。以字节为单位。
-        minRatio: 0.8,
-      }),
+      // new ProgressBarPlugin(),
+      // new BundleAnalyzerPlugin(),
+      // new CompressionWebpackPlugin({
+      //   filename: '[path].gz[query]',
+      //   algorithm: 'gzip',
+      //   test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$',),
+      //   threshold: 10240,//仅处理大于此大小的资产。以字节为单位。
+      //   minRatio: 0.8,
+      // }),
     ],
     optimization: {
       // splitChunks: {
@@ -58,34 +58,34 @@ module.exports = {
       //     },
       //   }
       // },
-      minimizer: [new UglifyJsPlugin(
-        {
-          uglifyOptions: {
-            compress: {
-              reduce_vars: true,// 把使用多次的静态值自动定义为变量
-              drop_debugger: true,// 删除所有的debugger语句   
-              drop_console: true,// 删除所有的console语句    
-            },
-            parallel: true, // 允许并发
-            cache: true, // 开启缓存
-            output: {
-              beautify: false // 使输出的代码尽可能紧凑
-            }
-          },
-        }
-      ),
-      new CssMinimizerPlugin({
-        parallel: true,// 多并发执行
-        minimizerOptions: {
-          preset: [
-            "default",
-            {
-              discardComments: { removeAll: true },//移除所有注释
-            },
-          ],
-        },
-      })],
-
+      // minimizer: [
+      //   new UglifyJsPlugin(
+      //   {
+      //     uglifyOptions: {
+      //       compress: {
+      //         reduce_vars: true,// 把使用多次的静态值自动定义为变量
+      //         drop_debugger: true,// 删除所有的debugger语句   
+      //         drop_console: true,// 删除所有的console语句    
+      //       },
+      //       parallel: true, // 允许并发
+      //       cache: true, // 开启缓存
+      //       output: {
+      //         beautify: false // 使输出的代码尽可能紧凑
+      //       }
+      //     },
+      //   }
+      // ),
+      // new CssMinimizerPlugin({
+      //   parallel: true,// 多并发执行
+      //   minimizerOptions: {
+      //     preset: [
+      //       "default",
+      //       {
+      //         discardComments: { removeAll: true },//移除所有注释
+      //       },
+      //     ],
+      //   },
+      // })],
     },
   },
   chainWebpack: (config) => {
