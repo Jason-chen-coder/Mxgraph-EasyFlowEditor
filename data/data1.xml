@@ -1,0 +1,279 @@
+<!-- <mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="_id_428157253482528314" value="常减压装置" style="_style_id_428157253482528314" parent="1" vertex="1">
+      <mxGeometry x="12.5" y="222.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="_id_428157253482528437" value="催化重整装置" style="_style_id_428157253482528437" parent="1" vertex="1">
+      <mxGeometry x="210" y="72.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="16" value="直馏石脑油" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FF6666;strokeWidth=4;fontFamily=Verdana;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="_id_428157253482528314" target="_id_428157253482528437" edge="1">
+      <mxGeometry x="0.36426116838488" y="10" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="50" y="110" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="_id_428157253482528336" value="催化裂化(加氢裂化)装置" style="_style_id_428157253482528336" parent="1" vertex="1">
+      <mxGeometry x="210" y="222.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="17" value="直馏柴油" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=6;strokeColor=#9933FF;" parent="1" source="_id_428157253482528314" target="_id_428157253482528336" edge="1">
+      <mxGeometry y="22.3606797749979" relative="1" as="geometry">
+        <mxPoint x="-20" y="12.3606797749979" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="_id_428157253482528376" value="延迟焦化装置" style="_style_id_428157253482528376" parent="1" vertex="1">
+      <mxGeometry x="210" y="392.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="_id_428157253482528633" value="芳烃抽提装置" style="_style_id_428157253482528633" parent="1" vertex="1">
+      <mxGeometry x="407.5" y="72.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="19" value="重整汽油" style="strokeColor=#333333;" parent="1" source="_id_428157253482528437" target="_id_428157253482528633" edge="1">
+      <mxGeometry y="10" relative="1" as="geometry">
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="_id_428157253482528473" value="气体分馏装置" style="_style_id_428157253482528473" parent="1" vertex="1">
+      <mxGeometry x="407.5" y="317.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="20" value="液化气" style="strokeColor=#333333;" parent="1" source="_id_428157253482528336" target="_id_428157253482528473" edge="1">
+      <mxGeometry x="-0.321782178217822" y="10" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="437" y="282" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="21" value="液化气" style="strokeColor=#333333;" parent="1" source="_id_428157253482528376" target="_id_428157253482528473" edge="1">
+      <mxGeometry x="0.741758241758242" y="80" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="437.5" y="420" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="_id_428157253482528491" value="MTBE装置" style="_style_id_428157253482528491" parent="1" vertex="1">
+      <mxGeometry x="597.5" y="317.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="22" value="C4(液化气)" style="strokeColor=#333333;" parent="1" source="_id_428157253482528473" target="_id_428157253482528491" edge="1">
+      <mxGeometry y="15.2069063257455" relative="1" as="geometry">
+        <mxPoint x="-2.5" y="0.206906325745535" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="24" value="减压渣油" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=4;exitDx=0;exitDy=0;entryDx=0;entryDy=0;" parent="1" source="_id_428157253482528314" target="_id_428157253482528376" edge="1">
+      <mxGeometry x="0.358306188925081" y="10" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="50" y="430" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="25" value="焦化蜡油" style="strokeColor=#333333;" parent="1" source="_id_428157253482528376" target="_id_428157253482528336" edge="1">
+      <mxGeometry y="30.4138126514911" relative="1" as="geometry">
+        <mxPoint x="0.413812651491099" y="5" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="_id_651099557232200423" value="烷基化装置" style="_style_id_651099557232200423" parent="1" vertex="1">
+      <mxGeometry x="777.5" y="317.5" width="75" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="26" value="重C4(液化气)" style="strokeColor=#333333;" parent="1" source="_id_428157253482528491" target="_id_651099557232200423" edge="1">
+      <mxGeometry y="16.7705098312484" relative="1" as="geometry">
+        <mxPoint x="-7.5" y="1.77050983124843" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="qt" value="汽油" parent="1" vertex="1">
+      <mxGeometry x="677.5" y="40" width="45" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="27" value="燃料油" parent="1" vertex="1">
+      <mxGeometry x="678" y="210" width="44.5" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="28" value="柴油" parent="1" vertex="1">
+      <mxGeometry x="677.5" y="147.5" width="45" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="29" value="石脑油" parent="1" vertex="1">
+      <mxGeometry x="677.5" y="87.5" width="45" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#7EA6E0;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528336" target="qt" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="497" y="260" />
+          <mxPoint x="497" y="62" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#97D077;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528336" target="28" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="247" y="180" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#7EA6E0;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528314" target="qt" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="33" y="48" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#97D077;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528314" target="28" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="66" y="159" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryDx=0;entryDy=0;strokeColor=#FFD966;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528314" target="27" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="381" y="237" />
+          <mxPoint x="381" y="237" />
+        </Array>
+        <mxPoint x="650" y="240" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#97D077;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528376" target="28" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="576" y="447" />
+          <mxPoint x="576" y="170" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#FF66B3;strokeWidth=2;fontFamily=Verdana;dashed=1;" parent="1" source="_id_428157253482528633" target="29" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="38" value="液化气" parent="1" vertex="1">
+      <mxGeometry x="927.5" y="332.5" width="45" height="45" as="geometry" />
+    </mxCell>
+    <mxCell id="39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=rgba(0, 96, 235, 1);strokeWidth=2;fontFamily=Verdana;dashed=0;" parent="1" source="_id_651099557232200423" target="38" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel> -->
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="rectangle-1" value="edsp-ui" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;rotation=-360;fontSize=16;" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="171" y="337" width="120" height="40" as="geometry">
+        <mxPoint x="-1" y="2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="3" value="edsp-adm-service" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;rotation=-360;fontSize=16;" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="423" y="337" width="171" height="40" as="geometry">
+        <mxPoint x="-1" y="2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="4" value="" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="rectangle-1" target="3" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="6" value="Domain A" style="group;fontColor=white;" parent="1" vertex="1">
+      <mxGeometry x="702" y="15" width="747" height="387" as="geometry" />
+    </mxCell>
+    <mxCell id="rectangle-2" value="edsp-adm-service" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=16;" parent="6" vertex="1" title="rectangle">
+      <mxGeometry x="24" y="120" width="155" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="7" value="" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="3" target="rectangle-2" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="22" value="组件" style="group;fontColor=white;" parent="1" vertex="1">
+      <mxGeometry x="1083" y="63" width="315" height="294" as="geometry" />
+    </mxCell>
+    <mxCell id="13" value="配置中心&#xa;Nacos" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="31.5" y="96.5" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="15" value="治理中心&#xa;Sentinal" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="31.5" y="156.5" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="17" value="应用性能分析&#xa;APM" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="163.5" y="42.5" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="18" value="服务网关&#xa;Gateway" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="163.5" y="96.5" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="19" value="日志中心&#xa;Log" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="163.5" y="156.5" width="120" height="40" as="geometry">
+        <mxPoint x="1" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rectangle-5" value="注册中心&#xa;Nacos" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="31.5" y="42" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="20" value="应用状态探测&#xa;Actuator" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="31.5" y="216" width="120" height="40" as="geometry">
+        <mxPoint x="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="21" value="缓存服务&#xa;Redis" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=15;" parent="22" vertex="1" title="rectangle">
+      <mxGeometry x="163.5" y="216" width="120" height="39" as="geometry">
+        <mxPoint y="2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="24" value="" style="exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="rectangle-2" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="1080" y="155" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="29" value="Doamin B" style="group;fontColor=white;" parent="1" vertex="1">
+      <mxGeometry x="702" y="495" width="750" height="150" as="geometry" />
+    </mxCell>
+    <mxCell id="30" value="应用系统" style="group;fontColor=white;" parent="1" vertex="1">
+      <mxGeometry x="717" y="201" width="270" height="159" as="geometry" />
+    </mxCell>
+    <mxCell id="rectangle-7" value="集群A" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontSize=16;" parent="30" vertex="1" title="rectangle">
+      <mxGeometry x="42" y="55" width="122" height="92" as="geometry">
+        <mxPoint x="-36" y="-59" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="Text-1" value="......" style="margin_left=10;shape=Text;strokeColor=transparent;strokeWidth=1;html=1;fillColor=#FFFFFF;verticalAlign=middle;align=center;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1" title="Text">
+      <mxGeometry x="897" y="291" width="70" height="20" as="geometry">
+        <mxPoint x="1" y="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="Text-2" value="......" style="margin_left=10;shape=Text;strokeColor=transparent;strokeWidth=1;html=1;fillColor=rgba(255, 255, 255, 0);verticalAlign=middle;align=center;whiteSpace=wrap;rounded=0;fontSize=32;labelBackgroundColor=rgba(67, 24, 24, 0);" parent="1" vertex="1" title="Text">
+      <mxGeometry x="919" y="579" width="313" height="17" as="geometry">
+        <mxPoint x="-7" y="-10" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="34" value="" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="3" target="29" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="660" y="357" />
+          <mxPoint x="660" y="570" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rhombus-1" value="实例a" style="shape=rhombus;margin_left=10;perimeter=ellipsePerimeter" parent="1" vertex="1" title="rhombus">
+      <mxGeometry x="771" y="276" width="51" height="45" as="geometry">
+        <mxPoint x="-2" y="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="39" value="......" style="margin_left=10;shape=Text;strokeColor=transparent;strokeWidth=1;html=1;fillColor=#FFFFFF;verticalAlign=middle;align=center;whiteSpace=wrap;rounded=0;fontSize=18;" parent="1" vertex="1" title="Text">
+      <mxGeometry x="813" y="312" width="54" height="19" as="geometry">
+        <mxPoint x="1" y="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="40" value="资源绑定" style="fontSize=16;" parent="1" edge="1">
+      <mxGeometry x="-0.4702" y="12" relative="1" as="geometry">
+        <mxPoint x="882" y="267" as="targetPoint" />
+        <mxPoint x="1083" y="267" as="sourcePoint" />
+        <Array as="points" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>

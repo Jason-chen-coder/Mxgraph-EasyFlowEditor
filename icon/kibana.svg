@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>icon / product-logo / 64x64px / stack / color</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon-/-product-logo-/-64x64px-/-stack-/-color" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo-kibana-64x64-color-reverse" transform="translate(11.000000, 4.999900)">
+            <path d="M-2.84217094e-14,20.25 L-2.84217094e-14,48.581 L20.137,25.392 C14.149,22.13 7.299,20.25 -2.84217094e-14,20.25" id="Fill-1" fill="#343741"></path>
+            <path d="M-7.10542736e-15,-3.01980663e-14 L-7.10542736e-15,20.25 C7.299,20.25 14.149,22.13 20.137,25.392 L42.188,-3.01980663e-14 L-7.10542736e-15,-3.01980663e-14 Z" id="Fill-3" fill="#F04E98"></path>
+            <path d="M24.4434,28.0591 L3.7754,51.8601 L1.9164,54.0001 L41.3414,54.0001 C39.1784,43.3421 32.9924,34.1491 24.4434,28.0591" id="Fill-6" fill="#00BFB3"></path>
+        </g>
+    </g>
+</svg>

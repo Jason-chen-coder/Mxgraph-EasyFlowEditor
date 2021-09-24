@@ -1,0 +1,184 @@
+<!-- <mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="17" value="GroupCase" style="group;fontColor=white;fontSize=17;" parent="1" vertex="1">
+      <mxGeometry x="86" y="105" width="878" height="616" as="geometry" />
+    </mxCell>
+    <mxCell id="center-2" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/boxDomain.png;" parent="17" vertex="1" title="中心">
+      <mxGeometry x="40" y="72" width="60" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-2" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/selected-1.png;spacingLeft=18;spacingBottom=18" parent="center-2" vertex="1" connectable="0" title="1">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-3" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/boxDomain.png;" parent="17" vertex="1" title="中心">
+      <mxGeometry x="784" y="72" width="60" height="60" as="geometry">
+        <mxPoint x="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-unselect-3" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/selected-3.png;spacingLeft=18;spacingBottom=18" parent="center-3" vertex="1" connectable="0" title="3">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-4" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/center.png" parent="17" vertex="1" title="中心">
+      <mxGeometry x="403" y="516" width="63" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-4" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-3.png;spacingLeft=18;spacingBottom=18" parent="center-4" vertex="1" connectable="0" title="3">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="center-5" style="fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1;shape=label;align=center;verticalAlign=bottom;imageAlign=center;imageVerticalAlign=top;image=./icon/center.png" parent="17" vertex="1" title="中心">
+      <mxGeometry x="406" y="306" width="57" height="60" as="geometry" />
+    </mxCell>
+    <mxCell id="center-unselect-5" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-4.png;spacingLeft=18;spacingBottom=18" parent="center-5" vertex="1" connectable="0" title="4">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="10" value="查询分发" style="entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;fontSize=13;" parent="17" source="center-2" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="436" y="87" />
+          <mxPoint x="436" y="87" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="11" value="管理" style="edgeStyle=none;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=13;" parent="17" source="center-5" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="12" value="管理" style="edgeStyle=none;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=13;" parent="17" source="center-5" target="center-2" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="13" value="数据迁移" style="edgeStyle=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=3;fontSize=13;" parent="17" source="center-2" target="center-4" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="15" value="管理" style="fontSize=14;" parent="17" source="center-5" target="center-4" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="16" value="数据迁移" style="entryX=0.5;entryY=1;entryDx=0;entryDy=0;edgeStyle=none;dashed=1;strokeWidth=3;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=13;" parent="17" source="center-4" target="center-3" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel> -->
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="rectangle-1" value="elasticsearch&#xa;client" style="margin_left=10;shape=rectangle;arcSize=20;fontSize=14;strokeColor=rgba(0, 0, 0, 1);fontColor=rgba(0, 0, 0, 1);" vertex="1" parent="1" title="rectangle">
+      <mxGeometry x="-129" y="42" width="180" height="84" as="geometry" />
+    </mxCell>
+    <mxCell id="42" value="域" style="group;fontColor=white;" vertex="1" parent="1">
+      <mxGeometry x="177" y="-9" width="1017" height="630" as="geometry" />
+    </mxCell>
+    <mxCell id="elasticsearch-1" value="coordinator" style="fillColor=#FFFFFF;strokeColor=rgba(0, 0, 0, 1);strokeWidth=1;shape=label;align=center;verticalAlign=center;imageAlign=left;imageVerticalAlign=center;image=./icon/elasticsearch.png;fontColor=rgba(0, 0, 0, 1);fontSize=14;" vertex="1" parent="42" title="ElasticSearch">
+      <mxGeometry x="135" y="71.5" width="140" height="40" as="geometry">
+        <mxPoint x="7" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="elasticsearch-unselect-1" value="1" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-2.png;spacingLeft=18;spacingBottom=18" vertex="1" connectable="0" parent="elasticsearch-1" title="2">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="19" value="data:warm" style="fillColor=#FFFFFF;strokeColor=rgba(0, 0, 0, 1);strokeWidth=1;shape=label;align=center;verticalAlign=center;imageAlign=left;imageVerticalAlign=center;image=./icon/elasticsearch.png;fontColor=rgba(0, 0, 0, 1);fontSize=14;" vertex="1" title="ElasticSearch" parent="42">
+      <mxGeometry x="786" y="71.5" width="140" height="40" as="geometry">
+        <mxPoint x="7" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="20" value="1" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-3.png;spacingLeft=18;spacingBottom=18" vertex="1" connectable="0" parent="19" title="3">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="21" value="master" style="fillColor=#FFFFFF;strokeColor=rgba(0, 0, 0, 1);strokeWidth=1;shape=label;align=center;verticalAlign=center;imageAlign=left;imageVerticalAlign=center;image=./icon/elasticsearch.png;fontColor=rgba(0, 0, 0, 1);fontSize=14;" vertex="1" title="ElasticSearch" parent="42">
+      <mxGeometry x="453" y="254.5" width="140" height="40" as="geometry">
+        <mxPoint x="2" y="2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="22" value="1" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/selected-1.png;spacingLeft=18;spacingBottom=18" vertex="1" connectable="0" parent="21" title="1">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="23" value="data:hot" style="fillColor=#FFFFFF;strokeColor=rgba(0, 0, 0, 1);strokeWidth=1;shape=label;align=center;verticalAlign=center;imageAlign=left;imageVerticalAlign=center;image=./icon/elasticsearch.png;fontColor=rgba(0, 0, 0, 1);fontSize=14;" vertex="1" title="ElasticSearch" parent="42">
+      <mxGeometry x="453" y="518.5" width="140" height="40" as="geometry">
+        <mxPoint x="7" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="24" value="1" style="port;normalType;orderPoint=true;fillColor=none;image=./images/order/unselect-4.png;spacingLeft=18;spacingBottom=18" vertex="1" connectable="0" parent="23" title="4">
+      <mxGeometry x="1" y="1" width="30" height="30" relative="1" as="geometry">
+        <mxPoint x="-18" y="-18" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="27" value="查询分发" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="42" source="elasticsearch-1" target="19">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="29" value="管理" style="edgeStyle=SideToSide;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="42" source="21" target="19">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="31" value="管理" style="entryX=0.75;entryY=1;entryDx=0;entryDy=0;edgeStyle=SideToSide;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="42" source="21" target="elasticsearch-1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="32" value="管理" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="42" source="21" target="23">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="34" value="数据迁移" style="entryX=0.5;entryY=1;entryDx=0;entryDy=0;edgeStyle=SideToSide;dashed=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;strokeWidth=4;fontSize=15;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);" edge="1" parent="42" source="23" target="19">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="36" value="请求分发" style="entryX=0.25;entryY=0;entryDx=0;entryDy=0;edgeStyle=SideToSide;exitX=0.5;exitY=1;exitDx=0;exitDy=0;strokeWidth=4;fontSize=15;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);" edge="1" parent="42" source="elasticsearch-1" target="23">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="45" value="addresses" style="shape=Arrow Left;fontSize=14;fillColor=rgba(255, 255, 255, 1);fontStyle=0;strokeColor=rgba(0, 0, 0, 1);fontColor=rgba(0, 0, 0, 1);" vertex="1" customer="1" parent="1">
+      <mxGeometry x="51" y="40.5" width="171" height="87" as="geometry">
+        <mxPoint x="7" y="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="46" value="查询分发" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="452" y="82.5" as="sourcePoint" />
+        <mxPoint x="963" y="82.5" as="targetPoint" />
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="47" value="管理" style="entryX=0.75;entryY=1;entryDx=0;entryDy=0;edgeStyle=SideToSide;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="665" y="245.5" as="sourcePoint" />
+        <mxPoint x="417" y="102.5" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="48" value="管理" style="edgeStyle=SideToSide;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontSize=14;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="735" y="245.5" as="sourcePoint" />
+        <mxPoint x="998" y="102.5" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="49" value="查询分发" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=15;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="452" y="82.5" as="sourcePoint" />
+        <mxPoint x="963" y="82.5" as="targetPoint" />
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="50" value="管理" style="entryX=0.75;entryY=1;entryDx=0;entryDy=0;edgeStyle=SideToSide;fontSize=15;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.25;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="665" y="245.5" as="sourcePoint" />
+        <mxPoint x="417" y="102.5" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="51" value="管理" style="edgeStyle=SideToSide;entryX=0.25;entryY=1;entryDx=0;entryDy=0;fontSize=15;fontColor=rgba(0, 0, 0, 1);strokeColor=rgba(0, 0, 0, 1);exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="735" y="245.5" as="sourcePoint" />
+        <mxPoint x="998" y="102.5" as="targetPoint" />
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>
+

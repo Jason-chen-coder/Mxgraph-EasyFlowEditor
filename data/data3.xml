@@ -1,0 +1,202 @@
+<mxGraphModel>
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="rectangle-1" value="new Value()" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fillColor=rgba(52, 73, 93, 1);fontColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="327" y="82" width="120" height="40" as="geometry">
+        <mxPoint x="-1" y="-2" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rectangle-2" value="Observe Data" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fillColor=rgba(58, 184, 130, 1);fontColor=rgba(255, 255, 255, 1);strokeColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="327" y="177" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="4" value="Init Events" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fillColor=rgba(58, 184, 130, 1);fontColor=rgba(255, 255, 255, 1);strokeColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="327" y="279" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="5" value="" style="exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="rectangle-1" target="rectangle-2" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="6" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="rectangle-2" target="4" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="rectangle-3" value="beforeCreate" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="129" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="8" value="" style="entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="rectangle-1" target="rectangle-3" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="9" value="created" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="332" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="10" value="" style="dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="4" target="9" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rhombus-1" value="Has&#xa;&#39;el&#39;option?" style="shape=rhombus;margin_left=10;perimeter=ellipsePerimeter;fillColor=rgba(252, 183, 56, 1);fontColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="rhombus">
+      <mxGeometry x="307.5" y="381" width="159" height="80" as="geometry">
+        <mxPoint x="-3" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="12" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="4" target="rhombus-1" edge="1">
+      <mxGeometry x="0.0188" y="-30" relative="1" as="geometry">
+        <Array as="points" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="13" value="Has&#xa;&#39;&#39;template&#39;&#xa;option?" style="shape=rhombus;margin_left=10;perimeter=ellipsePerimeter;fillColor=rgba(252, 183, 56, 1);fontColor=rgba(252, 252, 252, 1);" parent="1" vertex="1" title="rhombus">
+      <mxGeometry x="307.5" y="510" width="159" height="80" as="geometry">
+        <mxPoint x="-3" y="-1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="14" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="rhombus-1" target="13" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="15" value="No" style="entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="rhombus-1" target="13" edge="1">
+      <mxGeometry x="-0.6583" y="19" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="561" y="421" />
+          <mxPoint x="561" y="550" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="16" value="when&#xa;vm.$mount(el)&#xa;is called" style="entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="rhombus-1" target="13" edge="1">
+      <mxGeometry x="0.0027" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="561" y="421" />
+          <mxPoint x="561" y="550" />
+        </Array>
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="rectangle-4" value="Complie template&#xa;into&#xa;render function" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontColor=rgba(255, 255, 255, 1);fillColor=rgba(58, 184, 130, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="142.5" y="651" width="165" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="18" value="Compile el&#39;s&#xa;outerHTML&#xa;as template" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontColor=rgba(255, 255, 255, 1);fillColor=rgba(58, 184, 130, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="466.5" y="651" width="165" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="19" value="Yes" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="13" target="rectangle-4" edge="1">
+      <mxGeometry x="0.8252" y="-23" relative="1" as="geometry">
+        <Array as="points" />
+        <mxPoint as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="20" value="No" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="13" target="18" edge="1">
+      <mxGeometry x="0.8117" y="27" relative="1" as="geometry">
+        <mxPoint y="1" as="offset" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="21" value="Create vm.$el &#xa;and replace&#xa;&#39;el&#39; with it" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontColor=rgba(255, 255, 255, 1);fillColor=rgba(58, 184, 130, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="304.5" y="903" width="165" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="22" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="rectangle-4" target="21" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="23" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="18" target="21" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="25" value="beforeMounted" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="834" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="26" value="" style="dashed=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="21" target="25" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="circle-1" value="Mounted" style="margin_left=10;shape=ellipse;perimeter=ellipsePerimeter;fillColor=rgba(218, 89, 97, 1);fontColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="circle">
+      <mxGeometry x="346.99999999999994" y="1106" width="80" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="28" value="" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="21" target="circle-1" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="29" value="mounted" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="1041" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="30" value="" style="dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="21" target="29" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="31" value="Virtual DOM&#xa;re-render&#xa;and patch" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontColor=rgba(255, 255, 255, 1);fillColor=rgba(58, 184, 130, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="591" y="1108.5" width="129" height="75" as="geometry" />
+    </mxCell>
+    <mxCell id="32" value="when data&#xa;changes" style="dashed=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" parent="1" source="circle-1" target="31" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="405" y="1068" />
+          <mxPoint x="656" y="1068" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="34" value="beforeDestory" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="1284" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="35" value="Teardown&#xa;watchers,child&#xa;components and&#xa;events listeners" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;fontColor=rgba(255, 255, 255, 1);fillColor=rgba(58, 184, 130, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="304.5" y="1333" width="165" height="90" as="geometry" />
+    </mxCell>
+    <mxCell id="36" value="" style="dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="circle-1" target="34" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="37" value="when&#xa;vm.$destory()&#xa;is called" style="entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="circle-1" target="35" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="38" value="Destoryed" style="margin_left=10;shape=ellipse;perimeter=ellipsePerimeter;fillColor=rgba(218, 89, 97, 1);fontColor=rgba(255, 255, 255, 1);" parent="1" vertex="1" title="circle">
+      <mxGeometry x="346.99999999999994" y="1509" width="80" height="80" as="geometry" />
+    </mxCell>
+    <mxCell id="39" value="" style="exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="35" target="38" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="40" value="destoryed" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" parent="1" vertex="1" title="rectangle">
+      <mxGeometry x="81" y="1529" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="41" value="" style="entryX=1;entryY=0.5;entryDx=0;entryDy=0;dashed=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="38" target="40" edge="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="42" value="" style="dashed=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="31" target="circle-1" edge="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="656" y="1221" />
+          <mxPoint x="405" y="1221" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="43" value="beforeUpdate" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" vertex="1" title="rectangle" parent="1">
+      <mxGeometry x="631.5" y="951" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="44" value="Updated" style="margin_left=10;shape=rectangle;perimeter=ellipsePerimeter;arcSize=20;strokeColor=rgba(255, 0, 0, 1);strokeWidth=2;fontColor=rgba(255, 0, 0, 1);" vertex="1" title="rectangle" parent="1">
+      <mxGeometry x="631.5" y="1284" width="120" height="40" as="geometry" />
+    </mxCell>
+    <mxCell id="45" value="" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" target="43">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="585" y="1071" as="sourcePoint" />
+        <Array as="points">
+          <mxPoint x="585" y="971" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="46" value="" style="entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;" edge="1" parent="1" target="44">
+      <mxGeometry relative="1" as="geometry">
+        <mxPoint x="579" y="1221" as="sourcePoint" />
+        <Array as="points">
+          <mxPoint x="588" y="1221" />
+          <mxPoint x="588" y="1304" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>
