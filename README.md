@@ -1,4 +1,4 @@
-# Mxgraph-EasyFlowEditor
+# Mxgraph-Editor
 
 ## 1.什么是 mxgraph
 
