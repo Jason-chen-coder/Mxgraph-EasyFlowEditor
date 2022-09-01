@@ -1,5 +1,46 @@
 # Mxgraph-EasyFlowEditor
 
+## 项目源码欢迎 star:
+
+[项目源码地址](https://github.com/Jason-chen-coder/Mxgraph-EasyFlowEditor):
+![在这里插入图片描述](https://img-blog.csdnimg.cn/20210608102620212.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
+
+## 推荐文章:
+
+1.基于 mxGraph 的可视化环境组网设计器:https://github.com/igonglei/env-editor
+
+2.mxGraph 学习笔记:https://www.kancloud.cn/wujie520303/mxgraph/1434409
+
+3.功能全面的案例:https://github.com/lanniu/vue-mxgraph-example
+
+4.关于 mxGraph 可搜索的 API 中文文档:https://api.mxgraph.lanniu.top/#/
+
+## Project setup
+
+```
+yarn
+```
+
+### Compiles and hot-reloads for development
+
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+
+```
+yarn build
+```
+
+### Customize configuration
+
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Star 趋势图
+
+[![Stargazers over time](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor.svg)](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor)
+
 ## 1.什么是 mxgraph
 
 mxGraph 是一个 JavaScript 图表库，可以快速创建交互式图形和图表应用程序，这些应用程序可以在其供应商支持的任何主要浏览器中运行。mxGraph 提供图形绘制、图形可视化、图形交互、图形布局、图形分析等能力， 适用于工作流程图、BPMN 图、网络图、UML 图、循环图、组织结构图、MindMap 图、机架图、甘特图、信息图、平面图等绘制。
@@ -650,44 +691,3 @@ mxgraph 提供了几种自动布局的 API,直接调用 graphLayout 即可
       }
 
 ```
-
-## 项目源码欢迎 star:
-
-[项目源码地址](https://github.com/Jason-chen-coder/Mxgraph-EasyFlowEditor):
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210608102620212.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
-
-## 推荐文章:
-
-1.基于 mxGraph 的可视化环境组网设计器:https://github.com/igonglei/env-editor
-
-2.mxGraph 学习笔记:https://www.kancloud.cn/wujie520303/mxgraph/1434409
-
-3.功能全面的案例:https://github.com/lanniu/vue-mxgraph-example
-
-4.关于 mxGraph 可搜索的 API 中文文档:https://api.mxgraph.lanniu.top/#/
-
-## Project setup
-
-```
-yarn
-```
-
-### Compiles and hot-reloads for development
-
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-## Star 趋势图
-
-[![Stargazers over time](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor.svg)](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor)
