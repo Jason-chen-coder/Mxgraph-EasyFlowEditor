@@ -37,7 +37,7 @@ yarn build
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## Star 趋势图
+## Star 趋势图 
 
 [![Stargazers over time](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor.svg)](https://starchart.cc/Jason-chen-coder/Mxgraph-EasyFlowEditor)
 
