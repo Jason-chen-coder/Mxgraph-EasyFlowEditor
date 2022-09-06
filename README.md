@@ -9,7 +9,7 @@
 ## 推荐文章:
 以下是个人认为对上手mxgraph非常有帮助的文章：
 
-1.基于 mxGraph 的可视化环境组网设计器:https://github.com/igonglei/env-editor
+1.基于 mxGraph 的可视化环境组网设计器:[https://github.com/igonglei/env-editor](https://github.com/yooSeeFly/env-editor)
 
 2.mxGraph 学习笔记:https://www.kancloud.cn/wujie520303/mxgraph/1434409
 
