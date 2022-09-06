@@ -1,14 +1,12 @@
 # Mxgraph-EasyFlowEdito
- 本项目是基于mxGraph+vue设计的流程图编辑器，可用于流程图绘制，流程渲染等等
+ 本项目是基于mxGraph+vue设计的流程图编辑器，可用于流程图绘制，流程渲染等等；欢迎交流，欢迎star，谢谢！:
 
 ## 项目源码欢迎 star:
 
-[项目源码地址](https://github.com/Jason-chen-coder/Mxgraph-EasyFlowEditor):
-
 项目展示：
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20210608102620212.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
+![Vue生命周期流程的绘制](https://img-blog.csdnimg.cn/20210608102620212.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl8zOTA4NTgyMg==,size_16,color_FFFFFF,t_70)
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/2c18e17f1f47442e8f36e775aa5b3497.png)
+![定制化场景的流程渲染](https://img-blog.csdnimg.cn/2c18e17f1f47442e8f36e775aa5b3497.png)
 
 ## 推荐文章:
 
