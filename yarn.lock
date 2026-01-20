@@ -2432,9 +2432,9 @@ coa@^2.0.2:
     q "^1.1.2"
 
 codemirror@^5.41.0:
-  version "5.59.3"
-  resolved "https://registry.npm.taobao.org/codemirror/download/codemirror-5.59.3.tgz#237ec3ac0e39fee50d6f1a6196c8172a7c7c2ba1"
-  integrity sha1-I37DrA45/uUNbxphlsgXKnx8K6E=
+  version "5.62.3"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.62.3.tgz#5cfdee6931c8b2d1b39ae773aaaaec2cc6b5558e"
+  integrity sha512-zZAyOfN8TU67ngqrxhOgtkSAGV9jSpN1snbl8elPtnh9Z5A11daR405+dhLzLnuXrwX0WCShWlybxPN3QC/9Pg==
 
 collection-visit@^1.0.0:
   version "1.0.0"
